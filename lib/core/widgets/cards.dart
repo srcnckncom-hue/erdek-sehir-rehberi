@@ -204,7 +204,14 @@ class _PillButton extends StatelessWidget {
               children: [
                 AppIcon(action.icon, size: 18, color: foreground),
                 const SizedBox(width: AppSpacing.xs),
-                Text(action.label, style: AppTypography.tileLabel.copyWith(color: foreground)),
+                Flexible(
+                  child: Text(
+                    action.label,
+                    style: AppTypography.tileLabel.copyWith(color: foreground),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
           ),

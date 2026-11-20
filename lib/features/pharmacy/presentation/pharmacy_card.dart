@@ -128,13 +128,24 @@ class _ActionButton extends StatelessWidget {
         borderRadius: AppRadius.pillAll,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: AppSpacing.minTouchTarget),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppIcon(icon, size: 18, color: foreground),
-              const SizedBox(width: AppSpacing.xs),
-              Text(label, style: AppTypography.label.copyWith(color: foreground)),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppIcon(icon, size: 18, color: foreground),
+                const SizedBox(width: AppSpacing.xs),
+                // Büyük yazı boyutunda (Dynamic Type) taşmasın.
+                Flexible(
+                  child: Text(
+                    label,
+                    style: AppTypography.label.copyWith(color: foreground),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

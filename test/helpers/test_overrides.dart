@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:erdek_rehberi/app/providers.dart';
 import 'package:erdek_rehberi/core/data/data_result.dart';
 import 'package:erdek_rehberi/core/data/json_sources.dart';
@@ -6,7 +8,6 @@ import 'package:erdek_rehberi/core/theme/app_theme.dart';
 import 'package:erdek_rehberi/features/weather/data/weather_repository.dart';
 import 'package:erdek_rehberi/features/weather/domain/weather.dart';
 import 'package:erdek_rehberi/l10n/app_localizations.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -15,10 +16,21 @@ import 'package:material_ui/material_ui.dart';
 /// sıradaki feribot yarın 09:00, sıradaki otobüs bugün 19:00.
 final testNow = DateTime(2026, 11, 21, 18, 5);
 
-/// İnternete çıkmadan: "uzak" JSON olarak uygulamayla gelen data/ kopyası.
-class AssetJsonFetcher implements JsonFetcher {
+/// İnternete çıkmadan: "uzak" JSON olarak repo'daki data/ dosyaları.
+/// Diskten EŞZAMANLI okunur; test zamanlamasından bağımsız (asset yükleme
+/// sahte zamanlı testlerde gecikebiliyor).
+class FileJsonFetcher implements JsonFetcher {
   @override
-  Future<String> fetch(String path) => rootBundle.loadString('data/$path');
+  Future<String> fetch(String path) async => File('data/$path').readAsStringSync();
+}
+
+/// Uygulamayla gelen kopya yerine aynı dosyalar (eşzamanlı).
+class FileBundledJsonSource implements BundledJsonSource {
+  @override
+  Future<String?> read(String path) async {
+    final file = File('data/$path');
+    return file.existsSync() ? file.readAsStringSync() : null;
+  }
 }
 
 final testWeather = DataResult<CurrentWeather>(
@@ -43,7 +55,8 @@ Widget testScope({required Widget child, DateTime? now}) {
   return ProviderScope(
     overrides: [
       jsonCacheProvider.overrideWithValue(MemoryJsonCache()),
-      jsonFetcherProvider.overrideWithValue(AssetJsonFetcher()),
+      jsonFetcherProvider.overrideWithValue(FileJsonFetcher()),
+      bundledJsonProvider.overrideWithValue(FileBundledJsonSource()),
       announcementsSeenStoreProvider.overrideWithValue(MemoryAnnouncementsSeenStore()),
       clockProvider.overrideWithValue(() => fixed),
       nowProvider.overrideWith((ref) => Stream.value(fixed)),
