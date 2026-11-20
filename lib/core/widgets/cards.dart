@@ -24,6 +24,7 @@ class FeatureCard extends StatelessWidget {
     this.tagLabel,
     this.tagIcon,
     this.actions = const [],
+    this.footnote,
     this.color,
     this.onTap,
   });
@@ -37,6 +38,9 @@ class FeatureCard extends StatelessWidget {
   final String? tagLabel;
   final AppIconData? tagIcon;
   final List<CardAction> actions;
+
+  /// Kartın en altındaki küçük not ("Gitmeden önce telefonla teyit edin.").
+  final String? footnote;
 
   /// Varsayılan: vurgu kırmızısı.
   final Color? color;
@@ -136,7 +140,7 @@ class FeatureCard extends StatelessWidget {
                           style: AppTypography.caption.copyWith(
                             color: onCard.withValues(alpha: 0.9),
                           ),
-                          maxLines: 2,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -149,6 +153,15 @@ class FeatureCard extends StatelessWidget {
                             for (final a in actions)
                               _PillButton(action: a, background: onCard, foreground: base),
                           ],
+                        ),
+                      ],
+                      if (footnote != null) ...[
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(
+                          footnote!,
+                          style: AppTypography.tabLabel.copyWith(
+                            color: onCard.withValues(alpha: 0.85),
+                          ),
                         ),
                       ],
                     ],

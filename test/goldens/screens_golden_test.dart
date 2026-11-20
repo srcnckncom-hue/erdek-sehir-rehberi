@@ -4,6 +4,9 @@ library;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:erdek_rehberi/app/shell/app_shell.dart';
+
+import '../helpers/test_overrides.dart';
 import 'golden_helpers.dart';
 import 'previews.dart';
 
@@ -19,7 +22,7 @@ void main() {
           fileName: '01_ana_sayfa_${themeName(brightness)}_${device.name}',
           device: device,
           brightness: brightness,
-          builder: () => const HomePreview(),
+          builder: () => testScope(child: const AppShell()),
           precache: const [heroImage],
         );
       });
@@ -31,7 +34,7 @@ void main() {
           fileName: '02_ana_sayfa_tam_boy_${themeName(brightness)}_${device.name}',
           device: device.withHeight(1500),
           brightness: brightness,
-          builder: () => const HomePreview(),
+          builder: () => testScope(child: const AppShell()),
           precache: const [heroImage],
         );
       });

@@ -1,11 +1,152 @@
 {
   "@@locale": "tr",
   "appTitle": "Erdek Şehir Rehberi",
-  "@appTitle": {
-    "description": "Uygulamanın tam adı"
+  "setupInProgress": "Bu bölüm hazırlanıyor.",
+  "greetingMorning": "Günaydın, Erdek",
+  "greetingDay": "İyi günler, Erdek",
+  "greetingEvening": "İyi akşamlar, Erdek",
+  "greetingNight": "İyi geceler, Erdek",
+  "weekdayName": "{weekday, select, 1{Pazartesi} 2{Salı} 3{Çarşamba} 4{Perşembe} 5{Cuma} 6{Cumartesi} other{Pazar}}",
+  "@weekdayName": {
+    "placeholders": {
+      "weekday": {
+        "type": "String"
+      }
+    }
   },
-  "setupInProgress": "Kurulum aşaması. Arayüz, tasarım görsellerine göre hazırlanacak.",
-  "@setupInProgress": {
-    "description": "1. adımdaki geçici açılış ekranı metni"
-  }
+  "heroDayLabel": "{weekday}, Erdek",
+  "@heroDayLabel": {
+    "placeholders": {
+      "weekday": {
+        "type": "String"
+      }
+    }
+  },
+  "locationLabel": "Erdek, Balıkesir",
+  "statusUpToDate": "Güncel",
+  "statusUpdating": "Güncelleniyor",
+  "statusOffline": "Çevrimdışı · {time}",
+  "@statusOffline": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "humidityLabel": "%{value} Nem",
+  "@humidityLabel": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "windLabel": "{value} km/s",
+  "@windLabel": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "temperatureRange": "{min}°/{max}°",
+  "@temperatureRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "menu": "Menü",
+  "announcementsTooltip": "Duyurular",
+  "searchHint": "Eczane, telefon, sefer veya duyuru ara...",
+  "searchComingSoon": "Arama yakında eklenecek.",
+  "quickActionsTitle": "Hızlı İşlemlerim",
+  "seeAll": "Tümünü Gör",
+  "allServicesTitle": "Tüm Hizmetler",
+  "cityServicesTitle": "Şehir Hizmetleri",
+  "actionPharmacy": "Nöbetçi Eczane",
+  "actionPrayerTimes": "Namaz Vakitleri",
+  "actionFerryTimes": "Feribot Saatleri",
+  "actionAnnouncements": "Duyurular",
+  "actionContacts": "Önemli Telefonlar",
+  "actionBusTimes": "Otobüs Saatleri",
+  "actionImsakiye": "İmsakiye",
+  "actionOutages": "Kesintiler",
+  "actionMarketDays": "Pazar Günleri",
+  "actionEvents": "Etkinlikler",
+  "actionEmergency": "Acil 112",
+  "pharmacyOverline": "Bugünün nöbetçi eczanesi",
+  "pharmacyUntilTomorrow": "Yarın 08:30'a kadar",
+  "pharmacyUntilToday": "Bugün 08:30'a kadar",
+  "pharmacyMore": "+{count} nöbetçi eczane daha",
+  "@pharmacyMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pharmacyTag": "Nöbetçi",
+  "pharmacyConfirm": "Gitmeden önce telefonla teyit edin.",
+  "pharmacyNoneTitle": "Nöbet kaydı bulunamadı",
+  "pharmacyNoneSubtitle": "Acil durumda 112'yi arayın.",
+  "call": "Ara",
+  "directions": "Yol tarifi",
+  "nextPrayerTitle": "Sıradaki Vakit",
+  "prayerName": "{name, select, imsak{İmsak} gunes{Güneş} ogle{Öğle} ikindi{İkindi} aksam{Akşam} other{Yatsı}}",
+  "@prayerName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "remainingHoursMinutes": "{hours} sa {minutes} dk kaldı",
+  "@remainingHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "remainingMinutes": "{minutes} dk kaldı",
+  "@remainingMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "nextFerryTitle": "Sıradaki Feribot",
+  "nextBusTitle": "Sıradaki Otobüs",
+  "noDeparture": "Sefer yok",
+  "today": "Bugün",
+  "tomorrow": "Yarın",
+  "noData": "—",
+  "sampleDataBanner": "ÖRNEK VERİ — Bu bilgiler gerçek değildir.",
+  "weatherAttribution": "Hava durumu: MET Norway (CC BY 4.0)",
+  "tabHome": "Ana Sayfa",
+  "tabPharmacy": "Eczane",
+  "tabPrayer": "Vakitler",
+  "tabTransport": "Ulaşım",
+  "tabDirectory": "Rehber",
+  "comingSoonTitle": "Bu bölüm hazırlanıyor",
+  "comingSoonMessage": "Yakında burada olacak.",
+  "loadErrorTitle": "Bilgiler yüklenemedi",
+  "loadErrorMessage": "İnternet bağlantınızı kontrol edin.",
+  "retry": "Tekrar dene",
+  "drawerAbout": "Hakkında",
+  "drawerDataSources": "Veri kaynakları",
+  "drawerPrivacy": "Gizlilik Politikası",
+  "drawerIndependentNote": "Bu uygulama bağımsızdır; Erdek Belediyesi, Eczacı Odası veya başka bir resmi kurumla bağlantısı yoktur.",
+  "dataSourcesBody": "Hava durumu: MET Norway (CC BY 4.0). Namaz vakitleri: Diyanet İşleri Başkanlığı. Nöbetçi eczane, ulaşım, telefon ve duyurular: elle derlenir; değişmiş olabilir, lütfen teyit edin.",
+  "adLabel": "Reklam",
+  "cannotOpen": "Bağlantı açılamadı."
 }

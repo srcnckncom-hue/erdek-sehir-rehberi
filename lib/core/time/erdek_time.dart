@@ -26,4 +26,15 @@ abstract final class ErdekTime {
   }
 
   static DateTime now() => tz.TZDateTime.now(location);
+
+  static bool get isInitialized => _location != null;
+
+  /// Bir anı (ör. indirme zamanı) Erdek saatine çevirir. init() yapılmamışsa
+  /// (testler) cihaz saatini kullanır.
+  static DateTime toErdek(DateTime instant) =>
+      isInitialized ? tz.TZDateTime.from(instant, location) : instant.toLocal();
+
+  /// "HH:mm" (alanlardan; saat dilimi dönüşümü yapmaz).
+  static String hhmm(DateTime value) =>
+      '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:erdek_rehberi/core/theme/app_theme.dart';
+import 'package:erdek_rehberi/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -100,7 +101,10 @@ Future<void> takeScreenshot(
       themeMode: brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
       locale: const Locale('tr'),
       supportedLocales: const [Locale('tr')],
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
       home: builder(),
     ),
   );
@@ -111,7 +115,10 @@ Future<void> takeScreenshot(
     for (final image in precache) {
       await precacheImage(image, context);
     }
+    // Veri (asset JSON) yüklemelerinin bitmesi için kısa gerçek bekleme.
+    await Future<void>.delayed(const Duration(milliseconds: 100));
   });
+  await tester.pump();
   await tester.pumpAndSettle();
 
   await expectLater(

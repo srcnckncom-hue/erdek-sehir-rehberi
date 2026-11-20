@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../core/theme/app_theme.dart';
 import '../l10n/app_localizations.dart';
+import 'shell/app_shell.dart';
 
 class ErdekApp extends StatelessWidget {
   const ErdekApp({super.key});
@@ -23,37 +24,7 @@ class ErdekApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      home: const _SetupPlaceholder(),
-    );
-  }
-}
-
-class _SetupPlaceholder extends StatelessWidget {
-  const _SetupPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  l10n.appTitle,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 12),
-                Text(l10n.setupInProgress, textAlign: TextAlign.center),
-              ],
-            ),
-          ),
-        ),
-      ),
+      home: const AppShell(),
     );
   }
 }
