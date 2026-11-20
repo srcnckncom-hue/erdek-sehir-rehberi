@@ -68,7 +68,7 @@ Future<void> loadAppFonts() async {
 }
 
 /// [builder] ile kurulan ekranı verilen cihaz ve temada çizip
-/// test/goldens/screens/<dosya>.png olarak kaydeder.
+/// `test/goldens/screens/<dosya>.png` olarak kaydeder.
 Future<void> takeScreenshot(
   WidgetTester tester, {
   required String fileName,

@@ -87,18 +87,18 @@ abstract final class AppTypography {
     height: 1.2,
   );
 
-  static TextTheme textTheme(Color heading, Color body, Color secondary) =>
+  static TextTheme textTheme(Color headingColor, Color bodyColor, Color secondaryColor) =>
       TextTheme(
-        displayLarge: display.copyWith(color: heading),
-        headlineSmall: cardTitle.copyWith(color: heading),
-        titleLarge: sectionTitle.copyWith(color: heading),
-        titleMedium: greeting.copyWith(color: heading),
-        titleSmall: label.copyWith(color: body),
-        bodyLarge: body.copyWith(color: body),
-        bodyMedium: caption.copyWith(color: body),
-        bodySmall: caption.copyWith(color: secondary),
-        labelLarge: label.copyWith(color: body),
-        labelMedium: tileLabel.copyWith(color: body),
-        labelSmall: tabLabel.copyWith(color: secondary),
+        displayLarge: display.copyWith(color: headingColor),
+        headlineSmall: cardTitle.copyWith(color: headingColor),
+        titleLarge: sectionTitle.copyWith(color: headingColor),
+        titleMedium: greeting.copyWith(color: headingColor),
+        titleSmall: label.copyWith(color: bodyColor),
+        bodyLarge: body.copyWith(color: bodyColor),
+        bodyMedium: caption.copyWith(color: bodyColor),
+        bodySmall: caption.copyWith(color: secondaryColor),
+        labelLarge: label.copyWith(color: bodyColor),
+        labelMedium: tileLabel.copyWith(color: bodyColor),
+        labelSmall: tabLabel.copyWith(color: secondaryColor),
       );
 }
