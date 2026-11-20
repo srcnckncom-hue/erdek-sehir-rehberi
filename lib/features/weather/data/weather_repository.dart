@@ -23,14 +23,11 @@ abstract interface class WeatherRepository {
 ///  * Uygulamada "Hava durumu: MET Norway" atfı gösterilir (UI adımında).
 class MetNorwayWeatherRepository implements WeatherRepository {
   MetNorwayWeatherRepository({
-    required Dio dio,
-    required JsonCache cache,
-    required String userAgent,
+    required this.dio,
+    required this.cache,
+    required this.userAgent,
     DateTime Function()? now,
-  })  : _dio = dio,
-        _cache = cache,
-        _userAgent = userAgent,
-        _now = now ?? DateTime.now;
+  }) : _now = now ?? DateTime.now;
 
   static const cacheKey = 'weather:met-norway';
   static const endpoint =
@@ -39,9 +36,9 @@ class MetNorwayWeatherRepository implements WeatherRepository {
   /// Expires başlığı yoksa en az bu kadar bekle.
   static const fallbackTtl = Duration(minutes: 30);
 
-  final Dio _dio;
-  final JsonCache _cache;
-  final String _userAgent;
+  final Dio dio;
+  final JsonCache cache;
+  final String userAgent;
   final DateTime Function() _now;
 
   @override
@@ -49,7 +46,7 @@ class MetNorwayWeatherRepository implements WeatherRepository {
     DataResult<CurrentWeather>? local;
     DateTime? expires;
 
-    final cached = await _cache.read(cacheKey);
+    final cached = await cache.read(cacheKey);
     if (cached != null) {
       try {
         final stored = jsonDecode(cached.body) as Map<String, dynamic>;
@@ -70,10 +67,10 @@ class MetNorwayWeatherRepository implements WeatherRepository {
     if (local != null && expires != null && _now().isBefore(expires)) return;
 
     try {
-      if (_userAgent.isEmpty) {
+      if (userAgent.isEmpty) {
         throw StateError('WEATHER_USER_AGENT tanımlı değil.');
       }
-      final response = await _dio.get<String>(
+      final response = await dio.get<String>(
         endpoint,
         queryParameters: {
           'lat': ErdekLocation.latitude.toStringAsFixed(4),
@@ -81,7 +78,7 @@ class MetNorwayWeatherRepository implements WeatherRepository {
         },
         options: Options(
           responseType: ResponseType.plain,
-          headers: {'User-Agent': _userAgent},
+          headers: {'User-Agent': userAgent},
         ),
       );
       final payload = response.data;
@@ -92,7 +89,7 @@ class MetNorwayWeatherRepository implements WeatherRepository {
       final fresh = _result(payload, DataOrigin.network, fetchedAt);
       final newExpires = _parseExpires(response.headers.value('expires')) ??
           fetchedAt.add(fallbackTtl);
-      await _cache.write(
+      await cache.write(
         cacheKey,
         CachedJson(
           body: jsonEncode({

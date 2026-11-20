@@ -65,8 +65,7 @@ class PharmacyData {
     if (duty == null) return const [];
     final byId = {for (final p in pharmacies) p.id: p};
     return [
-      for (final id in duty.pharmacyIds)
-        if (byId[id] case final pharmacy?) pharmacy,
+      for (final id in duty.pharmacyIds) ?byId[id],
     ];
   }
 

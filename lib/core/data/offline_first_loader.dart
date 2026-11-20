@@ -14,18 +14,15 @@ import 'json_sources.dart';
 ///  4. Hiç yerel kopya yoksa ve indirme başarısızsa akış hata verir.
 class OfflineFirstLoader {
   OfflineFirstLoader({
-    required JsonFetcher fetcher,
-    required JsonCache cache,
-    required BundledJsonSource bundled,
+    required this.fetcher,
+    required this.cache,
+    required this.bundled,
     DateTime Function()? now,
-  })  : _fetcher = fetcher,
-        _cache = cache,
-        _bundled = bundled,
-        _now = now ?? DateTime.now;
+  }) : _now = now ?? DateTime.now;
 
-  final JsonFetcher _fetcher;
-  final JsonCache _cache;
-  final BundledJsonSource _bundled;
+  final JsonFetcher fetcher;
+  final JsonCache cache;
+  final BundledJsonSource bundled;
   final DateTime Function() _now;
 
   Stream<DataResult<T>> watch<T>(
@@ -34,23 +31,23 @@ class OfflineFirstLoader {
   ) async* {
     DataResult<T>? local;
 
-    final cached = await _cache.read(path);
+    final cached = await cache.read(path);
     if (cached != null) {
       local = _tryParse(cached.body, parseData, DataOrigin.cache, cached.fetchedAt);
     }
     if (local == null) {
-      final bundled = await _bundled.read(path);
-      if (bundled != null) {
-        local = _tryParse(bundled, parseData, DataOrigin.bundled, null);
+      final bundledBody = await bundled.read(path);
+      if (bundledBody != null) {
+        local = _tryParse(bundledBody, parseData, DataOrigin.bundled, null);
       }
     }
     if (local != null) yield local;
 
     try {
-      final body = await _fetcher.fetch(path);
+      final body = await fetcher.fetch(path);
       final fetchedAt = _now();
       final fresh = _parse(body, parseData, DataOrigin.network, fetchedAt);
-      await _cache.write(path, CachedJson(body: body, fetchedAt: fetchedAt));
+      await cache.write(path, CachedJson(body: body, fetchedAt: fetchedAt));
       yield fresh;
     } catch (error, stackTrace) {
       if (local == null) {
