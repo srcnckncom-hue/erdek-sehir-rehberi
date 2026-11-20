@@ -12,7 +12,13 @@ class ErdekApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: const Locale('tr'),
       supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // Flutter 3.50: Material/Cupertino çevirileri artık material_ui içinde.
+      // gen-l10n'in ürettiği AppLocalizations.localizationsDelegates eski
+      // flutter_localizations delegelerini içerdiği için kullanılmıyor.
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
       // GEÇİCİ: 3. adımda lib/core/theme (AppTheme.light / AppTheme.dark)
       // ile değiştirilecek. Burada renk/ölçü tanımlanmayacak.
       theme: ThemeData(useMaterial3: true),
