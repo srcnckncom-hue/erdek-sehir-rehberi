@@ -13,7 +13,7 @@ class QuickActionChip extends StatelessWidget {
     this.onTap,
   });
 
-  final IconData icon;
+  final AppIconData icon;
   final String label;
   final ToneColors tone;
   final VoidCallback? onTap;
@@ -70,7 +70,7 @@ class QuickActionTile extends StatelessWidget {
     this.onTap,
   });
 
-  final IconData icon;
+  final AppIconData icon;
   final String label;
   final Color iconColor;
   final VoidCallback? onTap;

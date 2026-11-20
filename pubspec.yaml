@@ -25,7 +25,7 @@ dependencies:
   dio: ^5.7.0
   hive_ce_flutter: ^2.5.0
   timezone: ^0.10.0
-  phosphor_flutter: ^2.1.0
+  phosphoricons_flutter: ^1.1.1
   # Diğer paketler (supabase_flutter, home_widget, flutter_local_notifications ...)
   # ilgili adımlarda eklenecek; kullanılmayan bağımlılık eklemiyoruz.
 

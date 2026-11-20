@@ -7,7 +7,7 @@ import '../theme/app_theme.dart';
 class InfoBanner extends StatelessWidget {
   const InfoBanner({super.key, required this.icon, required this.message});
 
-  final IconData icon;
+  final AppIconData icon;
   final String message;
 
   @override
@@ -48,7 +48,7 @@ class MessageView extends StatelessWidget {
     this.iconColor,
   });
 
-  final IconData icon;
+  final AppIconData icon;
   final String title;
   final String? message;
   final String? actionLabel;
@@ -149,7 +149,7 @@ class SkeletonList extends StatelessWidget {
 }
 
 abstract final class StateIcons {
-  static IconData get empty => AppIcons.info;
-  static IconData get error => AppIcons.warning;
-  static IconData get offline => AppIcons.offline;
+  static AppIconData get empty => AppIcons.info;
+  static AppIconData get error => AppIcons.warning;
+  static AppIconData get offline => AppIcons.offline;
 }

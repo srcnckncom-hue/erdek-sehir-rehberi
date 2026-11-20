@@ -7,7 +7,7 @@ import '../theme/app_theme.dart';
 class CardAction {
   const CardAction({required this.icon, required this.label, this.onTap});
 
-  final IconData icon;
+  final AppIconData icon;
   final String label;
   final VoidCallback? onTap;
 }
@@ -28,14 +28,14 @@ class FeatureCard extends StatelessWidget {
     this.onTap,
   });
 
-  final IconData icon;
+  final AppIconData icon;
   final String overline;
   final String title;
   final String? subtitle;
 
   /// Sağ üstteki hap etiket (görselde "Bildirimler").
   final String? tagLabel;
-  final IconData? tagIcon;
+  final AppIconData? tagIcon;
   final List<CardAction> actions;
 
   /// Varsayılan: vurgu kırmızısı.
@@ -215,7 +215,7 @@ class InfoCard extends StatelessWidget {
   });
 
   final String title;
-  final IconData icon;
+  final AppIconData icon;
   final String label;
   final String value;
   final String? footnote;

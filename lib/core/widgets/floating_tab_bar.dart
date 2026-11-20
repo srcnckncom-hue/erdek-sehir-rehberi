@@ -11,7 +11,7 @@ class TabItem {
   final String label;
 
   /// Aktif/pasif ikon (AppIcons.tabXxx).
-  final IconData Function({required bool active}) icon;
+  final AppIconData Function({required bool active}) icon;
 }
 
 /// Buzlu cam alt menü. Aktif sekme: %10 mavi zemin + mavi ikon/etiket +

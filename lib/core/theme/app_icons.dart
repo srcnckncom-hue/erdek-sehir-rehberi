@@ -1,94 +1,104 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
-/// Uygulamadaki tüm ikonlar TEK yerden: Phosphor Icons (MIT lisansı).
+/// Uygulamanın ikon tipi. Düz ikon (IconData) ya da iki katmanlı duotone
+/// ikon (PhosphorDuotoneIconData) taşır. Bileşenler yalnızca bunu bilir;
+/// ikon paketi değişirse sadece bu dosya değişir.
+@immutable
+class AppIconData {
+  const AppIconData(this.value);
+
+  /// IconData veya PhosphorDuotoneIconData
+  final Object value;
+}
+
+/// Uygulamadaki tüm ikonlar TEK yerden: Phosphor Icons (MIT lisansı),
+/// `phosphoricons_flutter` paketi (Flutter 3.44+ uyumlu).
 /// Görseldeki stil: açık dolgu + renkli kontur → "duotone".
-/// İkon setini değiştirmek gerekirse yalnızca bu dosya değişir.
 abstract final class AppIcons {
-  // Özellikler
-  static IconData get pharmacy => PhosphorIconsDuotone.firstAidKit;
-  static IconData get pill => PhosphorIconsDuotone.pill;
-  static IconData get prayer => PhosphorIconsDuotone.moonStars;
-  static IconData get imsakiye => PhosphorIconsDuotone.calendarBlank;
-  static IconData get ferry => PhosphorIconsDuotone.boat;
-  static IconData get bus => PhosphorIconsDuotone.bus;
-  static IconData get announcements => PhosphorIconsDuotone.megaphone;
-  static IconData get contacts => PhosphorIconsDuotone.phone;
-  static IconData get outage => PhosphorIconsDuotone.lightning;
-  static IconData get market => PhosphorIconsDuotone.storefront;
-  static IconData get event => PhosphorIconsDuotone.confetti;
-  static IconData get emergency => PhosphorIconsDuotone.siren;
+  static AppIconData _d(PhosphorDuotoneIconData icon) => AppIconData(icon);
+  static AppIconData _i(IconData icon) => AppIconData(icon);
 
-  // Genel
-  static IconData get menu => PhosphorIconsRegular.list;
-  static IconData get bell => PhosphorIconsRegular.bell;
-  static IconData get search => PhosphorIconsRegular.magnifyingGlass;
-  static IconData get arrowRight => PhosphorIconsRegular.arrowRight;
-  static IconData get call => PhosphorIconsFill.phoneCall;
-  static IconData get directions => PhosphorIconsFill.navigationArrow;
-  static IconData get mapPin => PhosphorIconsRegular.mapPin;
-  static IconData get refresh => PhosphorIconsRegular.arrowsClockwise;
-  static IconData get humidity => PhosphorIconsRegular.drop;
-  static IconData get wind => PhosphorIconsRegular.wind;
-  static IconData get thermometer => PhosphorIconsRegular.thermometer;
-  static IconData get info => PhosphorIconsDuotone.info;
-  static IconData get warning => PhosphorIconsDuotone.warningCircle;
-  static IconData get offline => PhosphorIconsDuotone.wifiSlash;
-  static IconData get clock => PhosphorIconsDuotone.clock;
+  // Özellikler (duotone)
+  static AppIconData get pharmacy => _d(PhosphorIconsDuotone.firstAidKit);
+  static AppIconData get pill => _d(PhosphorIconsDuotone.pill);
+  static AppIconData get prayer => _d(PhosphorIconsDuotone.moonStars);
+  static AppIconData get imsakiye => _d(PhosphorIconsDuotone.calendarBlank);
+  static AppIconData get ferry => _d(PhosphorIconsDuotone.boat);
+  static AppIconData get bus => _d(PhosphorIconsDuotone.bus);
+  static AppIconData get announcements => _d(PhosphorIconsDuotone.megaphone);
+  static AppIconData get contacts => _d(PhosphorIconsDuotone.phone);
+  static AppIconData get outage => _d(PhosphorIconsDuotone.lightning);
+  static AppIconData get market => _d(PhosphorIconsDuotone.storefront);
+  static AppIconData get event => _d(PhosphorIconsDuotone.confetti);
+  static AppIconData get emergency => _d(PhosphorIconsDuotone.siren);
+  static AppIconData get info => _d(PhosphorIconsDuotone.info);
+  static AppIconData get warning => _d(PhosphorIconsDuotone.warningCircle);
+  static AppIconData get offline => _d(PhosphorIconsDuotone.wifiSlash);
+  static AppIconData get clock => _d(PhosphorIconsDuotone.clock);
+
+  // Genel (düz)
+  static AppIconData get menu => _i(PhosphorIconsRegular.list);
+  static AppIconData get bell => _i(PhosphorIconsRegular.bell);
+  static AppIconData get search => _i(PhosphorIconsRegular.magnifyingGlass);
+  static AppIconData get arrowRight => _i(PhosphorIconsRegular.arrowRight);
+  static AppIconData get call => _i(PhosphorIconsFill.phoneCall);
+  static AppIconData get directions => _i(PhosphorIconsFill.navigationArrow);
+  static AppIconData get mapPin => _i(PhosphorIconsRegular.mapPin);
+  static AppIconData get refresh => _i(PhosphorIconsRegular.arrowsClockwise);
+  static AppIconData get humidity => _i(PhosphorIconsRegular.drop);
+  static AppIconData get wind => _i(PhosphorIconsRegular.wind);
+  static AppIconData get thermometer => _i(PhosphorIconsRegular.thermometer);
 
   // Alt menü: pasif = çizgi, aktif = dolu
-  static IconData tabHome({required bool active}) =>
-      active ? PhosphorIconsFill.house : PhosphorIconsRegular.house;
-  static IconData tabPharmacy({required bool active}) =>
-      active ? PhosphorIconsFill.firstAidKit : PhosphorIconsRegular.firstAidKit;
-  static IconData tabPrayer({required bool active}) =>
-      active ? PhosphorIconsFill.moonStars : PhosphorIconsRegular.moonStars;
-  static IconData tabTransport({required bool active}) =>
-      active ? PhosphorIconsFill.boat : PhosphorIconsRegular.boat;
-  static IconData tabDirectory({required bool active}) =>
-      active ? PhosphorIconsFill.addressBook : PhosphorIconsRegular.addressBook;
+  static AppIconData tabHome({required bool active}) =>
+      _i(active ? PhosphorIconsFill.house : PhosphorIconsRegular.house);
+  static AppIconData tabPharmacy({required bool active}) =>
+      _i(active ? PhosphorIconsFill.firstAidKit : PhosphorIconsRegular.firstAidKit);
+  static AppIconData tabPrayer({required bool active}) =>
+      _i(active ? PhosphorIconsFill.moonStars : PhosphorIconsRegular.moonStars);
+  static AppIconData tabTransport({required bool active}) =>
+      _i(active ? PhosphorIconsFill.boat : PhosphorIconsRegular.boat);
+  static AppIconData tabDirectory({required bool active}) =>
+      _i(active ? PhosphorIconsFill.addressBook : PhosphorIconsRegular.addressBook);
 
   /// MET Norway sembol kodu → ikon (çizgi stil, hero üzerinde beyaz).
-  static IconData weather(String symbolCode) {
+  static AppIconData weather(String symbolCode) {
     final night = symbolCode.endsWith('_night');
     final base = symbolCode.split('_').first;
-    if (base.contains('thunder')) return PhosphorIconsRegular.cloudLightning;
+    if (base.contains('thunder')) return _i(PhosphorIconsRegular.cloudLightning);
     if (base.contains('snow') || base.contains('sleet')) {
-      return PhosphorIconsRegular.cloudSnow;
+      return _i(PhosphorIconsRegular.cloudSnow);
     }
-    if (base.contains('rain')) return PhosphorIconsRegular.cloudRain;
-    if (base == 'fog') return PhosphorIconsRegular.cloudFog;
-    if (base == 'cloudy') return PhosphorIconsRegular.cloud;
+    if (base.contains('rain')) return _i(PhosphorIconsRegular.cloudRain);
+    if (base == 'fog') return _i(PhosphorIconsRegular.cloudFog);
+    if (base == 'cloudy') return _i(PhosphorIconsRegular.cloud);
     if (base == 'partlycloudy' || base == 'fair') {
-      return night ? PhosphorIconsRegular.cloudMoon : PhosphorIconsRegular.cloudSun;
+      return _i(night ? PhosphorIconsRegular.cloudMoon : PhosphorIconsRegular.cloudSun);
     }
     if (base == 'clearsky') {
-      return night ? PhosphorIconsRegular.moon : PhosphorIconsRegular.sun;
+      return _i(night ? PhosphorIconsRegular.moon : PhosphorIconsRegular.sun);
     }
-    return PhosphorIconsRegular.cloudSun;
+    return _i(PhosphorIconsRegular.cloudSun);
   }
 }
 
-/// Duotone ikonu doğru çizen ortak ikon. (Flutter'ın Icon'u duotone'u
-/// tek renk çizer; bu yüzden ekranlarda her zaman AppIcon kullanılır.)
+/// Ekranlarda her zaman bu kullanılır: duotone ikonları iki katman
+/// (açık dolgu + kontur) olarak doğru çizer.
 class AppIcon extends StatelessWidget {
   const AppIcon(this.icon, {super.key, this.size = 24, this.color, this.semanticLabel});
 
-  final IconData icon;
+  final AppIconData icon;
   final double size;
   final Color? color;
   final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    if (icon is PhosphorIconData) {
-      return PhosphorIcon(
-        icon as PhosphorIconData,
-        size: size,
-        color: color,
-        semanticLabel: semanticLabel,
-      );
+    final value = icon.value;
+    if (value is PhosphorDuotoneIconData) {
+      return PhosphorIcon(value, size: size, color: color, semanticLabel: semanticLabel);
     }
-    return Icon(icon, size: size, color: color, semanticLabel: semanticLabel);
+    return Icon(value as IconData, size: size, color: color, semanticLabel: semanticLabel);
   }
 }

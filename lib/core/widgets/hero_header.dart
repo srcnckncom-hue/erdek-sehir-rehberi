@@ -190,7 +190,7 @@ class HeroHeader extends StatelessWidget {
 class _DetailRow extends StatelessWidget {
   const _DetailRow({required this.items, required this.style});
 
-  final List<(IconData, String)> items;
+  final List<(AppIconData, String)> items;
   final TextStyle style;
 
   @override
