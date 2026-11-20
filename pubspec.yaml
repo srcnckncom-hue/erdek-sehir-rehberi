@@ -24,7 +24,7 @@ dependencies:
   flutter_riverpod: ^3.0.0
   dio: ^5.7.0
   hive_ce_flutter: ^2.5.0
-  timezone: ^0.10.0
+  timezone: ^0.11.2
   phosphoricons_flutter: ^1.1.1
   url_launcher: ^6.3.0
   flutter_local_notifications: ^23.0.3
