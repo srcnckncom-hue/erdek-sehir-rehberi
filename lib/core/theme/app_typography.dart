@@ -15,6 +15,14 @@ abstract final class AppTypography {
     letterSpacing: -1.5,
   );
 
+  /// Alt sayfa başlığı ("Nöbetçi Eczane")
+  static const pageTitle = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 26,
+    fontWeight: FontWeight.w700,
+    height: 1.2,
+  );
+
   /// Büyük kart başlığı (eczane adı)
   static const cardTitle = TextStyle(
     fontFamily: fontFamily,

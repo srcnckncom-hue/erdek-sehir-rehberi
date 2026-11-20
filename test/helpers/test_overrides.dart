@@ -2,8 +2,10 @@ import 'package:erdek_rehberi/app/providers.dart';
 import 'package:erdek_rehberi/core/data/data_result.dart';
 import 'package:erdek_rehberi/core/data/json_sources.dart';
 import 'package:erdek_rehberi/core/settings/seen_store.dart';
+import 'package:erdek_rehberi/core/theme/app_theme.dart';
 import 'package:erdek_rehberi/features/weather/data/weather_repository.dart';
 import 'package:erdek_rehberi/features/weather/domain/weather.dart';
+import 'package:erdek_rehberi/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
@@ -50,3 +52,18 @@ Widget testScope({required Widget child, DateTime? now}) {
     child: child,
   );
 }
+
+/// Tek bir ekranı tema + Türkçe metinlerle test etmek için.
+Widget testApp(Widget home, {DateTime? now}) => testScope(
+      now: now,
+      child: MaterialApp(
+        theme: AppTheme.light,
+        locale: const Locale('tr'),
+        supportedLocales: const [Locale('tr')],
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
+        ],
+        home: Scaffold(body: home),
+      ),
+    );

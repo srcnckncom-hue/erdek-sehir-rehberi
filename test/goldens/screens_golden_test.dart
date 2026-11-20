@@ -27,6 +27,16 @@ void main() {
         );
       });
 
+      testWidgets('eczane · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '04_eczane_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1300),
+          brightness: brightness,
+          builder: () => testScope(child: const AppShell(initialTab: AppTab.pharmacy)),
+        );
+      });
+
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {
         await takeScreenshot(

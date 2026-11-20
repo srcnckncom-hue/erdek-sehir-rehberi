@@ -7,6 +7,7 @@ export 'app_search_bar.dart';
 export 'cards.dart';
 export 'floating_tab_bar.dart';
 export 'hero_header.dart';
+export 'page_header.dart';
 export 'quick_actions.dart';
 export 'section_header.dart';
 export 'state_views.dart';

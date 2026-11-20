@@ -148,5 +148,72 @@
   "drawerIndependentNote": "Bu uygulama bağımsızdır; Erdek Belediyesi, Eczacı Odası veya başka bir resmi kurumla bağlantısı yoktur.",
   "dataSourcesBody": "Hava durumu: MET Norway (CC BY 4.0). Namaz vakitleri: Diyanet İşleri Başkanlığı. Nöbetçi eczane, ulaşım, telefon ve duyurular: elle derlenir; değişmiş olabilir, lütfen teyit edin.",
   "adLabel": "Reklam",
-  "cannotOpen": "Bağlantı açılamadı."
+  "cannotOpen": "Bağlantı açılamadı.",
+  "pharmacyScreenTitle": "Nöbetçi Eczane",
+  "monthName": "{month, select, 1{Ocak} 2{Şubat} 3{Mart} 4{Nisan} 5{Mayıs} 6{Haziran} 7{Temmuz} 8{Ağustos} 9{Eylül} 10{Ekim} 11{Kasım} other{Aralık}}",
+  "@monthName": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "dayMonth": "{day} {month}",
+  "@dayMonth": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "weekdayDayMonth": "{weekday}, {day} {month}",
+  "@weekdayDayMonth": {
+    "placeholders": {
+      "weekday": {
+        "type": "String"
+      },
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "dutyPeriod": "{start} 08:30 – {end} 08:30",
+  "@dutyPeriod": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "upcomingDutiesTitle": "Önümüzdeki Günler",
+  "noDutyRecord": "Kayıt yok",
+  "lastUpdated": "Son güncelleme: {time}",
+  "@lastUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineBanner": "Çevrimdışı · Son güncelleme: {time}",
+  "@offlineBanner": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacySourceNote": "Nöbet listesi Balıkesir Eczacı Odası duyurularından elle derlenir. Değişiklik olabilir; lütfen gitmeden önce arayın.",
+  "pharmacyEmptyTitle": "Bugün için nöbet kaydı yok",
+  "pharmacyEmptyMessage": "Nöbet listesi henüz güncellenmemiş olabilir. Acil durumda 112'yi arayın.",
+  "callEmergency": "112'yi ara"
 }

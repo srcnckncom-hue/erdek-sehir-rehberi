@@ -8,6 +8,7 @@ import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/time/calendar_date.dart';
 import '../../../core/time/erdek_time.dart';
+import '../../../core/util/launch_or_notify.dart';
 import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
@@ -313,19 +314,6 @@ class HomeScreen extends ConsumerWidget {
       },
     );
   }
-}
-
-/// tel:/harita açılamazsa kısa uyarı gösterir.
-Future<void> launchOrNotify(BuildContext context, Future<bool> Function() launch) async {
-  final messenger = ScaffoldMessenger.maybeOf(context);
-  final message = AppLocalizations.of(context).cannotOpen;
-  var ok = false;
-  try {
-    ok = await launch();
-  } catch (_) {
-    ok = false;
-  }
-  if (!ok) messenger?.showSnackBar(SnackBar(content: Text(message)));
 }
 
 class _Hero extends StatelessWidget {

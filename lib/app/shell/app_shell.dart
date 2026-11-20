@@ -4,6 +4,7 @@ import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../l10n/app_localizations.dart';
 import 'app_drawer.dart';
 import 'app_tab.dart';
@@ -53,8 +54,8 @@ class _AppShellState extends State<AppShell> {
             onOpenTab: _select,
             onOpenMenu: () => _scaffoldKey.currentState?.openDrawer(),
           ),
-          // 5–8. adımlarda gerçek ekranlarla değişecek.
-          _ComingSoon(title: l10n.tabPharmacy, icon: AppIcons.pharmacy),
+          const PharmacyScreen(),
+          // 6–8. adımlarda gerçek ekranlarla değişecek.
           _ComingSoon(title: l10n.tabPrayer, icon: AppIcons.prayer),
           _ComingSoon(title: l10n.tabTransport, icon: AppIcons.ferry),
           _ComingSoon(title: l10n.tabDirectory, icon: AppIcons.contacts),
