@@ -7,6 +7,8 @@ import 'app/providers.dart';
 import 'core/cache/hive_json_cache.dart';
 import 'core/settings/seen_store.dart';
 import 'core/time/erdek_time.dart';
+import 'features/prayer/notifications/prayer_notifications.dart';
+import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +19,21 @@ Future<void> main() async {
   final cacheBox = await Hive.openBox<String>(HiveJsonCache.boxName);
   final settingsBox = await Hive.openBox<String>(HiveAnnouncementsSeenStore.boxName);
 
+  final notifications = await LocalPrayerNotificationScheduler.initialize();
+  final l10n = lookupAppLocalizations(const Locale('tr'));
+
   runApp(
     ProviderScope(
       overrides: [
         jsonCacheProvider.overrideWithValue(HiveJsonCache(cacheBox)),
         announcementsSeenStoreProvider.overrideWithValue(
           HiveAnnouncementsSeenStore(settingsBox),
+        ),
+        prayerNotificationSettingsStoreProvider.overrideWithValue(
+          HivePrayerNotificationSettingsStore(settingsBox),
+        ),
+        prayerNotificationSchedulerProvider.overrideWithValue(
+          LocalPrayerNotificationScheduler(notifications, l10n),
         ),
       ],
       child: const ErdekApp(),

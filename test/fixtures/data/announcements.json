@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-21T00:00:00+03:00",
+  "source": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+  "data": {
+    "items": [
+      {
+        "id": "ornek-kesinti-1",
+        "category": "kesinti",
+        "title": "ÖRNEK: Planlı su kesintisi",
+        "body": "Bu bir örnek duyurudur. Gerçek duyurular data/announcements.json dosyasından gelir.",
+        "publishedAt": "2026-11-20T10:00:00+03:00",
+        "startsAt": "2026-11-22T09:00:00+03:00",
+        "endsAt": "2026-12-31T23:59:00+03:00"
+      },
+      {
+        "id": "ornek-pazar-1",
+        "category": "pazar",
+        "title": "ÖRNEK: Pazar günleri",
+        "body": "Bu bir örnek duyurudur.",
+        "publishedAt": "2026-11-19T09:00:00+03:00"
+      },
+      {
+        "id": "ornek-etkinlik-1",
+        "category": "etkinlik",
+        "title": "ÖRNEK: Etkinlik",
+        "body": "Bu bir örnek duyurudur.",
+        "publishedAt": "2026-11-18T09:00:00+03:00",
+        "endsAt": "2027-01-31T23:59:00+03:00"
+      }
+    ]
+  }
+}

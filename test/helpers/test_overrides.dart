@@ -16,19 +16,23 @@ import 'package:material_ui/material_ui.dart';
 /// sıradaki feribot yarın 09:00, sıradaki otobüs bugün 19:00.
 final testNow = DateTime(2026, 11, 21, 18, 5);
 
-/// İnternete çıkmadan: "uzak" JSON olarak repo'daki data/ dosyaları.
+/// Testler data/ yerine SABİT kopyaları okur (test/fixtures/data). Böylece
+/// haftalık vakit görevi data/'yı güncellediğinde testler bozulmaz.
+const fixturesDir = 'test/fixtures/data';
+
+/// İnternete çıkmadan: "uzak" JSON olarak sabit kopyalar.
 /// Diskten EŞZAMANLI okunur; test zamanlamasından bağımsız (asset yükleme
 /// sahte zamanlı testlerde gecikebiliyor).
 class FileJsonFetcher implements JsonFetcher {
   @override
-  Future<String> fetch(String path) async => File('data/$path').readAsStringSync();
+  Future<String> fetch(String path) async => File('$fixturesDir/$path').readAsStringSync();
 }
 
 /// Uygulamayla gelen kopya yerine aynı dosyalar (eşzamanlı).
 class FileBundledJsonSource implements BundledJsonSource {
   @override
   Future<String?> read(String path) async {
-    final file = File('data/$path');
+    final file = File('$fixturesDir/$path');
     return file.existsSync() ? file.readAsStringSync() : null;
   }
 }

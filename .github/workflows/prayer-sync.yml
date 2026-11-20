@@ -1,0 +1,63 @@
+# Haftada bir (ve elle) Erdek namaz vakitlerini çeker → data/prayer_times.json
+# → değiştiyse commit'ler ve GitHub Pages yayınını başlatır.
+# Uygulama vakit servisine doğrudan istek ATMAZ; yalnızca Pages'teki JSON'u okur.
+#
+# Not: GitHub, 60 gün boyunca hiç commit olmayan public repolarda zamanlanmış
+# workflow'ları durdurur. Bu workflow her ay yeni veri commit'lediği için
+# normalde aktif kalır.
+name: prayer-sync
+
+on:
+  schedule:
+    - cron: '17 1 * * 1' # Her pazartesi 04:17 (TSİ)
+  workflow_dispatch:
+
+permissions:
+  contents: write # data/prayer_times.json commit'i
+  actions: write # pages-deploy'u tetiklemek için
+
+concurrency:
+  group: prayer-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install jsonschema
+
+      - name: Vakitleri çek
+        env:
+          # imsakiyem: Diyanet verisi, üçüncü taraf (şimdilik)
+          # diyanet: resmi API (hesap açılınca; AWQAT_* secrets gerekir)
+          PRAYER_SOURCE: imsakiyem
+          PRAYER_DISTRICT_ID: '17881' # Erdek
+        run: python3 scripts/fetch_prayer_times.py
+
+      - name: Veri doğrulama
+        run: python3 scripts/validate_data.py
+
+      - name: Değiştiyse commit + Pages yayını
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/prayer_times.json; then
+            echo "Değişiklik yok."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/prayer_times.json
+          git commit -m "data: namaz vakitleri güncellendi"
+          git push
+          # GITHUB_TOKEN ile yapılan push başka workflow'u tetiklemez;
+          # workflow_dispatch ise tetikleyebilir.
+          gh workflow run pages-deploy.yml --ref "${GITHUB_REF_NAME}"
+          echo "::notice::Vakitler güncellendi, pages-deploy başlatıldı."

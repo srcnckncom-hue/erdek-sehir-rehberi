@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/theme/app_icons.dart';
@@ -5,6 +8,10 @@ import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/pharmacy/presentation/pharmacy_screen.dart';
+import '../../features/prayer/data/prayer_repository.dart';
+import '../../features/prayer/notifications/prayer_notifications.dart';
+import '../../features/prayer/presentation/prayer_screen.dart';
+import '../providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'app_drawer.dart';
 import 'app_tab.dart';
@@ -12,20 +19,52 @@ import 'app_tab.dart';
 export 'app_tab.dart';
 
 /// Alt menülü ana iskelet. Sekmeler IndexedStack ile durumunu korur.
-class AppShell extends StatefulWidget {
+class AppShell extends ConsumerStatefulWidget {
   const AppShell({super.key, this.initialTab = AppTab.home});
 
   final AppTab initialTab;
 
   @override
-  State<AppShell> createState() => _AppShellState();
+  ConsumerState<AppShell> createState() => _AppShellState();
 }
 
-class _AppShellState extends State<AppShell> {
+class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late AppTab _tab = widget.initialTab;
 
   void _select(AppTab tab) => setState(() => _tab = tab);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // Vakit verisi ya da bildirim ayarı değişince bildirimleri yeniden kur.
+    ref.listenManual(prayerTimesProvider, (_, _) => _syncNotifications(), fireImmediately: true);
+    ref.listenManual(prayerNotificationSettingsProvider, (_, _) => _syncNotifications());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  /// Uygulama öne gelince 60 bildirimlik pencereyi ileri kaydır.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _syncNotifications();
+  }
+
+  void _syncNotifications() {
+    unawaited(
+      syncPrayerNotifications(
+        scheduler: ref.read(prayerNotificationSchedulerProvider),
+        data: ref.read(prayerTimesProvider).value?.data,
+        settings: ref.read(prayerNotificationSettingsProvider),
+        erdekNow: ref.read(clockProvider)(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +94,8 @@ class _AppShellState extends State<AppShell> {
             onOpenMenu: () => _scaffoldKey.currentState?.openDrawer(),
           ),
           const PharmacyScreen(),
-          // 6–8. adımlarda gerçek ekranlarla değişecek.
-          _ComingSoon(title: l10n.tabPrayer, icon: AppIcons.prayer),
+          const PrayerScreen(),
+          // 7–8. adımlarda gerçek ekranlarla değişecek.
           _ComingSoon(title: l10n.tabTransport, icon: AppIcons.ferry),
           _ComingSoon(title: l10n.tabDirectory, icon: AppIcons.contacts),
         ],

@@ -215,5 +215,135 @@
   "pharmacySourceNote": "Nöbet listesi Balıkesir Eczacı Odası duyurularından elle derlenir. Değişiklik olabilir; lütfen gitmeden önce arayın.",
   "pharmacyEmptyTitle": "Bugün için nöbet kaydı yok",
   "pharmacyEmptyMessage": "Nöbet listesi henüz güncellenmemiş olabilir. Acil durumda 112'yi arayın.",
-  "callEmergency": "112'yi ara"
+  "callEmergency": "112'yi ara",
+  "prayerScreenTitle": "Namaz Vakitleri",
+  "prayerSubtitle": "Erdek · {date}",
+  "@prayerSubtitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "hijriDate": "Hicri: {date}",
+  "@hijriDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "todayTimesTitle": "Bugünün Vakitleri",
+  "imsakiyeTitle": "İmsakiye",
+  "monthYear": "{month} {year}",
+  "@monthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "weekdayShort": "{weekday, select, 1{Pzt} 2{Sal} 3{Çar} 4{Per} 5{Cum} 6{Cmt} other{Paz}}",
+  "@weekdayShort": {
+    "placeholders": {
+      "weekday": {
+        "type": "String"
+      }
+    }
+  },
+  "dayColumn": "Gün",
+  "prayerTitleWithTime": "{name} · {time}",
+  "@prayerTitleWithTime": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerSourceNote": "Vakitler: {source}. Haftada bir güncellenir.",
+  "@prayerSourceNote": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "prayerNoDataTitle": "Vakit bilgisi bulunamadı",
+  "prayerNoDataMessage": "Bu tarih için vakitler henüz yüklenmedi. İnternete bağlanıp sayfayı aşağı çekin.",
+  "notificationsTitle": "Vakit bildirimleri",
+  "notificationsOff": "Kapalı",
+  "notificationsOnBefore": "Açık · {minutes} dk önce",
+  "@notificationsOnBefore": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsOnAtTime": "Açık · vaktinde",
+  "notificationsTag": "Bildirim açık",
+  "notificationWhenTitle": "Ne zaman haber verilsin?",
+  "notificationAtTime": "Vaktinde",
+  "notificationMinutesBefore": "{minutes} dk önce",
+  "@notificationMinutesBefore": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationPrayersTitle": "Hangi vakitler?",
+  "notificationPermissionDenied": "Bildirim izni verilmedi. iPhone Ayarlar › Erdek Rehberi › Bildirimler'den açabilirsiniz.",
+  "notificationHint": "Bildirimler telefonunuzda kurulur; internet gerekmez. Uygulamayı ara sıra açtığınızda sonraki günler için yenilenir.",
+  "notifTitleBefore": "{prayer} vakti yaklaşıyor",
+  "@notifTitleBefore": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "notifBodyBefore": "{prayer} vaktine {minutes} dakika kaldı ({time}).",
+  "@notifBodyBefore": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notifTitleAt": "{prayer} vakti",
+  "@notifTitleAt": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "notifBodyAt": "Erdek için {prayer} vakti girdi ({time}).",
+  "@notifBodyAt": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "previousMonth": "Önceki ay",
+  "nextMonth": "Sonraki ay",
+  "done": "Tamam",
+  "prayerSourceName": "Diyanet İşleri Başkanlığı"
 }

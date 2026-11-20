@@ -49,6 +49,10 @@ abstract final class AppIcons {
   static AppIconData get humidity => _i(PhosphorIconsRegular.drop);
   static AppIconData get wind => _i(PhosphorIconsRegular.wind);
   static AppIconData get thermometer => _i(PhosphorIconsRegular.thermometer);
+  static AppIconData get caretLeft => _i(PhosphorIconsRegular.caretLeft);
+  static AppIconData get caretRight => _i(PhosphorIconsRegular.caretRight);
+  static AppIconData get bellRinging => _d(PhosphorIconsDuotone.bellRinging);
+  static AppIconData get sunrise => _d(PhosphorIconsDuotone.sunHorizon);
 
   // Alt menü: pasif = çizgi, aktif = dolu
   static AppIconData tabHome({required bool active}) =>

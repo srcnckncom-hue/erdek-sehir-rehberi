@@ -37,6 +37,16 @@ void main() {
         );
       });
 
+      testWidgets('vakitler · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '05_vakitler_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(2300),
+          brightness: brightness,
+          builder: () => testScope(child: const AppShell(initialTab: AppTab.prayer)),
+        );
+      });
+
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {
         await takeScreenshot(

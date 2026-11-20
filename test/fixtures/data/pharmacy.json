@@ -1,0 +1,590 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-21T00:00:00+03:00",
+  "source": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+  "data": {
+    "pharmacies": [
+      {
+        "id": "ornek-1",
+        "name": "ÖRNEK Eczane 1",
+        "address": "ÖRNEK adres 1, Erdek / Balıkesir",
+        "phone": "+900000000000",
+        "lat": 40.399,
+        "lng": 27.793
+      },
+      {
+        "id": "ornek-2",
+        "name": "ÖRNEK Eczane 2",
+        "address": "ÖRNEK adres 2, Erdek / Balıkesir",
+        "phone": "+900000000000"
+      },
+      {
+        "id": "ornek-3",
+        "name": "ÖRNEK Eczane 3",
+        "address": "ÖRNEK adres 3, Erdek / Balıkesir",
+        "phone": "+900000000000"
+      },
+      {
+        "id": "ornek-4",
+        "name": "ÖRNEK Eczane 4",
+        "address": "ÖRNEK adres 4, Erdek / Balıkesir",
+        "phone": "+900000000000"
+      }
+    ],
+    "duties": [
+      {
+        "date": "2026-11-01",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-02",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-03",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-04",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-05",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-06",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-07",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-08",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-09",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-10",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-11",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-12",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-13",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-14",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-15",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-16",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-17",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-18",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-19",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-20",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-21",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-22",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-23",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-24",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-25",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-26",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-11-27",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-11-28",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-11-29",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-11-30",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-01",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-02",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-03",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-04",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-05",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-06",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-07",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-08",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-09",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-10",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-11",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-12",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-13",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-14",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-15",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-16",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-17",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-18",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-19",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-20",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-21",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-22",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-23",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-24",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-25",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-26",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-27",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2026-12-28",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2026-12-29",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2026-12-30",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2026-12-31",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-01",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-02",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-03",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-04",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-05",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-06",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-07",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-08",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-09",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-10",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-11",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-12",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-13",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-14",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-15",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-16",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-17",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-18",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-19",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-20",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-21",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-22",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-23",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-24",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-25",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-26",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-27",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      },
+      {
+        "date": "2027-01-28",
+        "pharmacyIds": [
+          "ornek-1"
+        ]
+      },
+      {
+        "date": "2027-01-29",
+        "pharmacyIds": [
+          "ornek-2"
+        ]
+      },
+      {
+        "date": "2027-01-30",
+        "pharmacyIds": [
+          "ornek-3"
+        ]
+      },
+      {
+        "date": "2027-01-31",
+        "pharmacyIds": [
+          "ornek-4"
+        ]
+      }
+    ]
+  }
+}

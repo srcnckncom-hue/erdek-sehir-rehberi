@@ -16,7 +16,7 @@ enum PrayerName {
 }
 
 class PrayerDay {
-  const PrayerDay({required this.date, required this.times});
+  const PrayerDay({required this.date, required this.times, this.hijri});
 
   factory PrayerDay.fromJson(Map<String, dynamic> json) => PrayerDay(
         date: CalendarDate.parse(json['date'] as String),
@@ -24,10 +24,14 @@ class PrayerDay {
           for (final name in PrayerName.values)
             name: ClockTime.parse(json[name.jsonKey] as String),
         },
+        hijri: json['hijri'] as String?,
       );
 
   final CalendarDate date;
   final Map<PrayerName, ClockTime> times;
+
+  /// Hicri tarih, ör. "12 Cemaziyelahir 1448" (kaynak verirse).
+  final String? hijri;
 
   ClockTime timeOf(PrayerName name) => times[name]!;
 }

@@ -27,7 +27,8 @@ dependencies:
   timezone: ^0.10.0
   phosphoricons_flutter: ^1.1.1
   url_launcher: ^6.3.0
-  # Diğer paketler (supabase_flutter, home_widget, flutter_local_notifications ...)
+  flutter_local_notifications: ^23.0.3
+  # Diğer paketler (supabase_flutter, home_widget ...)
   # ilgili adımlarda eklenecek; kullanılmayan bağımlılık eklemiyoruz.
 
 dev_dependencies:

@@ -79,6 +79,10 @@
               "yatsi": {
                 "type": "string",
                 "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+              },
+              "hijri": {
+                "type": "string",
+                "description": "Hicri tarih, ör. '12 Cemaziyelahir 1448'"
               }
             }
           }

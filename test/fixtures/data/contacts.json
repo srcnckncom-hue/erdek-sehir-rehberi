@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-21T00:00:00+03:00",
+  "source": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+  "data": {
+    "categories": [
+      {
+        "id": "acil",
+        "title": "Acil",
+        "contacts": [
+          {
+            "name": "Acil Çağrı (Ambulans, İtfaiye, Polis, Jandarma)",
+            "phone": "112"
+          }
+        ]
+      },
+      {
+        "id": "kamu",
+        "title": "Kamu Kurumları",
+        "contacts": [
+          {
+            "name": "Erdek Belediyesi",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          },
+          {
+            "name": "Erdek Devlet Hastanesi",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          },
+          {
+            "name": "Erdek İlçe Jandarma Komutanlığı",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          },
+          {
+            "name": "Erdek Liman Başkanlığı",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          },
+          {
+            "name": "İtfaiye",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          }
+        ]
+      },
+      {
+        "id": "taksi",
+        "title": "Taksi Durakları",
+        "contacts": [
+          {
+            "name": "ÖRNEK Taksi Durağı 1",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          },
+          {
+            "name": "ÖRNEK Taksi Durağı 2",
+            "phone": "+900000000000",
+            "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek"
+          }
+        ]
+      }
+    ]
+  }
+}
