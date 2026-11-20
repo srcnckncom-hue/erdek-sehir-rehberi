@@ -96,8 +96,22 @@ jobs:
       - run: flutter gen-l10n
       - run: flutter analyze
 
-      - name: Testler (unit + widget + golden)
-        run: flutter test --reporter expanded
+      - name: Testler (unit + widget)
+        run: flutter test --exclude-tags golden --reporter expanded
+
+      # Tasarım kontrolü: her ekranın açık/koyu × küçük/büyük iPhone
+      # görüntüsü. Referansla kıyaslamaz, yalnızca üretir (--update-goldens).
+      - name: Ekran görüntülerini üret (golden)
+        run: flutter test --tags golden --update-goldens --reporter expanded
+
+      - name: Ekran görüntüleri artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: test/goldens/screens/
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Golden hata görüntüleri
         if: failure()
@@ -107,17 +121,6 @@ jobs:
           path: test/**/failures/
           if-no-files-found: ignore
           retention-days: 7
-
-      # 3. adımda golden altyapısı build/screenshots/ altına her ekranın
-      # açık/koyu × küçük/büyük iPhone görüntüsünü yazacak.
-      - name: Ekran görüntüleri (tasarım kontrolü)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: build/screenshots/
-          if-no-files-found: ignore
-          retention-days: 14
 
   build-ios:
     name: iOS build-check (imzasız, macOS)

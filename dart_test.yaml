@@ -1,0 +1,4 @@
+# golden: ekran görüntüsü üreten testler. CI'da ayrı adımda
+# `flutter test --tags golden --update-goldens` ile çalışır.
+tags:
+  golden:

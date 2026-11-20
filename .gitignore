@@ -50,3 +50,6 @@ fastlane/test_output
 .vscode/
 *.iml
 .DS_Store
+
+# CI'da üretilen ekran görüntüleri (artifact olarak indirilir)
+test/goldens/screens/

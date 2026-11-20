@@ -25,6 +25,7 @@ dependencies:
   dio: ^5.7.0
   hive_ce_flutter: ^2.5.0
   timezone: ^0.10.0
+  phosphor_flutter: ^2.1.0
   # Diğer paketler (supabase_flutter, home_widget, flutter_local_notifications ...)
   # ilgili adımlarda eklenecek; kullanılmayan bağımlılık eklemiyoruz.
 
@@ -40,3 +41,17 @@ flutter:
     # Uygulamayla birlikte gelen veri kopyası: ilk açılışta internet yoksa
     # bunlar gösterilir. (Yalnızca data/ kökündeki dosyalar; schemas/ dahil değil.)
     - data/
+    - assets/images/
+
+  # Poppins — SIL Open Font License (assets/fonts/OFL-Poppins.txt)
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700

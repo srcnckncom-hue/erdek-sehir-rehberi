@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../core/theme/app_theme.dart';
 import '../l10n/app_localizations.dart';
 
 class ErdekApp extends StatelessWidget {
@@ -19,9 +20,9 @@ class ErdekApp extends StatelessWidget {
         AppLocalizations.delegate,
         ...GlobalMaterialLocalizations.delegates,
       ],
-      // GEÇİCİ: 3. adımda lib/core/theme (AppTheme.light / AppTheme.dark)
-      // ile değiştirilecek. Burada renk/ölçü tanımlanmayacak.
-      theme: ThemeData(useMaterial3: true),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
       home: const _SetupPlaceholder(),
     );
   }
@@ -43,7 +44,7 @@ class _SetupPlaceholder extends StatelessWidget {
               children: [
                 Text(
                   l10n.appTitle,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),

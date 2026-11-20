@@ -66,6 +66,33 @@ void main() {
       expect(weather.isNight, isFalse);
     });
 
+    test('nem, rüzgâr ve 24 saatlik min/maks', () {
+      Map<String, dynamic> entry(String time, num t) => {
+            'time': time,
+            'data': {
+              'instant': {
+                'details': {'air_temperature': t, 'relative_humidity': 72.4, 'wind_speed': 3.3},
+              },
+              'next_1_hours': {
+                'summary': {'symbol_code': 'cloudy'},
+              },
+            },
+          };
+      final weather = CurrentWeather.fromMetCompact({
+        'properties': {
+          'timeseries': [
+            entry('2026-11-21T09:00:00Z', 16),
+            entry('2026-11-21T10:00:00Z', 22.2),
+            entry('2026-11-21T11:00:00Z', 13.8),
+          ],
+        },
+      });
+      expect(weather.relativeHumidity!.round(), 72);
+      expect(weather.windSpeedKmh, 12);
+      expect(weather.minTemperatureC!.round(), 14);
+      expect(weather.maxTemperatureC!.round(), 22);
+    });
+
     test('sembol kodu çevirileri', () {
       expect(weatherDescriptionTr('cloudy'), 'Bulutlu');
       expect(weatherDescriptionTr('lightrainshowers_night'), 'Hafif yağmur');

@@ -4,6 +4,10 @@ class CurrentWeather {
     required this.temperatureC,
     required this.symbolCode,
     required this.time,
+    this.relativeHumidity,
+    this.windSpeedMs,
+    this.minTemperatureC,
+    this.maxTemperatureC,
   });
 
   /// MET Norway compact yanıtının ilk zaman dilimini okur.
@@ -20,10 +24,23 @@ class CurrentWeather {
     final summary = ((data['next_1_hours'] ?? data['next_6_hours'])
         as Map<String, dynamic>?)?['summary'] as Map<String, dynamic>?;
 
+    // Önümüzdeki 24 saatin en düşük / en yüksek sıcaklığı ("14°/22°")
+    final temps = <double>[];
+    for (final entry in timeseries.take(24)) {
+      final d = ((entry as Map<String, dynamic>)['data']
+          as Map<String, dynamic>)['instant'] as Map<String, dynamic>;
+      final t = (d['details'] as Map<String, dynamic>)['air_temperature'] as num?;
+      if (t != null) temps.add(t.toDouble());
+    }
+
     return CurrentWeather(
       temperatureC: (instant['air_temperature'] as num).toDouble(),
       symbolCode: summary?['symbol_code'] as String? ?? 'unknown',
       time: DateTime.parse(first['time'] as String),
+      relativeHumidity: (instant['relative_humidity'] as num?)?.toDouble(),
+      windSpeedMs: (instant['wind_speed'] as num?)?.toDouble(),
+      minTemperatureC: temps.length > 1 ? temps.reduce((a, b) => a < b ? a : b) : null,
+      maxTemperatureC: temps.length > 1 ? temps.reduce((a, b) => a > b ? a : b) : null,
     );
   }
 
@@ -32,6 +49,16 @@ class CurrentWeather {
   /// ör. "partlycloudy_day". İkon seçimi için de kullanılır.
   final String symbolCode;
   final DateTime time;
+
+  /// Bağıl nem (%)
+  final double? relativeHumidity;
+
+  /// Rüzgâr hızı (m/s). Ekranda km/s gösterilir.
+  final double? windSpeedMs;
+  final double? minTemperatureC;
+  final double? maxTemperatureC;
+
+  int? get windSpeedKmh => windSpeedMs == null ? null : (windSpeedMs! * 3.6).round();
 
   int get roundedTemperature => temperatureC.round();
 
