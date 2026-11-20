@@ -8,7 +8,7 @@ abstract final class Env {
   /// dev | prod
   static const appEnv = String.fromEnvironment('APP_ENV', defaultValue: 'dev');
 
-  /// GitHub Pages kök adresi, ör. https://<kullanici>.github.io/<repo>
+  /// GitHub Pages kök adresi, ör. `https://<kullanici>.github.io/<repo>`
   /// Uzaktan JSON'lar `$dataBaseUrl/data/...` altından okunur.
   static const dataBaseUrl = String.fromEnvironment('DATA_BASE_URL');
 
