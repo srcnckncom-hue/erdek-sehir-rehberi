@@ -1,0 +1,98 @@
+# BİR KEZ elle çalıştırılır. Mac olmadan ios/ klasörünü üretir:
+#   flutter create --platforms=ios  (Linux runner'da çalışır, macOS dakikası harcamaz)
+# ardından bundle ID, görünen ad, dil ve minimum iOS sürümünü ayarlar ve
+# sonucu aynı branch'e commit'ler.
+name: bootstrap-ios
+
+on:
+  workflow_dispatch:
+    inputs:
+      bundle_prefix:
+        description: 'Bundle ID öneki (ör. com.ornekad). Uygulama: <önek>.erdekrehberi'
+        required: true
+      display_name:
+        description: 'Ana ekranda ikonun altındaki ad (kısa olmalı)'
+        required: true
+        default: 'Erdek Rehberi'
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Girdi kontrolü
+        env:
+          PREFIX: ${{ inputs.bundle_prefix }}
+        run: |
+          if ! [[ "$PREFIX" =~ ^[a-z][a-z0-9]*(\.[a-z][a-z0-9-]*)+$ ]]; then
+            echo "::error::Geçersiz önek: '$PREFIX'. Örnek: com.ornekad (küçük harf, nokta ile ayrılmış)."
+            exit 1
+          fi
+          if [ -d ios/Runner.xcodeproj ]; then
+            echo "::error::ios/ zaten var. Bu workflow yalnızca bir kez çalıştırılmalı."
+            exit 1
+          fi
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: flutter create (yalnızca iOS)
+        env:
+          PREFIX: ${{ inputs.bundle_prefix }}
+        run: |
+          flutter create . \
+            --platforms=ios \
+            --org "$PREFIX" \
+            --project-name erdek_rehberi \
+            --ios-language swift
+          # flutter create, MyApp'e referans veren örnek bir test ekler; bizim
+          # testimiz test/app_smoke_test.dart olduğu için siliyoruz.
+          rm -f test/widget_test.dart
+
+      - name: Bundle ID, iOS 16 ve Info.plist ayarları
+        env:
+          PREFIX: ${{ inputs.bundle_prefix }}
+          DISPLAY_NAME: ${{ inputs.display_name }}
+        run: |
+          PBX=ios/Runner.xcodeproj/project.pbxproj
+          ESC_PREFIX=$(printf '%s' "$PREFIX" | sed 's/\./\\./g')
+          # com.x.erdekRehberi -> com.x.erdekrehberi (RunnerTests dahil)
+          sed -i "s/${ESC_PREFIX}\.erdekRehberi/${PREFIX}.erdekrehberi/g" "$PBX"
+          # Minimum iOS 16 (kilit ekranı widget'ları ve güncel paketler için)
+          sed -i 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9.]*;/IPHONEOS_DEPLOYMENT_TARGET = 16.0;/g' "$PBX"
+          grep -n "PRODUCT_BUNDLE_IDENTIFIER" "$PBX"
+          grep -c "IPHONEOS_DEPLOYMENT_TARGET = 16.0;" "$PBX"
+
+          python3 - <<'PY'
+          import os, plistlib
+          path = "ios/Runner/Info.plist"
+          with open(path, "rb") as f:
+              p = plistlib.load(f)
+          p["CFBundleDisplayName"] = os.environ["DISPLAY_NAME"]
+          p["CFBundleName"] = "erdek_rehberi"
+          p["CFBundleDevelopmentRegion"] = "tr"
+          p["CFBundleLocalizations"] = ["tr"]
+          # Yalnızca standart HTTPS kullanıyoruz -> ihracat uyumluluğu sorusu çıkmaz
+          p["ITSAppUsesNonExemptEncryption"] = False
+          with open(path, "wb") as f:
+              plistlib.dump(p, f, sort_keys=False)
+          print(open(path).read())
+          PY
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A ios .metadata
+          git status --short
+          git commit -m "chore(ios): flutter create ile iOS projesini oluştur"
+          git push
+          echo "::notice::Tamam. Şimdi Actions > ios-ci > Run workflow ile ilk iOS derlemesini başlat."

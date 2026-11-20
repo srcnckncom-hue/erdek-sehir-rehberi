@@ -1,0 +1,11 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Erdek Şehir Rehberi",
+  "@appTitle": {
+    "description": "Uygulamanın tam adı"
+  },
+  "setupInProgress": "Kurulum aşaması. Arayüz, tasarım görsellerine göre hazırlanacak.",
+  "@setupInProgress": {
+    "description": "1. adımdaki geçici açılış ekranı metni"
+  }
+}

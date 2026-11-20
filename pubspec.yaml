@@ -1,0 +1,33 @@
+name: erdek_rehberi
+description: >-
+  Erdek Şehir Rehberi — nöbetçi eczane, namaz vakitleri, ulaşım, önemli
+  telefonlar, duyurular ve hava durumu. Bağımsız, resmi olmayan uygulama.
+publish_to: none
+
+# Build numarası (+N) CI'da GITHUB_RUN_NUMBER ile ezilir.
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.14.0
+  # CI'daki Flutter sürümü BURADAN okunur (subosito/flutter-action
+  # flutter-version-file). Sürümü yükseltmek için yalnızca burayı değiştir.
+  flutter: 3.50.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  flutter_riverpod: ^3.0.0
+  # Diğer paketler (dio, hive_ce, supabase_flutter, home_widget ...)
+  # ilgili adımlarda eklenecek; kullanılmayan bağımlılık eklemiyoruz.
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true

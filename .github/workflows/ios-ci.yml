@@ -1,0 +1,182 @@
+# Her push/PR'da:
+#   1) Linux (ucuz): flutter analyze + flutter test (golden testler dahil),
+#      golden hata görüntüleri ve ekran görüntüleri artifact olarak yüklenir.
+#   2) macOS (pahalı): imzasız iOS release derlemesi = "build-check".
+#      Yalnızca uygulamayı etkileyen dosyalar değiştiyse ve ios/ klasörü
+#      varsa çalışır. Elle tetiklemede (workflow_dispatch) her zaman çalışır.
+name: ios-ci
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+      - 'docs/**'
+      - 'design/**'
+      - 'admin/**'
+      - 'supabase/**'
+      - '**/*.md'
+  pull_request:
+    paths-ignore:
+      - 'data/**'
+      - 'docs/**'
+      - 'design/**'
+      - 'admin/**'
+      - 'supabase/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ios-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read # paths-filter, PR'daki değişen dosyaları API'den okur
+
+env:
+  # Xcode sürümü burada sabit. App Store yüklemeleri Xcode 26 SDK istiyor.
+  XCODE_VERSION: '26.6'
+  # Kontrol derlemesi sahte ayarlarla yapılır; gerçek anahtar gerekmez.
+  ENV_FILE: config/env.example.json
+
+jobs:
+  test:
+    name: Analyze & Test (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      app_changed: ${{ github.event_name == 'workflow_dispatch' && 'true' || steps.filter.outputs.app }}
+      has_ios: ${{ steps.ioscheck.outputs.has_ios }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Değişen dosyaları belirle
+        id: filter
+        if: github.event_name != 'workflow_dispatch'
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            app:
+              - 'lib/**'
+              - 'ios/**'
+              - 'packages/**'
+              - 'assets/**'
+              - 'pubspec.yaml'
+              - 'pubspec.lock'
+              - 'l10n.yaml'
+              - 'config/env.example.json'
+              - '.github/workflows/ios-ci.yml'
+
+      - name: ios/ klasörü var mı?
+        id: ioscheck
+        run: |
+          if [ -f ios/Runner.xcodeproj/project.pbxproj ]; then
+            echo "has_ios=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_ios=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::ios/ henüz yok. Önce 'bootstrap-ios' workflow'unu bir kez elle çalıştır."
+          fi
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Pub önbelleği
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.lock', '**/pubspec.yaml') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - run: flutter analyze
+
+      - name: Testler (unit + widget + golden)
+        run: flutter test --reporter expanded
+
+      - name: Golden hata görüntüleri
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-failures
+          path: test/**/failures/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      # 3. adımda golden altyapısı build/screenshots/ altına her ekranın
+      # açık/koyu × küçük/büyük iPhone görüntüsünü yazacak.
+      - name: Ekran görüntüleri (tasarım kontrolü)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: build/screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  build-ios:
+    name: iOS build-check (imzasız, macOS)
+    needs: test
+    if: needs.test.outputs.has_ios == 'true' && needs.test.outputs.app_changed == 'true'
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode ${{ env.XCODE_VERSION }} seç
+        run: |
+          XCODE_APP="/Applications/Xcode_${XCODE_VERSION}.app"
+          if [ ! -d "$XCODE_APP" ]; then
+            echo "::error::$XCODE_APP bulunamadı. Runner'daki Xcode'lar:"
+            ls -d /Applications/Xcode*.app
+            exit 1
+          fi
+          sudo xcode-select -s "$XCODE_APP"
+          xcodebuild -version
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Pub önbelleği
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.lock', '**/pubspec.yaml') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: CocoaPods önbelleği
+        uses: actions/cache@v4
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+          key: pods-${{ runner.os }}-${{ hashFiles('ios/Podfile.lock', 'pubspec.lock') }}
+          restore-keys: pods-${{ runner.os }}-
+
+      - run: flutter pub get
+      - run: flutter gen-l10n
+
+      - name: flutter build ios --release --no-codesign
+        run: |
+          flutter build ios --release --no-codesign \
+            --dart-define-from-file="$ENV_FILE" \
+            --build-number="${GITHUB_RUN_NUMBER}"
+
+      # Podfile.lock repo'da yoksa, buradan indirip commit'leyebilirsin
+      # (sürümler sabitlenir, önbellek daha iyi çalışır).
+      - name: Podfile.lock artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Podfile.lock
+          path: ios/Podfile.lock
+          if-no-files-found: ignore
+          retention-days: 7

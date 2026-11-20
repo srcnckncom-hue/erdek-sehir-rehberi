@@ -1,0 +1,63 @@
+# GitHub Pages sitesini TEK yerden yayınlar (bir repo'nun tek Pages sitesi olur):
+#   /data/...   uzaktan JSON verileri (eczane, ulaşım, telefonlar, duyurular, vakitler)
+#   /legal/...  gizlilik politikası ve kullanım koşulları
+#   /admin/     reklam yönetim paneli (admin/ eklendiğinde, 9. adım)
+# Spec'teki "admin-deploy.yml"nin yerini alır; aksi halde iki ayrı yayın
+# birbirini ezerdi.
+name: pages-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'docs/legal/**'
+      - 'admin/**'
+      - 'packages/**'
+      - 'scripts/build_pages.sh'
+      - '.github/workflows/pages-deploy.yml'
+  workflow_dispatch:
+  # Vakit çeken cron workflow'u (6. adım) bunu doğrudan çağıracak; çünkü
+  # GITHUB_TOKEN ile yapılan commit'ler push tetikleyicisini çalıştırmaz.
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Flutter (yalnızca admin paneli varsa)
+        if: hashFiles('admin/pubspec.yaml') != ''
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Siteyi derle
+        run: bash scripts/build_pages.sh _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

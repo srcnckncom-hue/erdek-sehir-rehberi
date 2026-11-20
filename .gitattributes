@@ -1,0 +1,7 @@
+# Satır sonları her platformda LF (Windows dahil); CI Linux/macOS üzerinde çalışıyor.
+* text=auto eol=lf
+*.sh text eol=lf
+*.jpg binary
+*.png binary
+*.ttf binary
+*.otf binary
