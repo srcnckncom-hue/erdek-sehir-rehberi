@@ -15,6 +15,7 @@ on:
       - 'admin/**'
       - 'packages/**'
       - 'scripts/build_pages.sh'
+      - 'scripts/validate_data.py'
       - '.github/workflows/pages-deploy.yml'
   workflow_dispatch:
   # Vakit çeken cron workflow'u (6. adım) bunu doğrudan çağıracak; çünkü
@@ -36,6 +37,16 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+
+      # Hatalı JSON yayınlanırsa uygulama eski kopyada kalır; yine de
+      # yayından önce yakalayalım.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Veri dosyalarını doğrula
+        run: |
+          pip install jsonschema
+          python3 scripts/validate_data.py
 
       - name: Flutter (yalnızca admin paneli varsa)
         if: hashFiles('admin/pubspec.yaml') != ''

@@ -1,0 +1,31 @@
+# data/ altındaki JSON'lar değişince şema + mantık doğrulaması (Linux, ~20 sn).
+# Hatalı veri yayınlanmasın diye pages-deploy de aynı kontrolü çalıştırır.
+name: data-validate
+
+on:
+  push:
+    paths:
+      - 'data/**'
+      - 'scripts/validate_data.py'
+      - '.github/workflows/data-validate.yml'
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'scripts/validate_data.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install jsonschema
+      - name: Veri dosyalarını doğrula
+        run: python3 scripts/validate_data.py

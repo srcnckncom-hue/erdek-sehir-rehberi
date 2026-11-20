@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Önemli telefonlar",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isSample",
+    "updatedAt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isSample": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?([+-]\\d{2}:\\d{2}|Z)$"
+    },
+    "source": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "categories"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "contacts"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "contacts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "phone"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "phone": {
+                      "type": "string",
+                      "pattern": "^(\\+90\\d{10}|1\\d{2,3})$",
+                      "description": "+90 ile başlayan 10 haneli numara (boşluksuz) veya 112 gibi kısa numara"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

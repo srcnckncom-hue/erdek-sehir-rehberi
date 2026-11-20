@@ -22,7 +22,10 @@ dependencies:
   # Flutter 3.50'den itibaren Material, SDK dışında ayrı paket.
   material_ui: ^1.0.0
   flutter_riverpod: ^3.0.0
-  # Diğer paketler (dio, hive_ce, supabase_flutter, home_widget ...)
+  dio: ^5.7.0
+  hive_ce_flutter: ^2.5.0
+  timezone: ^0.10.0
+  # Diğer paketler (supabase_flutter, home_widget, flutter_local_notifications ...)
   # ilgili adımlarda eklenecek; kullanılmayan bağımlılık eklemiyoruz.
 
 dev_dependencies:
@@ -33,3 +36,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    # Uygulamayla birlikte gelen veri kopyası: ilk açılışta internet yoksa
+    # bunlar gösterilir. (Yalnızca data/ kökündeki dosyalar; schemas/ dahil değil.)
+    - data/

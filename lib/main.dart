@@ -1,11 +1,26 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import 'app/app.dart';
+import 'app/providers.dart';
+import 'core/cache/hive_json_cache.dart';
+import 'core/time/erdek_time.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Sonraki adımlarda burada: timezone (Europe/Istanbul), hive_ce, Sentry,
-  // Supabase başlatma. Hepsi lib/app/bootstrap.dart içine taşınacak.
-  runApp(const ProviderScope(child: ErdekApp()));
+
+  ErdekTime.init();
+
+  await Hive.initFlutter();
+  final cacheBox = await Hive.openBox<String>(HiveJsonCache.boxName);
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        jsonCacheProvider.overrideWithValue(HiveJsonCache(cacheBox)),
+      ],
+      child: const ErdekApp(),
+    ),
+  );
 }
