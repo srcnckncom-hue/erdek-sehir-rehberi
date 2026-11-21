@@ -113,13 +113,20 @@ class GroupedCard extends StatelessWidget {
         borderRadius: AppRadius.tileAll,
         boxShadow: AppShadows.card(p.shadow),
       ),
-      child: Column(
-        children: [
-          for (var i = 0; i < children.length; i++) ...[
-            if (i > 0) Divider(indent: AppSpacing.lg, endIndent: AppSpacing.lg, color: p.divider),
-            children[i],
+      // Şeffaf Material: içteki ListTile / InkWell dokunma efektleri beyaz
+      // zeminin üstünde görünsün (yoksa Flutter uyarı verir, efekt kaybolur).
+      child: Material(
+        type: MaterialType.transparency,
+        borderRadius: AppRadius.tileAll,
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            for (var i = 0; i < children.length; i++) ...[
+              if (i > 0) Divider(indent: AppSpacing.lg, endIndent: AppSpacing.lg, color: p.divider),
+              children[i],
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
