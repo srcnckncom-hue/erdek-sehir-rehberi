@@ -24,6 +24,9 @@ class Api {
   static const _storageKey = 'erdek_admin_session';
   static const bucket = 'ad-images';
 
+  /// Gezilecek yer fotoğrafları vb. (0003_content_images.sql).
+  static const contentBucket = 'content-images';
+
   final String base;
   final String apiKey;
 
@@ -227,15 +230,34 @@ class Api {
   // ─── Storage ─────────────────────────────────────────────────────────
   /// Görseli yükler, kovadaki yolunu döndürür.
   Future<String> uploadImage(Uint8List bytes, {required String contentType}) async {
-    final ext = switch (contentType) {
-      'image/png' => 'png',
-      'image/webp' => 'webp',
-      _ => 'jpg',
-    };
-    final path = 'ad_${DateTime.now().millisecondsSinceEpoch}.$ext';
+    final path = 'ad_${DateTime.now().millisecondsSinceEpoch}.${_ext(contentType)}';
     final headers = await _headers(extra: {'Content-Type': contentType, 'x-upsert': 'false'});
     final res = await http.post(Uri.parse('$base/storage/v1/object/$bucket/$path'), headers: headers, body: bytes);
     _check(res);
     return path;
+  }
+
+  static String _ext(String contentType) => switch (contentType) {
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+        _ => 'jpg',
+      };
+
+  /// İçerik fotoğrafını [folder] altına yükler; herkese açık ADRESİNİ döndürür
+  /// (belgeye bu adres yazılır, uygulama doğrudan okur).
+  Future<String> uploadContentImage(
+    Uint8List bytes, {
+    required String contentType,
+    required String folder,
+  }) async {
+    final path = '$folder/${DateTime.now().millisecondsSinceEpoch}.${_ext(contentType)}';
+    final headers = await _headers(extra: {'Content-Type': contentType, 'x-upsert': 'false'});
+    final res = await http.post(
+      Uri.parse('$base/storage/v1/object/$contentBucket/$path'),
+      headers: headers,
+      body: bytes,
+    );
+    _check(res);
+    return '$base/storage/v1/object/public/$contentBucket/$path';
   }
 }

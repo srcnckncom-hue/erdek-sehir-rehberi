@@ -28,6 +28,22 @@ enum PlaceCategory {
       values.firstWhere((c) => c.jsonValue == value, orElse: () => other);
 }
 
+/// Yer fotoğrafı (panelden yüklenir; Supabase Storage "content-images").
+class PlacePhoto {
+  const PlacePhoto({required this.url, this.credit});
+
+  factory PlacePhoto.fromJson(Map<String, dynamic> json) => PlacePhoto(
+        url: json['url'] as String,
+        credit: json['credit'] as String?,
+      );
+
+  /// https:// ile başlayan herkese açık adres.
+  final String url;
+
+  /// Fotoğraf sahibi / kaynak ("Fotoğraf: …" olarak gösterilir).
+  final String? credit;
+}
+
 class Place {
   const Place({
     required this.id,
@@ -40,6 +56,7 @@ class Place {
     this.address,
     this.latitude,
     this.longitude,
+    this.photos = const [],
   });
 
   factory Place.fromJson(Map<String, dynamic> json) => Place(
@@ -53,6 +70,10 @@ class Place {
         address: json['address'] as String?,
         latitude: (json['latitude'] as num?)?.toDouble(),
         longitude: (json['longitude'] as num?)?.toDouble(),
+        photos: [
+          for (final p in json['photos'] as List<dynamic>? ?? const [])
+            PlacePhoto.fromJson(p as Map<String, dynamic>),
+        ],
       );
 
   final String id;
@@ -71,6 +92,9 @@ class Place {
   final String? address;
   final double? latitude;
   final double? longitude;
+
+  /// İlki kapak fotoğrafıdır (listede de görünür). Boşsa tür ikonu gösterilir.
+  final List<PlacePhoto> photos;
 
   bool get hasLocation => (latitude != null && longitude != null) || address != null;
 }

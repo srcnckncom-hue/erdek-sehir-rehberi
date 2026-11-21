@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../api.dart';
+import '../file_pick.dart';
 import 'content_editor.dart';
 import 'form_kit.dart';
 
@@ -26,13 +27,14 @@ class PlacesEditor extends StatelessWidget {
         docId: 'places',
         title: 'Gezilecek Yerler',
         validate: (data) => (data['places'] as List<dynamic>).isEmpty ? 'En az bir yer olmalı.' : null,
-        builder: (context, data, changed) => _Body(data: data, changed: changed),
+        builder: (context, data, changed) => _Body(api: api, data: data, changed: changed),
       );
 }
 
 class _Body extends StatefulWidget {
-  const _Body({required this.data, required this.changed});
+  const _Body({required this.api, required this.data, required this.changed});
 
+  final Api api;
   final Map<String, dynamic> data;
   final VoidCallback changed;
 
@@ -41,7 +43,73 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+  static const _maxPhotoBytes = 2 * 1024 * 1024;
+  static const _maxPhotos = 10;
+
   List<dynamic> get _places => widget.data['places'] as List<dynamic>;
+
+  /// Yükleniyor göstergesi için: fotoğraf eklenen yerin id'si.
+  String? _uploadingFor;
+
+  void _toast(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  List<dynamic> _photosOf(Map<String, dynamic> place) =>
+      place.putIfAbsent('photos', () => <dynamic>[]) as List<dynamic>;
+
+  /// Fotoğraf seç → (isteğe bağlı) sahibi/kaynağı → Storage'a yükle → listeye ekle.
+  /// Belgeye kaydetmek için yine üstteki "Kaydet" gerekir.
+  Future<void> _addPhoto(Map<String, dynamic> place) async {
+    if (_photosOf(place).length >= _maxPhotos) {
+      _toast('Bir yere en fazla $_maxPhotos fotoğraf eklenebilir.');
+      return;
+    }
+    final picked = await pickImage();
+    if (picked == null) return;
+    if (picked.bytes.length > _maxPhotoBytes) {
+      _toast('Fotoğraf 2 MB\'tan büyük (${(picked.bytes.length / 1024).round()} KB). Küçültüp tekrar deneyin.');
+      return;
+    }
+    if (!mounted) return;
+    final v = await showFormDialog(
+      context,
+      title: 'Fotoğraf bilgisi',
+      fields: const [
+        FieldSpec(
+          'credit',
+          'Fotoğraf sahibi / kaynak (isteğe bağlı)',
+          hint: 'Uygulamada "Fotoğraf: …" olarak görünür. Yalnızca kullanım hakkı olan fotoğrafları yükleyin.',
+        ),
+      ],
+    );
+    if (v == null) return;
+    setState(() => _uploadingFor = place['id'] as String);
+    try {
+      final url = await widget.api.uploadContentImage(
+        picked.bytes,
+        contentType: picked.type,
+        folder: 'places',
+      );
+      _apply(() => _photosOf(place).add(<String, dynamic>{
+            'url': url,
+            if (v['credit']!.isNotEmpty) 'credit': v['credit'],
+          }));
+      _toast('Fotoğraf yüklendi. Yayına almak için "Kaydet"e basın.');
+    } catch (e) {
+      _toast('Fotoğraf yüklenemedi: $e');
+    } finally {
+      if (mounted) setState(() => _uploadingFor = null);
+    }
+  }
+
+  void _removePhoto(Map<String, dynamic> place, int index) {
+    _apply(() {
+      final photos = _photosOf(place)..removeAt(index);
+      if (photos.isEmpty) place.remove('photos');
+    });
+  }
 
   void _apply(VoidCallback f) {
     setState(f);
@@ -101,6 +169,8 @@ class _BodyState extends State<_Body> {
       if (v['address']!.isNotEmpty) 'address': v['address'],
       'latitude': ?lat,
       'longitude': ?lng,
+      // Fotoğraflar bu formda değil, kartın altında yönetilir; korunur.
+      if ((p?['photos'] as List<dynamic>?)?.isNotEmpty ?? false) 'photos': p!['photos'],
     };
     _apply(() {
       if (p == null) {
@@ -119,21 +189,35 @@ class _BodyState extends State<_Body> {
       children: [
         for (var i = 0; i < places.length; i++)
           Card(
-            child: ListTile(
-              title: Text(places[i]['title'] as String),
-              subtitle: Text(
-                '${_areas[places[i]['area']]} · ${_categories[places[i]['category']]} · ${places[i]['summary']}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: RowActions(
-                onUp: i > 0 ? () => _apply(() => moveItem(_places, i, -1)) : null,
-                onDown: i < places.length - 1 ? () => _apply(() => moveItem(_places, i, 1)) : null,
-                onEdit: () => _edit(places[i]),
-                onDelete: () async {
-                  if (await confirmDelete(context, 'Yer')) _apply(() => _places.removeAt(i));
-                },
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ListTile(
+                  title: Text(places[i]['title'] as String),
+                  subtitle: Text(
+                    '${_areas[places[i]['area']]} · ${_categories[places[i]['category']]} · ${places[i]['summary']}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: RowActions(
+                    onUp: i > 0 ? () => _apply(() => moveItem(_places, i, -1)) : null,
+                    onDown: i < places.length - 1 ? () => _apply(() => moveItem(_places, i, 1)) : null,
+                    onEdit: () => _edit(places[i]),
+                    onDelete: () async {
+                      if (await confirmDelete(context, 'Yer')) _apply(() => _places.removeAt(i));
+                    },
+                  ),
+                ),
+                _PhotoStrip(
+                  photos: (places[i]['photos'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>(),
+                  uploading: _uploadingFor == places[i]['id'],
+                  onAdd: _uploadingFor == null ? () => _addPhoto(places[i]) : null,
+                  onRemove: (index) async {
+                    if (await confirmDelete(context, 'Fotoğraf')) _removePhoto(places[i], index);
+                  },
+                  onMakeCover: (index) => _apply(() => moveItem(_photosOf(places[i]), index, -index)),
+                ),
+              ],
             ),
           ),
         Align(
@@ -141,6 +225,120 @@ class _BodyState extends State<_Body> {
           child: TextButton.icon(onPressed: () => _edit(), icon: const Icon(Icons.add), label: const Text('Yer ekle')),
         ),
       ],
+    );
+  }
+}
+
+/// Bir yerin fotoğrafları: küçük önizlemeler (ilki KAPAK), kapak yap, sil, ekle.
+class _PhotoStrip extends StatelessWidget {
+  const _PhotoStrip({
+    required this.photos,
+    required this.uploading,
+    required this.onAdd,
+    required this.onRemove,
+    required this.onMakeCover,
+  });
+
+  final List<Map<String, dynamic>> photos;
+  final bool uploading;
+  final VoidCallback? onAdd;
+  final ValueChanged<int> onRemove;
+  final ValueChanged<int> onMakeCover;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          for (var i = 0; i < photos.length; i++)
+            SizedBox(
+              width: 128,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: AspectRatio(
+                      aspectRatio: 4 / 3,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          ColoredBox(
+                            color: scheme.surfaceContainerHighest,
+                            child: Image.network(
+                              photos[i]['url'] as String,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, _, _) => const Icon(Icons.broken_image_outlined),
+                            ),
+                          ),
+                          if (i == 0)
+                            Positioned(
+                              left: 4,
+                              top: 4,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: scheme.primary,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  'Kapak',
+                                  style: TextStyle(color: scheme.onPrimary, fontSize: 11),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          (photos[i]['credit'] as String?) ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      if (i > 0)
+                        IconButton(
+                          tooltip: 'Kapak yap',
+                          visualDensity: VisualDensity.compact,
+                          iconSize: 18,
+                          onPressed: () => onMakeCover(i),
+                          icon: const Icon(Icons.star_outline),
+                        ),
+                      IconButton(
+                        tooltip: 'Sil',
+                        visualDensity: VisualDensity.compact,
+                        iconSize: 18,
+                        onPressed: () => onRemove(i),
+                        icon: const Icon(Icons.delete_outline),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          if (uploading)
+            const Padding(
+              padding: EdgeInsets.all(12),
+              child: SizedBox.square(dimension: 24, child: CircularProgressIndicator(strokeWidth: 2)),
+            )
+          else
+            OutlinedButton.icon(
+              onPressed: onAdd,
+              icon: const Icon(Icons.add_photo_alternate_outlined),
+              label: Text(photos.isEmpty ? 'Fotoğraf ekle (en fazla 2 MB)' : 'Fotoğraf ekle'),
+            ),
+        ],
+      ),
     );
   }
 }

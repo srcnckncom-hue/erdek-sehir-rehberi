@@ -87,14 +87,16 @@ Kategoriler (`categories`) ve içindeki kişiler (`contacts`): `name`, `phone`, 
   "summary": "Listede görünen 1–2 cümlelik özet.",
   "paragraphs": ["Ayrıntı sayfasındaki 1. paragraf.", "2. paragraf."],
   "tips": ["Kısa pratik bilgi"],
-  "address": "isteğe bağlı", "latitude": 40.39, "longitude": 27.79 }
+  "address": "isteğe bağlı", "latitude": 40.39, "longitude": 27.79,
+  "photos": [{ "url": "https://…/storage/v1/object/public/content-images/places/….jpg",
+               "credit": "Fotoğraf sahibi (isteğe bağlı)" }] }
 ```
 
 - `area`: `erdek` veya `kapidag`.
 - `category`: `plaj`, `tarihi`, `doga`, `koy`, `manzara` veya `diger`.
 - `tips`, `address`, `latitude`/`longitude` isteğe bağlı. Konum ya da adres varsa "Yol tarifi" düğmesi çıkar. Koordinat yazılacaksa ikisi birlikte yazılır.
 - Liste dosyadaki sırayla gösterilir.
-- Fotoğraf alanı şimdilik yok. Kullanım hakkı bize ait fotoğraflar gelince eklenecek.
+- `photos` isteğe bağlı (en çok 10). Panelden yüklenir (Supabase Storage `content-images` kovası, dosya başına en çok 2 MB, JPG/PNG/WEBP). İlki kapak fotoğrafıdır, listede de görünür. `credit` varsa "Fotoğraf: …" olarak yazılır. YALNIZCA kullanım hakkı bize ait / izinli fotoğraflar yüklenir.
 
 ## history.json — Erdek tarihi
 

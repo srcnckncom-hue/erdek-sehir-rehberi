@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../core/data/json_sources.dart';
 import '../core/data/offline_first_loader.dart';
@@ -7,6 +8,7 @@ import '../core/network/content_json_fetcher.dart';
 import '../core/network/dio_json_fetcher.dart';
 import '../core/settings/onboarding_store.dart';
 import '../core/settings/seen_store.dart';
+import '../core/settings/theme_store.dart';
 import '../core/time/erdek_time.dart';
 import 'env.dart';
 
@@ -31,6 +33,22 @@ final announcementsSeenStoreProvider = Provider<AnnouncementsSeenStore>(
 final onboardingStoreProvider = Provider<OnboardingStore>(
   (ref) => MemoryOnboardingStore(isDone: true),
 );
+
+/// main() içinde Hive ile override edilir.
+final themeModeStoreProvider = Provider<ThemeModeStore>((ref) => MemoryThemeModeStore());
+
+/// Görünüm: Açık (varsayılan) / Koyu / Telefonla aynı. ☰ menüden değiştirilir.
+final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(ThemeModeNotifier.new);
+
+class ThemeModeNotifier extends Notifier<ThemeMode> {
+  @override
+  ThemeMode build() => ref.watch(themeModeStoreProvider).load();
+
+  Future<void> setMode(ThemeMode mode) async {
+    state = mode;
+    await ref.read(themeModeStoreProvider).save(mode);
+  }
+}
 
 /// main() içinde HiveJsonCache ile override edilir.
 final jsonCacheProvider = Provider<JsonCache>(

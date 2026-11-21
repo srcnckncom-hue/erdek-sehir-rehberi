@@ -8,7 +8,7 @@
 > (+ → Add folder) ve şunu yaz: "docs/KARARLAR.md'yi oku, Erdek Şehir Rehberi'ne
 > kaldığımız yerden devam ediyoruz."
 >
-> Son güncelleme: 21.11.2026, TestFlight'ta denendi (her şey çalıştı); açılış animasyonu + tanıtım ekranları yazıldı (CI bekleniyor).
+> Son güncelleme: 21.11.2026, açılış animasyonu + tanıtım ONAYLANDI (golden); tema seçimi + yer fotoğrafları yazıldı (CI + 0003 SQL bekleniyor).
 
 ## Durum
 - 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
@@ -53,9 +53,17 @@
   - core/settings/onboarding_store.dart: Hive 'settings' kutusu, anahtar onboarding_done_v1 (içerik köklü değişirse v2 ile herkese yeniden gösterilir). onboardingStoreProvider varsayılanı "görüldü" (testler); testScope(onboardingStore:) parametresi.
   - Reklam: AdImpressionGate (ad_slot.dart, InheritedWidget) perde açıkken gösterim SAYMAZ; perde kalkınca sayılır.
   - Testler: test/features/launch_test.dart. Golden 11_acilis_gri/renkli (yalnız açık), 12_tanitim_1..3.
+  - Golden 11/12 kullanıcıya gösterildi, onaylandı. SE'de 3. sayfa sığmıyordu → görsel küçültüldü, 3. sayfa ve bildirim metni kısaltıldı.
+- TestFlight geri bildirimi 2 (21.11.2026): YAZILDI, CI bekleniyor:
+  - Tema: VARSAYILAN AÇIK (artık telefonu izlemiyor). ☰ menüde "Görünüm": Açık / Koyu / Sistem (SegmentedPills, Key theme_mode_selector). core/settings/theme_store.dart (Hive 'settings', anahtar theme_mode: light/dark/system), themeModeProvider + ThemeModeNotifier.setMode (app/providers.dart), ErdekApp ConsumerWidget. Açılış animasyonu zemini her temada beyaz kalır.
+  - Gezilecek yerlere FOTOĞRAF: places.json'da isteğe bağlı photos: [{url (https), credit?}] en çok 10, ilki KAPAK. Şema + DATA.md güncellendi.
+    - supabase/migrations/0003_content_images.sql: public "content-images" kovası (2 MB, JPG/PNG/WEBP), yalnız admin yazar. KULLANICI SQL'i ÇALIŞTIRMALI.
+    - Panel (places_editor): her yer kartının altında fotoğraf şeridi: ekle (≤2 MB, isteğe bağlı sahibi/kaynak), "Kapak yap", sil; yükleme anında Storage'a gider ama yayına "Kaydet" ile çıkar. Silinen fotoğraf Storage'da kalır (kaydedilmemiş belgeyi bozmamak için). Api.uploadContentImage(folder: 'places') herkese açık adres döndürür.
+    - Uygulama: liste kartında kapak (64×64), ayrıntıda 4:3 kaydırmalı galeri + noktalar + "Fotoğraf: …"; yüklenemezse/yoksa tür ikonu (PlaceIconTile, PlacePhotoImage, PlacePhotoGallery — explore/presentation/place_photos.dart).
+    - Kural: yalnızca kullanım hakkı bize ait / izinli fotoğraflar.
 - Firebase: ERTELENDİ.
 - SIRADAKİ:
-  1. CI yeşil → golden 11/12 ekran görüntüleri onayı → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)
+  1. CI yeşil + 0003 SQL çalıştırıldı → panelden bir yere fotoğraf ekle + Kaydet → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)
   2. 14. adım App Store hazırlığı: ekran görüntüleri (golden 6.9" 1320×2868 tabanlı), açıklama/anahtar kelimeler/kategori, gizlilik politikası + kullanım koşulları (docs/legal → Pages /legal/), App Privacy formu (konum yok, takip yok; reklam sayımı anonim), destek URL'si, yaş derecelendirmesi, hero fotoğrafı kullanım hakkı teyidi, "resmi değil" ibaresi.
   3. Gerçek veriler panelden girilecek (telefonlar, eczane nöbetleri, şehir içi hatlar, gezilecek yerler, tarih).
   4. Ertelenenler: Firebase (Crashlytics + FCM, admin'den bildirim), Diyanet API'ye geçiş.
@@ -65,7 +73,7 @@
 - Erdek–Bandırma, Erdek–Balıkesir otobüs saatleri.
 - Balıkesir Büyükşehir Erdek içi mahalle hatları (hat adı, mahalleler, saatler, gün tipleri).
 - Önemli telefonlar, nöbetçi eczane listesi, duyurular.
-- Gezilecek yerlerin ve Erdek tarihinin gerçek metinleri; kullanım hakkı olan fotoğraflar.
+- Gezilecek yerlerin ve Erdek tarihinin gerçek metinleri; kullanım hakkı olan fotoğraflar (artık panelden yüklenebilir).
 
 ## Kurallar (kullanıcının şartnamesinden)
 - Gizli anahtarlar repoya girmez; CI'da secrets'tan üretilen dosya + --dart-define-from-file.

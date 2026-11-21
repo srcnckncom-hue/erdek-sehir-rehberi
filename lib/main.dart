@@ -10,6 +10,7 @@ import 'app/providers.dart';
 import 'core/cache/hive_json_cache.dart';
 import 'core/settings/onboarding_store.dart';
 import 'core/settings/seen_store.dart';
+import 'core/settings/theme_store.dart';
 import 'core/time/erdek_time.dart';
 import 'features/prayer/notifications/prayer_notifications.dart';
 import 'l10n/app_localizations.dart';
@@ -38,6 +39,7 @@ Future<void> main() async {
           HiveAnnouncementsSeenStore(settingsBox),
         ),
         onboardingStoreProvider.overrideWithValue(HiveOnboardingStore(settingsBox)),
+        themeModeStoreProvider.overrideWithValue(HiveThemeModeStore(settingsBox)),
         prayerNotificationSettingsStoreProvider.overrideWithValue(
           HivePrayerNotificationSettingsStore(settingsBox),
         ),

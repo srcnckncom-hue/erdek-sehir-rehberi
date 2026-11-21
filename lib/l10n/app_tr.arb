@@ -546,8 +546,8 @@
   "onboarding2Title": "Feribot ve otobüs saatleri",
   "onboarding2Body": "Feribot, şehirlerarası ve şehir içi otobüs saatlerine sıradaki seferle birlikte hemen ulaş.",
   "onboarding3Title": "Rehber, duyurular ve keşfet",
-  "onboarding3Body": "Önemli telefonlar, güncel duyurular, gezilecek yerler ve Erdek tarihi burada. Ana ekrana widget ekleyerek vakitleri ve nöbetçi eczaneyi uygulamayı açmadan gör.",
-  "onboardingNotifBody": "Vakitlerden önce hatırlatma al. Sonra Vakitler sayfasından değiştirebilirsin.",
+  "onboarding3Body": "Önemli telefonlar, duyurular, gezilecek yerler ve Erdek tarihi. Widget ile vakitler ve nöbetçi eczane ana ekranında.",
+  "onboardingNotifBody": "Vakitlerden önce hatırlatma al.",
   "onboardingPageLabel": "Sayfa {page} / {count}",
   "@onboardingPageLabel": {
     "placeholders": {
@@ -556,6 +556,26 @@
       },
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "appearanceTitle": "Görünüm",
+  "themeLight": "Açık",
+  "themeDark": "Koyu",
+  "themeSystem": "Sistem",
+  "placePhotoCredit": "Fotoğraf: {name}",
+  "@placePhotoCredit": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placePhotoLabel": "{title} fotoğrafı",
+  "@placePhotoLabel": {
+    "placeholders": {
+      "title": {
+        "type": "String"
       }
     }
   }

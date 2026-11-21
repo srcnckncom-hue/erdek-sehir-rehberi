@@ -7,6 +7,7 @@ import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/explore.dart';
+import 'place_photos.dart';
 import 'place_style.dart';
 
 Future<void> openPlace(BuildContext context, Place place, {bool isSample = false}) =>
@@ -16,7 +17,7 @@ Future<void> openPlace(BuildContext context, Place place, {bool isSample = false
       ),
     );
 
-/// Bir yerin ayrıntı sayfası: fotoğraf alanı, özet, metin, ipuçları, yol tarifi.
+/// Bir yerin ayrıntı sayfası: fotoğraf galerisi, özet, metin, ipuçları, yol tarifi.
 class PlaceDetailScreen extends StatelessWidget {
   const PlaceDetailScreen({super.key, required this.place, this.isSample = false});
 
@@ -27,8 +28,6 @@ class PlaceDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
-    final color = PlaceStyle.color(p, place.category);
-
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom + AppSpacing.xxl),
@@ -43,26 +42,8 @@ class PlaceDetailScreen extends StatelessWidget {
             InfoBanner(icon: AppIcons.info, message: l10n.sampleDataBanner),
             const SizedBox(height: AppSpacing.md),
           ],
-          // Fotoğraf alanı: hakkı bize ait fotoğraflar gelene kadar tür ikonu.
-          Container(
-            height: 180,
-            margin: AppSpacing.pagePadding,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.12),
-              borderRadius: AppRadius.cardAll,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AppIcon(PlaceStyle.icon(place.category), size: 56, color: color),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  l10n.placePhotoSoon,
-                  style: AppTypography.caption.copyWith(color: p.textSecondary),
-                ),
-              ],
-            ),
-          ),
+          // Fotoğraflar (panelden yüklenir); yoksa tür ikonu + "Fotoğraf yakında".
+          PlacePhotoGallery(place: place),
           const SizedBox(height: AppSpacing.xl),
           Padding(
             padding: AppSpacing.pagePadding,

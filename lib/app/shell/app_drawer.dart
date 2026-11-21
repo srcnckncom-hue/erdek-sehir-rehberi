@@ -1,22 +1,26 @@
 import 'dart:async';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/widgets/widgets.dart';
 import '../../features/explore/presentation/history_screen.dart';
 import '../../features/explore/presentation/places_screen.dart';
 import '../../l10n/app_localizations.dart';
+import '../providers.dart';
 
-/// ☰ menüsü: bağımsızlık notu, Keşfet (gezilecek yerler, tarih), veri kaynakları. Ayarlar (bildirim
-/// tercihleri) 6. adımda, gizlilik bağlantısı 14. adımda eklenecek.
-class AppDrawer extends StatelessWidget {
+/// ☰ menüsü: bağımsızlık notu, Keşfet (gezilecek yerler, tarih), Görünüm
+/// (açık/koyu tema), veri kaynakları. Gizlilik bağlantısı 14. adımda eklenecek.
+class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
+    final themeMode = ref.watch(themeModeProvider);
     return Drawer(
       backgroundColor: p.background,
       child: SafeArea(
@@ -54,6 +58,22 @@ class AppDrawer extends StatelessWidget {
               color: p.iconPurple,
               title: l10n.historyTitle,
               onTap: () => _push(context, const HistoryScreen()),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Text(
+              l10n.appearanceTitle,
+              style: AppTypography.label.copyWith(color: p.textSecondary),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            SegmentedPills<ThemeMode>(
+              key: const Key('theme_mode_selector'),
+              selected: themeMode,
+              onSelected: (mode) => ref.read(themeModeProvider.notifier).setMode(mode),
+              options: [
+                SegmentOption(value: ThemeMode.light, label: l10n.themeLight, icon: AppIcons.themeLight),
+                SegmentOption(value: ThemeMode.dark, label: l10n.themeDark, icon: AppIcons.themeDark),
+                SegmentOption(value: ThemeMode.system, label: l10n.themeSystem, icon: AppIcons.themeSystem),
+              ],
             ),
             const SizedBox(height: AppSpacing.xxl),
             _Section(icon: AppIcons.info, title: l10n.drawerDataSources, body: l10n.dataSourcesBody),

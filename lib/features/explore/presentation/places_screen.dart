@@ -10,6 +10,7 @@ import '../../../l10n/app_localizations.dart';
 import '../data/explore_repository.dart';
 import '../domain/explore.dart';
 import 'place_detail_screen.dart';
+import 'place_photos.dart';
 import 'place_style.dart';
 
 Future<void> openPlaces(BuildContext context) => Navigator.of(context).push(
@@ -162,7 +163,7 @@ class _PlacesScreenState extends ConsumerState<PlacesScreen> {
       ];
 }
 
-/// Liste kartı: tür ikonu (fotoğraf gelene kadar) + başlık + bölge/tür + özet.
+/// Liste kartı: kapak fotoğrafı (yoksa tür ikonu) + başlık + bölge/tür + özet.
 class PlaceCard extends StatelessWidget {
   const PlaceCard({super.key, required this.place, required this.onTap});
 
@@ -178,15 +179,17 @@ class PlaceCard extends StatelessWidget {
     final content = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 64,
-          height: 64,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.12),
-            borderRadius: AppRadius.tileAll,
+        ClipRRect(
+          borderRadius: AppRadius.tileAll,
+          child: SizedBox.square(
+            dimension: 64,
+            child: place.photos.isEmpty
+                ? PlaceIconTile(category: place.category)
+                : PlacePhotoImage(
+                    url: place.photos.first.url,
+                    fallback: PlaceIconTile(category: place.category),
+                  ),
           ),
-          child: AppIcon(PlaceStyle.icon(place.category), size: 32, color: color),
         ),
         const SizedBox(width: AppSpacing.md),
         Expanded(

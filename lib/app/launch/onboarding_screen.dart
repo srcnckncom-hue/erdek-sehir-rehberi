@@ -199,7 +199,7 @@ class _OnboardingPage extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         // Küçük ekranda (iPhone SE) görsel küçülür, içerik kaydırılabilir.
-        final artSize = math.min(240.0, constraints.maxHeight * (extra == null ? 0.42 : 0.32));
+        final artSize = math.min(240.0, constraints.maxHeight * (extra == null ? 0.42 : 0.26));
         return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxl),
           child: ConstrainedBox(
@@ -208,7 +208,7 @@ class _OnboardingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox.square(dimension: artSize, child: art),
-                const SizedBox(height: AppSpacing.xxl + AppSpacing.md),
+                SizedBox(height: extra == null ? AppSpacing.xxl + AppSpacing.md : AppSpacing.xl),
                 Text(
                   title,
                   textAlign: TextAlign.center,

@@ -63,6 +63,11 @@ abstract final class AppIcons {
   static AppIconData get caretRight => _i(PhosphorIconsRegular.caretRight);
   static AppIconData get bellRinging => _d(PhosphorIconsDuotone.bellRinging);
   static AppIconData get sunrise => _d(PhosphorIconsDuotone.sunHorizon);
+  static AppIconData get themeLight => _i(PhosphorIconsRegular.sun);
+  static AppIconData get themeDark => _i(PhosphorIconsRegular.moon);
+  static AppIconData get themeSystem => _i(PhosphorIconsRegular.deviceMobile);
+  static AppIconData get appearance => _d(PhosphorIconsDuotone.palette);
+  static AppIconData get image => _d(PhosphorIconsDuotone.image);
 
   // Alt menü: pasif = çizgi, aktif = dolu
   static AppIconData tabHome({required bool active}) =>

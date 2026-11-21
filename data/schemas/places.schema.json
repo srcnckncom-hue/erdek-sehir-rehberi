@@ -102,6 +102,27 @@
                 "type": "number",
                 "minimum": 27.0,
                 "maximum": 28.5
+              },
+              "photos": {
+                "type": "array",
+                "maxItems": 10,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "pattern": "^https://"
+                    },
+                    "credit": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
               }
             },
             "dependentRequired": {
