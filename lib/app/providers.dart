@@ -8,6 +8,7 @@ import '../core/network/content_json_fetcher.dart';
 import '../core/network/dio_json_fetcher.dart';
 import '../core/settings/onboarding_store.dart';
 import '../core/settings/seen_store.dart';
+import '../core/settings/locale_store.dart';
 import '../core/settings/theme_store.dart';
 import '../core/settings/usage_store.dart';
 import '../core/time/erdek_time.dart';
@@ -51,6 +52,22 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   Future<void> setMode(ThemeMode mode) async {
     state = mode;
     await ref.read(themeModeStoreProvider).save(mode);
+  }
+}
+
+/// main() içinde Hive ile override edilir.
+final localeStoreProvider = Provider<LocaleStore>((ref) => MemoryLocaleStore());
+
+/// Uygulama dili: Türkçe (varsayılan) / İngilizce. Ayarlar'dan değiştirilir.
+final localeProvider = NotifierProvider<LocaleNotifier, Locale>(LocaleNotifier.new);
+
+class LocaleNotifier extends Notifier<Locale> {
+  @override
+  Locale build() => ref.watch(localeStoreProvider).load();
+
+  Future<void> setLocale(Locale locale) async {
+    state = locale;
+    await ref.read(localeStoreProvider).save(locale);
   }
 }
 

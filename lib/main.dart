@@ -8,6 +8,7 @@ import 'app/app.dart';
 import 'app/launch/launch_splash.dart';
 import 'app/providers.dart';
 import 'core/cache/hive_json_cache.dart';
+import 'core/settings/locale_store.dart';
 import 'core/settings/onboarding_store.dart';
 import 'core/settings/seen_store.dart';
 import 'core/settings/theme_store.dart';
@@ -27,7 +28,9 @@ Future<void> main() async {
   final settingsBox = await Hive.openBox<String>(HiveAnnouncementsSeenStore.boxName);
 
   final notifications = await LocalPrayerNotificationScheduler.initialize();
-  final l10n = lookupAppLocalizations(const Locale('tr'));
+  // Bildirim metinleri kayıtlı dilde (dil değişirse bir sonraki açılışta).
+  final localeStore = HiveLocaleStore(settingsBox);
+  final l10n = lookupAppLocalizations(localeStore.load());
 
   // Logo parçaları çözülmeden ilk kare çizilmesin (animasyon takılmadan başlar).
   await _precacheLogo();
@@ -41,6 +44,7 @@ Future<void> main() async {
         ),
         onboardingStoreProvider.overrideWithValue(HiveOnboardingStore(settingsBox)),
         themeModeStoreProvider.overrideWithValue(HiveThemeModeStore(settingsBox)),
+        localeStoreProvider.overrideWithValue(localeStore),
         usageStoreProvider.overrideWithValue(HiveUsageStore(settingsBox)),
         systemBridgeProvider.overrideWithValue(ChannelSystemBridge()),
         prayerNotificationSettingsStoreProvider.overrideWithValue(

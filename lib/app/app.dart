@@ -14,7 +14,8 @@ class ErdekApp extends ConsumerWidget {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
-      locale: const Locale('tr'),
+      // Varsayılan Türkçe; Ayarlar'dan İngilizce seçilebilir.
+      locale: ref.watch(localeProvider),
       supportedLocales: AppLocalizations.supportedLocales,
       // Flutter 3.50: Material/Cupertino çevirileri artık material_ui içinde.
       // gen-l10n'in ürettiği AppLocalizations.localizationsDelegates eski

@@ -8,7 +8,7 @@
 > (+ → Add folder) ve şunu yaz: "docs/KARARLAR.md'yi oku, Erdek Şehir Rehberi'ne
 > kaldığımız yerden devam ediyoruz."
 >
-> Son güncelleme: 21.11.2026, renkli logo + çizim animasyonu ONAYLANDI (golden). Özellik paketi AŞAMA 1 (1–6) yazıldı, CI bekleniyor. Kullanıcı 12 özelliğin HEPSİNİ seçti: Aşama 1 = 1–6, Aşama 2 = 7–9, Aşama 3 = 10–12.
+> Son güncelleme: 21.11.2026, renkli logo + çizim animasyonu ONAYLANDI (golden). Özellik paketi AŞAMA 1 (1–6) yazıldı, CI bekleniyor. Kullanıcı 12 özelliğin HEPSİNİ seçti: Aşama 1 = 1–6, Aşama 2 = 7–9, Aşama 3 = 10–11 (12 İngilizce öne alındı, yapıldı).
 
 ## Durum
 - 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
@@ -89,6 +89,11 @@
   - Eczane sayfası: önümüzdeki 7 gün (önce 6); ilk satır "Yarın · <gün>" vurgulu. Kaynak notu: otomatik Eczacı Odası listesi.
   - Ulaşım: sıradaki sefer kartında "Bugünkü son sefer HH:MM" (son sefer henüz kalkmadıysa) / "Bugünün son seferi".
   - Testler: settings_screen_test (bölümler, paylaş, puanlama zamanı), pharmacy/transport testleri güncellendi; fixture pharmacy.json'da 21.11 notu. Golden 13_ayarlar.
+- TestFlight geri bildirimi 3 (21.11.2026 akşam):
+  - Vakit bildirimleri sayfası (alt pencere): görünür "Kapat" düğmesi (Key notification_sheet_close) + useSafeArea.
+  - Yazı boyutları küçültüldü: sectionTitle 20→17 (tüm bölüm başlıkları), "Tümünü Gör" caption 13 w500 + ok 16, tileLabel 13→12 (8 beyaz kutucuk), arama kutusu metni 13.5 + ikon 20.
+  - Ana sayfadaki renkli kısayollar 3 → 2: Nöbetçi Eczane + Feribot Saatleri (Namaz Vakitleri çıkarıldı; alt sekmede ve kutucuklarda var). "Tüm Hizmetler" sayfasında da 2 sütun.
+  - İNGİLİZCE (Aşama 3'ten öne alındı): lib/l10n/app_en.arb (tüm 218 metin). VARSAYILAN TÜRKÇE, telefon dilinden BAĞIMSIZ; Ayarlar → Dil (Türkçe / English). core/settings/locale_store.dart (Hive 'app_locale'), localeProvider + LocaleNotifier.setLocale. Bildirim metinleri kayıtlı dilde (dil değişince bir sonraki açılışta). Panelden gelen içerik ve iOS widget metinleri Türkçe kalır. Testler Türkçe (testApp locale tr).
 - Firebase: ERTELENDİ.
 - SIRADAKİ:
   1. CI yeşil + 0003 SQL çalıştırıldı → panelden bir yere fotoğraf ekle + Kaydet → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)

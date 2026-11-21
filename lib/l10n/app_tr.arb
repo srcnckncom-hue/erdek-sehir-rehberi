@@ -580,7 +580,7 @@
     }
   },
   "settingsTitle": "Ayarlar ve Hakkında",
-  "settingsSubtitle": "Görünüm, bildirimler, destek ve uygulama bilgileri",
+  "settingsSubtitle": "Görünüm, dil, bildirimler, destek ve uygulama bilgileri",
   "settingsNotificationsTitle": "Bildirimler",
   "settingsSupportTitle": "Destek",
   "aboutTitle": "Hakkında",
@@ -639,5 +639,8 @@
       }
     }
   },
-  "thisIsLastDepartureToday": "Bugünün son seferi"
+  "thisIsLastDepartureToday": "Bugünün son seferi",
+  "languageTitle": "Dil",
+  "languageTurkish": "Türkçe",
+  "languageEnglish": "English"
 }

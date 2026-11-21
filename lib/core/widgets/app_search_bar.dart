@@ -35,12 +35,12 @@ class AppSearchBar extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Row(
                   children: [
-                    AppIcon(AppIcons.search, size: 22, color: p.textSecondary),
+                    AppIcon(AppIcons.search, size: 20, color: p.textSecondary),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
                         hint,
-                        style: AppTypography.body.copyWith(color: p.textSecondary),
+                        style: AppTypography.body.copyWith(color: p.textSecondary, fontSize: 13.5),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

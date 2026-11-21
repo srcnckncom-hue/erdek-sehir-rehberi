@@ -39,10 +39,10 @@ abstract final class AppTypography {
     height: 1.2,
   );
 
-  /// Bölüm başlığı ("Hızlı İşlemlerim")
+  /// Bölüm başlığı ("Hızlı İşlemlerim") — 21.11.2026: 20 → 17 (kullanıcı isteği)
   static const sectionTitle = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: FontWeight.w600,
     height: 1.25,
   );
@@ -71,10 +71,10 @@ abstract final class AppTypography {
     height: 1.4,
   );
 
-  /// Beyaz kutucuk etiketi
+  /// Beyaz kutucuk etiketi — 21.11.2026: 13 → 12 (kullanıcı isteği)
   static const tileLabel = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: FontWeight.w500,
     height: 1.25,
   );

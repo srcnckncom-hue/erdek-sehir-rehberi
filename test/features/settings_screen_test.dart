@@ -1,5 +1,6 @@
 import 'package:erdek_rehberi/core/settings/usage_store.dart';
 import 'package:erdek_rehberi/core/system/system_bridge.dart';
+import 'package:erdek_rehberi/features/prayer/presentation/notification_settings_sheet.dart';
 import 'package:erdek_rehberi/features/settings/presentation/settings_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,6 +33,36 @@ void main() {
     final container = ProviderScope.containerOf(tester.element(find.byType(SettingsScreen)));
     final bridge = container.read(systemBridgeProvider) as NoopSystemBridge;
     expect(bridge.shared.single, contains('Erdek Şehir Rehberi'));
+  });
+
+  testWidgets('Vakit bildirimleri sayfasında Kapat düğmesi var ve kapatır', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1170, 6000)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(testApp(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Vakit bildirimleri'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(notificationSheetCloseKey), findsOneWidget);
+
+    await tester.tap(find.byKey(notificationSheetCloseKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(notificationSheetCloseKey), findsNothing);
+  });
+
+  testWidgets('Dil seçimi: Türkçe ve English seçenekleri', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1170, 6000)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(testApp(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    expect(find.text('Dil'), findsOneWidget);
+    expect(find.text('Türkçe'), findsOneWidget);
+    expect(find.text('English'), findsOneWidget);
   });
 
   group('Puanlama penceresi zamanı', () {

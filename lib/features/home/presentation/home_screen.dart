@@ -108,7 +108,7 @@ class HomeScreen extends ConsumerWidget {
               onAction: () => _showAllServices(context, ref),
             ),
             const SizedBox(height: AppSpacing.md),
-            QuickActionGrid(columns: 3, children: _chips(context, ref)),
+            QuickActionGrid(columns: 2, children: _chips(context, ref)),
             const SizedBox(height: AppSpacing.gap),
             QuickActionGrid(columns: 4, children: _tiles(context, ref)),
             const SizedBox(height: AppSpacing.section),
@@ -252,12 +252,6 @@ class HomeScreen extends ConsumerWidget {
         onTap: () => onOpenTab(AppTab.pharmacy),
       ),
       QuickActionChip(
-        icon: AppIcons.prayer,
-        label: l10n.actionPrayerTimes,
-        tone: p.mint,
-        onTap: () => onOpenTab(AppTab.prayer),
-      ),
-      QuickActionChip(
         icon: AppIcons.ferry,
         label: l10n.actionFerryTimes,
         tone: p.aqua,
@@ -343,7 +337,7 @@ class HomeScreen extends ConsumerWidget {
                 SectionHeader(title: l10n.allServicesTitle),
                 const SizedBox(height: AppSpacing.md),
                 QuickActionGrid(
-                  columns: 3,
+                  columns: 2,
                   children: [
                     for (final w in _chips(context, ref).cast<QuickActionChip>())
                       QuickActionChip(

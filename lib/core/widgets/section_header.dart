@@ -28,8 +28,8 @@ class SectionHeader extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 5,
-            height: 19,
+            width: 4,
+            height: 17,
             decoration: BoxDecoration(
               color: accentColor ?? p.primary,
               borderRadius: BorderRadius.circular(3),
@@ -60,10 +60,13 @@ class SectionHeader extends StatelessWidget {
                     children: [
                       Text(
                         actionLabel!,
-                        style: AppTypography.label.copyWith(color: p.primary),
+                        style: AppTypography.caption.copyWith(
+                          color: p.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       const SizedBox(width: AppSpacing.xxs),
-                      AppIcon(AppIcons.arrowRight, size: 18, color: p.primary),
+                      AppIcon(AppIcons.arrowRight, size: 16, color: p.primary),
                     ],
                   ),
                 ),

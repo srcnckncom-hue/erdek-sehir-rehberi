@@ -17,9 +17,12 @@ Future<void> toggleNotifications(BuildContext context, WidgetRef ref, {required 
   if (!ok) messenger?.showSnackBar(SnackBar(content: Text(denied)));
 }
 
+const notificationSheetCloseKey = Key('notification_sheet_close');
+
 Future<void> showNotificationSettingsSheet(BuildContext context) => showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
       showDragHandle: true,
       backgroundColor: context.palette.background,
       builder: (_) => const _NotificationSettingsSheet(),
@@ -41,7 +44,24 @@ class _NotificationSettingsSheet extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SectionHeader(title: l10n.notificationsTitle),
+            Row(
+              children: [
+                Expanded(child: SectionHeader(title: l10n.notificationsTitle)),
+                // Kapat / geri: sayfa aşağı kaydırılarak da kapanır, ama
+                // görünür bir düğme şart (kullanıcı geri bildirimi).
+                Padding(
+                  padding: const EdgeInsets.only(right: AppSpacing.sm),
+                  child: TextButton(
+                    key: notificationSheetCloseKey,
+                    onPressed: () => Navigator.of(context).maybePop(),
+                    child: Text(
+                      l10n.close,
+                      style: AppTypography.label.copyWith(color: p.primary),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: AppSpacing.md),
             GroupedCard(
               children: [
