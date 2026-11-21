@@ -14,14 +14,19 @@
   - Arama: openSearch() tam ekran; TextSearch Türkçe büyük/küçük + aksan katlama; en az 2 karakter, bölüm başına en fazla 8 sonuç.
   - Ulaşım 3. tür "Şehir İçi" (TransportMode.city): Balıkesir Büyükşehir mahalle hatları ÖRNEK, rota düzeyinde isSample:true. Şehirlerarası otobüs de ÖRNEK.
   - Ortak: pill_selectors.dart (SegmentedPills, PillChoiceRow), Launchers.openUrl/formatPhone, golden 07_rehber.
-- 8b ara adım (Keşfet) yazıldı (21.11.2026); CI'da bir test düzeltildi (geri düğmesi PageHeader.backKey ile bulunuyor), sonuç bekleniyor:
+- 8b ara adım (Keşfet) TAMAM (CI yeşil, ekran görüntüleri onaylandı):
   - Ana sayfada "Şehir Hizmetleri" altına "Keşfet" bölümü (Gezilecek Yerler aqua, Erdek Tarihi mor); ☰ menüde de var. Metinler ÖRNEK. Fotoğraf yok → tür ikonu + "Fotoğraf yakında" (hakkı bize ait fotoğraflar gelince eklenecek).
   - data/places.json (area erdek/kapidag; category plaj/tarihi/doga/koy/manzara/diger; summary, paragraphs, tips?, address?, latitude/longitude?) — 6 ÖRNEK yer. data/history.json (intro?, sections: id/title/period?/paragraphs) — 4 ÖRNEK dönem.
   - lib/features/explore: PlacesScreen, PlaceDetailScreen, HistoryScreen (Navigator.push). PageHeader'a onBack eklendi.
   - Arama gezilecek yerleri de arıyor. Bu sayfalarda reklam YOK.
   - Golden 08_gezilecek_yerler, 09_yer_ayrinti, 10_erdek_tarihi.
+- 9. adım reklam sistemi BAŞLADI (21.11.2026):
+  - Kararlar: geçiş (tam ekran) reklamı YOK. Banner = görsel (2:1, 1200×600) + başlık (+ isteğe bağlı reklam veren adı), köşede "Reklam" etiketi.
+  - Supabase projesi: https://kzoydwxugwhorbbjqctb.supabase.co, bölge Europe. Publishable key (herkese açık) GitHub Secret SUPABASE_ANON_KEY olarak; SUPABASE_URL de secret. Secret key sohbete yapıştırıldığı için SİLİNDİ; secret key kullanılmıyor, asla sohbete yazılmaz. Proje ayarı: Data API açık, otomatik grant kapalı, otomatik RLS açık.
+  - 9a yazıldı, kullanıcı SQL'i çalıştıracak + CI bekleniyor: supabase/migrations/0001_ads.sql (admins, ad_slots [6 slot], ads, ad_placements, ad_stats_daily; RLS; uygulama yalnızca get_active_ads() ve record_ad_event() RPC'lerini çağırır; ad-images public kovası, yalnız admin yazar; is_admin()). Uygulama: features/ads (Ad, pickAd [en yüksek öncelik + oturum başına dönüş], AdsRepository dio ile REST/RPC, apikey başlığı, önbellek 'ads_active', örnek ayarlarda ağa çıkmaz), gerçek AdSlot (gösterim/tıklama sayımı, index parametresi), ana sayfa yenilemesi reklamları da yeniler.
+  - 9b sırada: Flutter Web admin paneli (admin/, supabase_flutter, giriş + reklam listesi/ekle/düzenle/görsel yükle/slot seç/tarih + günlük istatistik), pages-deploy'da secrets ile derleme (workflow değişikliği → kullanıcı elle taşır).
 - Firebase: ERTELENDİ.
-- Sırada: 9. adım reklam sistemi (Supabase şema/RLS, Flutter Web admin, gerçek AdSlot + interstitial, istatistik). Sonra 10 WidgetKit, 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
+- Sonra: 10 WidgetKit, 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
 
 ## Kullanıcıdan beklenen gerçek veriler
 - Gestaş tarifesinin gerçek geçerlilik tarihleri ve telefonu.

@@ -12,6 +12,7 @@ import '../../../core/util/launch_or_notify.dart';
 import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../ads/data/ads_repository.dart';
 import '../../ads/presentation/ad_slot.dart';
 import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/data/announcements_seen.dart';
@@ -71,7 +72,8 @@ class HomeScreen extends ConsumerWidget {
           ..invalidate(prayerTimesProvider)
           ..invalidate(transportDataProvider)
           ..invalidate(announcementsProvider)
-          ..invalidate(currentWeatherProvider);
+          ..invalidate(currentWeatherProvider)
+          ..invalidate(activeAdsProvider);
         try {
           await ref.read(pharmacyDataProvider.future);
         } catch (_) {

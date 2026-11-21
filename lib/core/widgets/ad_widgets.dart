@@ -27,7 +27,7 @@ class AdLabel extends StatelessWidget {
 
 /// Kart formatlı yerel reklam (`home_feed_1` gibi slotlar).
 /// Görsel oranı 2:1 — admin panelinde yükleme rehberi: 1200×600 px.
-/// Veri bağlantısı (AdSlot) 9. adımda; bu yalnızca görünüm.
+/// Veriyi AdSlot (features/ads) sağlar; bu yalnızca görünüm.
 class AdCard extends StatelessWidget {
   const AdCard({
     super.key,
@@ -74,7 +74,11 @@ class AdCard extends StatelessWidget {
                     children: [
                       AspectRatio(
                         aspectRatio: imageAspectRatio,
-                        child: Image(image: image, fit: BoxFit.cover),
+                        child: Image(
+                          image: image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, _, _) => ColoredBox(color: p.surfaceMuted),
+                        ),
                       ),
                       Positioned(
                         left: AppSpacing.sm,

@@ -297,9 +297,10 @@ class _DepartureList extends StatelessWidget {
         // Her 5 seferde bir yerel reklam (aktif reklam yoksa yer kaplamaz).
         if (i % TransportScreen.inlineAdEvery == 0) {
           rows.add(
-            const AdSlot(
+            AdSlot(
               id: 'transport_list_inline',
-              padding: EdgeInsets.all(AppSpacing.sm),
+              index: i ~/ TransportScreen.inlineAdEvery,
+              padding: const EdgeInsets.all(AppSpacing.sm),
             ),
           );
         }
