@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../api.dart';
-import 'ads_screen.dart';
+import '../shell.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.api});
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       if (!mounted) return;
       await Navigator.of(context).pushReplacement(
-        MaterialPageRoute<void>(builder: (_) => AdsScreen(api: widget.api)),
+        MaterialPageRoute<void>(builder: (_) => AdminShell(api: widget.api)),
       );
     } catch (e) {
       setState(() => _error = e.toString());

@@ -3,7 +3,6 @@ import 'package:material_ui/material_ui.dart';
 import '../api.dart';
 import '../models.dart';
 import 'ad_edit_screen.dart';
-import 'login_screen.dart';
 
 /// Reklam listesi + son 30 günün gösterim/tıklama özeti.
 class AdsScreen extends StatefulWidget {
@@ -44,13 +43,6 @@ class _AdsScreenState extends State<AdsScreen> {
     if (changed ?? false) _reload();
   }
 
-  Future<void> _signOut() async {
-    widget.api.signOut();
-    await Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(builder: (_) => LoginScreen(api: widget.api)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +50,7 @@ class _AdsScreenState extends State<AdsScreen> {
         title: const Text('Reklamlar'),
         actions: [
           IconButton(tooltip: 'Yenile', onPressed: _reload, icon: const Icon(Icons.refresh)),
-          TextButton(onPressed: _signOut, child: Text('Çıkış (${widget.api.email ?? ''})')),
+          Center(child: Text(widget.api.email ?? '')),
           const SizedBox(width: 8),
         ],
       ),

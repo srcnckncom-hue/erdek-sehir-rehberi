@@ -1,8 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
 import 'api.dart';
-import 'screens/ads_screen.dart';
 import 'screens/login_screen.dart';
+import 'shell.dart';
 
 /// Derleme sırasında GitHub Secrets'tan gelir (pages-deploy.yml).
 const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -55,7 +55,7 @@ class _GateState extends State<_Gate> {
         if (snap.connectionState != ConnectionState.done) {
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
-        return widget.api.isSignedIn ? AdsScreen(api: widget.api) : LoginScreen(api: widget.api);
+        return widget.api.isSignedIn ? AdminShell(api: widget.api) : LoginScreen(api: widget.api);
       },
     );
   }

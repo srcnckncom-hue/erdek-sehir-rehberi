@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/data/json_sources.dart';
 import '../core/data/offline_first_loader.dart';
+import '../core/network/content_json_fetcher.dart';
 import '../core/network/dio_json_fetcher.dart';
 import '../core/settings/seen_store.dart';
 import '../core/time/erdek_time.dart';
@@ -40,8 +41,14 @@ final dioProvider = Provider<Dio>((ref) {
   return dio;
 });
 
+/// Önce Supabase (panelden düzenlenen içerikler), yoksa GitHub Pages.
 final jsonFetcherProvider = Provider<JsonFetcher>(
-  (ref) => DioJsonFetcher(ref.watch(dioProvider), baseUrl: Env.dataBaseUrl),
+  (ref) => ContentJsonFetcher(
+    dio: ref.watch(dioProvider),
+    fallback: DioJsonFetcher(ref.watch(dioProvider), baseUrl: Env.dataBaseUrl),
+    supabaseUrl: Env.supabaseUrl,
+    apiKey: Env.supabaseAnonKey,
+  ),
 );
 
 final bundledJsonProvider = Provider<BundledJsonSource>(

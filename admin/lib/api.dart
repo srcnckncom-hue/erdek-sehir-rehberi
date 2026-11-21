@@ -200,6 +200,30 @@ class Api {
     }
   }
 
+  // ─── İçerik belgeleri (content_docs) ─────────────────────────────────
+  /// Panelden kaydedilmiş belge; yoksa null.
+  Future<Map<String, dynamic>?> getContent(String id) async {
+    final rows = await _get('content_docs?select=doc&id=eq.$id');
+    if (rows.isEmpty) return null;
+    return (rows.first as Map<String, dynamic>)['doc'] as Map<String, dynamic>;
+  }
+
+  /// GitHub Pages'te yayınlanan kopya (panel ilk kez açıldığında başlangıç).
+  Future<Map<String, dynamic>> getPublishedCopy(String id) async {
+    final res = await http.get(Uri.base.resolve('../data/$id.json'));
+    if (res.statusCode != 200) throw ApiException('Yayındaki kopya okunamadı ($id).');
+    return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<void> saveContent(String id, Map<String, dynamic> doc) async {
+    final res = await http.post(
+      Uri.parse('$base/rest/v1/content_docs?on_conflict=id'),
+      headers: await _headers(extra: {'Prefer': 'resolution=merge-duplicates'}),
+      body: jsonEncode({'id': id, 'doc': doc}),
+    );
+    _check(res);
+  }
+
   // ─── Storage ─────────────────────────────────────────────────────────
   /// Görseli yükler, kovadaki yolunu döndürür.
   Future<String> uploadImage(Uint8List bytes, {required String contentType}) async {
