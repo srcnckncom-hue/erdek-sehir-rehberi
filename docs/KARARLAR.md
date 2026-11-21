@@ -2,6 +2,13 @@
 
 > Yeni bir Claude sohbetinde devam ederken önce bu dosyayı okut. Proje kuralları,
 > tasarım, sürümler ve sıradaki adım burada. Kod ve veri bu repoda.
+>
+> Yeni sohbete başlarken: GitHub reposunu (srcnckncom-hue/erdek-sehir-rehberi) bağla,
+> Claude masaüstü uygulamasında `Documents\GitHub\erdek-sehir-rehberi` klasörünü ekle
+> (+ → Add folder) ve şunu yaz: "docs/KARARLAR.md'yi oku, Erdek Şehir Rehberi'ne
+> kaldığımız yerden devam ediyoruz."
+>
+> Son güncelleme: 21.11.2026, 13. adım tamam (TestFlight'a ilk derleme gitti).
 
 ## Durum
 - 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
@@ -38,9 +45,13 @@
   - Hedef Xcode projesine CI'da scripts/add_widget_target.rb (xcodeproj gem, tekrar çalıştırılabilir, embed fazı Thin Binary'den önce) ile eklenir — ios-ci'de adım var, ios-release'de de OLMALI.
 - 11. adım TAMAM (CI yeşil): logo ONAYLANDI ("şimdilik"): Bursa şehir rehberi rozet stilinden ilham; kemer içinde gün batımı + Kapıdağ silueti + deniz + yelkenli + martılar, sol kenarda zeytin dalı (Düzlerspor'dan yalnızca fikir, kopya değil), mavi levhada ERDEK, turuncu kurdelede ŞEHİR REHBERİ, Poppins Bold. Kaynak: assets/images/logo.svg; logo.png (drawer). İkon: krem #FFF6EA zemin + logo (tüm AppIcon boyutları). Açılış: LaunchImage 240×210 pt, beyaz zemin. Not: küçük boyda alt yazı zor okunuyor; kullanıcı böyle kalsın dedi.
 - 12. adım TAMAM (ios-signing-setup yeşil; certs/profiles erdek-certificates'ta; PAT adı erdek-match-2, süresi dolunca MATCH_GIT_URL yenilenmeli): Gemfile (fastlane), fastlane/Appfile, Matchfile (git storage, appstore), Fastfile (lane certificates: match appstore, APP + WIDGET, API key ile, readonly false). Workflow ios-signing-setup.yml (workflow_dispatch, macos-26). Secrets: APPLE_TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 (p8 içeriği), MATCH_PASSWORD, MATCH_GIT_URL (https://x-access-token:<fine-grained PAT>@github.com/srcnckncom-hue/erdek-certificates.git). Apple tarafı elle: App Group + iki App ID (App Groups yetkisi, gruba bağlı) + App Store Connect API anahtarı (App Manager).
-- 13. adım yazıldı: pubspec version 1.0.0+1. Fastfile lane beta: match readonly → update_code_signing_settings (Runner + ErdekWidget, manual, Apple Distribution) → build no = latest_testflight_build_number+1 → ExportOptions (app-store-connect, manual, iki profil) → flutter build ipa --dart-define-from-file=config/env.json → upload_to_testflight (beklemeden). Workflow ios-release.yml (workflow_dispatch, macos-26, Xcode 26.6): make_env.sh (DATA_BASE_URL Pages, WEATHER_USER_AGENT "ErdekSehirRehberi/1.0 github.com/srcnckncom-hue/erdek-sehir-rehberi"), add_widget_target.rb, fastlane ios beta. Kullanıcı App Store Connect'te uygulama kaydını açacak.
+- 13. adım TAMAM (ios-release yeşil, ilk derleme TestFlight'a gitti; widget betiği ios-release'de `bundle exec ruby` ile çalışır): pubspec version 1.0.0+1. Fastfile lane beta: match readonly → update_code_signing_settings (Runner + ErdekWidget, manual, Apple Distribution) → build no = latest_testflight_build_number+1 → ExportOptions (app-store-connect, manual, iki profil) → flutter build ipa --dart-define-from-file=config/env.json → upload_to_testflight (beklemeden). Workflow ios-release.yml (workflow_dispatch, macos-26, Xcode 26.6): make_env.sh (DATA_BASE_URL Pages, WEATHER_USER_AGENT "ErdekSehirRehberi/1.0 github.com/srcnckncom-hue/erdek-sehir-rehberi"), add_widget_target.rb, fastlane ios beta. App Store Connect'te uygulama kaydı açıldı.
 - Firebase: ERTELENDİ.
-- Sonra: 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
+- SIRADAKİ:
+  1. Kullanıcı TestFlight'ta kendi iPhone'unda deneyecek (Internal Testing grubu) ve geri bildirim verecek: logo/açılış, reklam, widget, panelden gelen içerikler.
+  2. 14. adım App Store hazırlığı: ekran görüntüleri (golden 6.9" 1320×2868 tabanlı), açıklama/anahtar kelimeler/kategori, gizlilik politikası + kullanım koşulları (docs/legal → Pages /legal/), App Privacy formu (konum yok, takip yok; reklam sayımı anonim), destek URL'si, yaş derecelendirmesi, hero fotoğrafı kullanım hakkı teyidi, "resmi değil" ibaresi.
+  3. Gerçek veriler panelden girilecek (telefonlar, eczane nöbetleri, şehir içi hatlar, gezilecek yerler, tarih).
+  4. Ertelenenler: Firebase (Crashlytics + FCM, admin'den bildirim), Diyanet API'ye geçiş.
 
 ## Kullanıcıdan beklenen gerçek veriler
 - Gestaş tarifesinin gerçek geçerlilik tarihleri ve telefonu.
