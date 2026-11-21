@@ -21,7 +21,7 @@ void main() {
     await pumpScreen(tester);
 
     expect(find.text('Ulaşım'), findsOneWidget);
-    expect(find.text('Avşa'), findsOneWidget);
+    expect(find.text('Erdek – Avşa'), findsOneWidget);
     expect(find.text('Yarın · 09:00'), findsOneWidget);
     expect(find.textContaining('14 sa 55 dk kaldı'), findsOneWidget);
     expect(find.text('Pzt 23'), findsOneWidget);
@@ -34,7 +34,7 @@ void main() {
     await tester.tap(find.text('Otobüs'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Bandırma'), findsOneWidget);
+    expect(find.text('Erdek – Bandırma'), findsOneWidget);
     expect(find.text('Bugün · 19:00'), findsOneWidget);
     expect(find.textContaining('55 dk kaldı'), findsOneWidget);
     expect(find.text('Sıradaki'), findsOneWidget);

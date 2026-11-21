@@ -538,7 +538,8 @@ class _NextDepartureCard extends StatelessWidget {
     }
 
     UpcomingDeparture? next;
-    for (final route in data?.byMode(mode) ?? const <TransportRoute>[]) {
+    // Yalnızca Erdek'ten kalkan hatlar (dönüş seferleri değil).
+    for (final route in data?.outboundByMode(mode) ?? const <TransportRoute>[]) {
       final candidate = upcomingDepartures(route, now, limit: 1).firstOrNull;
       if (candidate == null) continue;
       if (next == null ||

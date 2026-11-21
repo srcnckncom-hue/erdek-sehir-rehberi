@@ -92,31 +92,42 @@ class FeatureCard extends StatelessWidget {
                             alignment: Alignment.center,
                             child: AppIcon(icon, size: 26, color: onCard),
                           ),
-                          const Spacer(),
-                          if (tagLabel != null)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.md,
-                                vertical: AppSpacing.xs,
-                              ),
-                              decoration: BoxDecoration(
-                                color: onCard.withValues(alpha: 0.18),
-                                borderRadius: AppRadius.pillAll,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  if (tagIcon != null) ...[
-                                    AppIcon(tagIcon!, size: 16, color: onCard),
-                                    const SizedBox(width: AppSpacing.xs),
-                                  ],
-                                  Text(
-                                    tagLabel!,
-                                    style: AppTypography.tileLabel.copyWith(color: onCard),
-                                  ),
-                                ],
-                              ),
+                          const SizedBox(width: AppSpacing.md),
+                          // Etiket uzunsa kısalsın, satır taşmasın.
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: tagLabel == null
+                                  ? const SizedBox.shrink()
+                                  : Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: AppSpacing.md,
+                                        vertical: AppSpacing.xs,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: onCard.withValues(alpha: 0.18),
+                                        borderRadius: AppRadius.pillAll,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (tagIcon != null) ...[
+                                            AppIcon(tagIcon!, size: 16, color: onCard),
+                                            const SizedBox(width: AppSpacing.xs),
+                                          ],
+                                          Flexible(
+                                            child: Text(
+                                              tagLabel!,
+                                              style: AppTypography.tileLabel.copyWith(color: onCard),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                             ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),

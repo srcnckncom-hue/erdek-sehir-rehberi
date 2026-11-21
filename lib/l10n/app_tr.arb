@@ -406,5 +406,14 @@
       }
     }
   },
-  "selectRoute": "Hat seçin"
+  "selectRoute": "Hat seçin",
+  "arrivalAt": "Varış {time}",
+  "@arrivalAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "routeSampleBanner": "Bu hattın saatleri ÖRNEK VERİ — gerçek değildir."
 }

@@ -56,6 +56,12 @@ Her hat (`routes`) birden fazla tarife dönemi (`timetables`) içerebilir: yaz /
 
 - `days` yazılmazsa sefer **her gün** vardır. 1 = Pazartesi … 7 = Pazar.
 - `mode`: feribot için `"ferry"`, otobüs/minibüs için `"bus"`.
+- `direction`: Erdek'ten kalkış `"outbound"`, Erdek'e dönüş `"inbound"`. Ana sayfadaki
+  "Sıradaki Feribot/Otobüs" kartları yalnızca `outbound` hatları kullanır.
+- `arrival` (opsiyonel): varış saati, ör. `{ "time": "11:00", "arrival": "13:00", "note": "Balıklı üzerinden" }`.
+- `isSample: true` olan hatta "ÖRNEK VERİ" uyarısı çıkar; gerçek saatleri girince sil.
+- Gestaş feribot tarifesi tek bir geminin tur güzergâhıdır; her ada için iki yön
+  (Erdek → Ada, Ada → Erdek) ayrı hat olarak yazılır.
 
 ## contacts.json — Önemli telefonlar
 

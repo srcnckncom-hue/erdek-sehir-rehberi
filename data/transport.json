@@ -1,60 +1,132 @@
 {
   "schemaVersion": 1,
-  "isSample": true,
-  "updatedAt": "2026-11-21T00:00:00+03:00",
-  "source": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+  "isSample": false,
+  "updatedAt": "2026-11-21T09:30:00+03:00",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Otobüs: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
         "id": "erdek-avsa",
         "mode": "ferry",
-        "title": "Erdek – Avşa",
+        "direction": "outbound",
+        "title": "Erdek → Avşa",
         "from": "Erdek İskelesi",
         "to": "Avşa",
-        "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
         "timetables": [
           {
-            "name": "Kış tarifesi (ÖRNEK)",
-            "validFrom": "2026-10-01",
-            "validTo": "2027-05-31",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "09:00"
+                "time": "11:00",
+                "arrival": "13:00",
+                "note": "Balıklı üzerinden"
               },
               {
-                "time": "16:00",
+                "time": "19:15",
+                "arrival": "22:00",
                 "days": [
-                  1,
                   2,
                   3,
-                  4,
-                  5,
                   6
-                ]
+                ],
+                "note": "Balıklı, Marmara üzerinden"
+              },
+              {
+                "time": "19:15",
+                "arrival": "22:00",
+                "days": [
+                  5
+                ],
+                "note": "Balıklı, Marmara, Ekinlik üzerinden"
+              },
+              {
+                "time": "19:30",
+                "arrival": "22:15",
+                "days": [
+                  1,
+                  4
+                ],
+                "note": "Balıklı, Marmara, Ekinlik üzerinden"
+              },
+              {
+                "time": "19:30",
+                "arrival": "21:45",
+                "days": [
+                  7
+                ],
+                "note": "Marmara üzerinden"
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "id": "avsa-erdek",
+        "mode": "ferry",
+        "direction": "inbound",
+        "title": "Avşa → Erdek",
+        "from": "Avşa",
+        "to": "Erdek İskelesi",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
+        "timetables": [
           {
-            "name": "Yaz tarifesi (ÖRNEK)",
-            "validFrom": "2027-06-01",
-            "validTo": "2027-09-30",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "08:00"
-              },
-              {
-                "time": "11:00"
-              },
-              {
-                "time": "14:00"
-              },
-              {
-                "time": "18:00",
-                "note": "Yalnızca hafta sonu",
+                "time": "06:00",
+                "arrival": "11:00",
                 "days": [
-                  6,
+                  1,
+                  4
+                ],
+                "note": "Ekinlik, Marmara, Balıklı üzerinden"
+              },
+              {
+                "time": "06:00",
+                "arrival": "11:00",
+                "days": [
+                  2,
+                  3,
+                  5,
+                  6
+                ],
+                "note": "Marmara, Balıklı üzerinden"
+              },
+              {
+                "time": "06:00",
+                "arrival": "11:00",
+                "days": [
                   7
-                ]
+                ],
+                "note": "Marmara üzerinden"
+              },
+              {
+                "time": "16:45",
+                "arrival": "19:15",
+                "days": [
+                  2,
+                  3,
+                  5,
+                  6
+                ],
+                "note": "Balıklı üzerinden"
+              },
+              {
+                "time": "17:00",
+                "arrival": "19:30",
+                "days": [
+                  1,
+                  4,
+                  7
+                ],
+                "note": "Balıklı üzerinden"
               }
             ]
           }
@@ -63,51 +135,63 @@
       {
         "id": "erdek-marmara",
         "mode": "ferry",
-        "title": "Erdek – Marmara Adası",
+        "direction": "outbound",
+        "title": "Erdek → Marmara",
         "from": "Erdek İskelesi",
         "to": "Marmara Adası",
-        "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
         "timetables": [
           {
-            "name": "Kış tarifesi (ÖRNEK)",
-            "validFrom": "2026-10-01",
-            "validTo": "2027-05-31",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "09:00"
-              },
-              {
-                "time": "16:00",
+                "time": "11:00",
+                "arrival": "16:00",
                 "days": [
                   1,
+                  4
+                ],
+                "note": "Balıklı, Avşa, Ekinlik üzerinden"
+              },
+              {
+                "time": "11:00",
+                "arrival": "16:00",
+                "days": [
                   2,
                   3,
-                  4,
+                  5,
+                  6,
+                  7
+                ],
+                "note": "Balıklı, Avşa üzerinden"
+              },
+              {
+                "time": "19:15",
+                "arrival": "21:15",
+                "days": [
+                  2,
+                  3,
                   5,
                   6
-                ]
-              }
-            ]
-          },
-          {
-            "name": "Yaz tarifesi (ÖRNEK)",
-            "validFrom": "2027-06-01",
-            "validTo": "2027-09-30",
-            "departures": [
-              {
-                "time": "08:00"
+                ],
+                "note": "Balıklı üzerinden"
               },
               {
-                "time": "11:00"
-              },
-              {
-                "time": "14:00"
-              },
-              {
-                "time": "18:00",
-                "note": "Yalnızca hafta sonu",
+                "time": "19:30",
+                "arrival": "21:30",
                 "days": [
-                  6,
+                  1,
+                  4
+                ],
+                "note": "Balıklı üzerinden"
+              },
+              {
+                "time": "19:30",
+                "arrival": "21:00",
+                "days": [
                   7
                 ]
               }
@@ -116,53 +200,162 @@
         ]
       },
       {
-        "id": "erdek-pasalimani",
+        "id": "marmara-erdek",
         "mode": "ferry",
-        "title": "Erdek – Paşalimanı / Balıklı",
-        "from": "Erdek İskelesi",
-        "to": "Paşalimanı / Balıklı",
-        "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+        "direction": "inbound",
+        "title": "Marmara → Erdek",
+        "from": "Marmara Adası",
+        "to": "Erdek İskelesi",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
         "timetables": [
           {
-            "name": "Kış tarifesi (ÖRNEK)",
-            "validFrom": "2026-10-01",
-            "validTo": "2027-05-31",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "09:00"
+                "time": "06:45",
+                "arrival": "11:00",
+                "days": [
+                  2,
+                  3,
+                  5,
+                  6
+                ],
+                "note": "Balıklı üzerinden"
+              },
+              {
+                "time": "06:45",
+                "arrival": "11:00",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "07:00",
+                "arrival": "11:00",
+                "days": [
+                  1,
+                  4
+                ],
+                "note": "Balıklı üzerinden"
               },
               {
                 "time": "16:00",
+                "arrival": "19:30",
                 "days": [
                   1,
+                  4,
+                  7
+                ],
+                "note": "Ekinlik, Avşa, Balıklı üzerinden"
+              },
+              {
+                "time": "16:00",
+                "arrival": "19:15",
+                "days": [
                   2,
                   3,
-                  4,
+                  5,
+                  6
+                ],
+                "note": "Avşa, Balıklı üzerinden"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "erdek-balikli",
+        "mode": "ferry",
+        "direction": "outbound",
+        "title": "Erdek → Balıklı",
+        "from": "Erdek İskelesi",
+        "to": "Paşalimanı / Balıklı",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
+        "timetables": [
+          {
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
+            "departures": [
+              {
+                "time": "11:00",
+                "arrival": "12:00"
+              },
+              {
+                "time": "19:15",
+                "arrival": "20:15",
+                "days": [
+                  2,
+                  3,
                   5,
                   6
                 ]
+              },
+              {
+                "time": "19:30",
+                "arrival": "20:30",
+                "days": [
+                  1,
+                  4
+                ]
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "id": "balikli-erdek",
+        "mode": "ferry",
+        "direction": "inbound",
+        "title": "Balıklı → Erdek",
+        "from": "Paşalimanı / Balıklı",
+        "to": "Erdek İskelesi",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
+        "timetables": [
           {
-            "name": "Yaz tarifesi (ÖRNEK)",
-            "validFrom": "2027-06-01",
-            "validTo": "2027-09-30",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "08:00"
+                "time": "07:45",
+                "arrival": "11:00",
+                "days": [
+                  2,
+                  3,
+                  5,
+                  6
+                ]
               },
               {
-                "time": "11:00"
+                "time": "08:00",
+                "arrival": "11:00",
+                "days": [
+                  1,
+                  4
+                ]
               },
               {
-                "time": "14:00"
+                "time": "17:45",
+                "arrival": "19:15",
+                "days": [
+                  2,
+                  3,
+                  5,
+                  6
+                ]
               },
               {
                 "time": "18:00",
-                "note": "Yalnızca hafta sonu",
+                "arrival": "19:30",
                 "days": [
-                  6,
+                  1,
+                  4,
                   7
                 ]
               }
@@ -173,53 +366,81 @@
       {
         "id": "erdek-ekinlik",
         "mode": "ferry",
-        "title": "Erdek – Ekinlik",
+        "direction": "outbound",
+        "title": "Erdek → Ekinlik",
         "from": "Erdek İskelesi",
         "to": "Ekinlik",
-        "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
         "timetables": [
           {
-            "name": "Kış tarifesi (ÖRNEK)",
-            "validFrom": "2026-10-01",
-            "validTo": "2027-05-31",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "09:00"
-              },
-              {
-                "time": "16:00",
+                "time": "11:00",
+                "arrival": "13:20",
                 "days": [
                   1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
+                  4
+                ],
+                "note": "Balıklı, Avşa üzerinden"
+              },
+              {
+                "time": "19:15",
+                "arrival": "21:45",
+                "days": [
+                  5
+                ],
+                "note": "Balıklı, Marmara üzerinden"
+              },
+              {
+                "time": "19:30",
+                "arrival": "22:00",
+                "days": [
+                  1,
+                  4
+                ],
+                "note": "Balıklı, Marmara üzerinden"
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "id": "ekinlik-erdek",
+        "mode": "ferry",
+        "direction": "inbound",
+        "title": "Ekinlik → Erdek",
+        "from": "Ekinlik",
+        "to": "Erdek İskelesi",
+        "operator": "Gestaş",
+        "note": "Gestaş Güney Marmara hattı. Tarife geçerlilik tarihleri teyit edilecek.",
+        "timetables": [
           {
-            "name": "Yaz tarifesi (ÖRNEK)",
-            "validFrom": "2027-06-01",
-            "validTo": "2027-09-30",
+            "name": "Kış tarifesi",
+            "validFrom": "2026-11-21",
+            "validTo": "2027-03-31",
             "departures": [
               {
-                "time": "08:00"
-              },
-              {
-                "time": "11:00"
-              },
-              {
-                "time": "14:00"
-              },
-              {
-                "time": "18:00",
-                "note": "Yalnızca hafta sonu",
+                "time": "06:20",
+                "arrival": "11:00",
                 "days": [
-                  6,
+                  1,
+                  4
+                ],
+                "note": "Marmara, Balıklı üzerinden"
+              },
+              {
+                "time": "16:30",
+                "arrival": "19:30",
+                "days": [
+                  1,
+                  4,
                   7
-                ]
+                ],
+                "note": "Avşa, Balıklı üzerinden"
               }
             ]
           }
@@ -430,7 +651,9 @@
               }
             ]
           }
-        ]
+        ],
+        "isSample": true,
+        "direction": "outbound"
       },
       {
         "id": "erdek-balikesir",
@@ -637,7 +860,9 @@
               }
             ]
           }
-        ]
+        ],
+        "isSample": true,
+        "direction": "outbound"
       }
     ]
   }

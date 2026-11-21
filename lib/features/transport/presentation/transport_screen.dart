@@ -80,11 +80,18 @@ class TransportScreen extends ConsumerWidget {
           semanticsLabel: l10n.selectRoute,
           items: [
             for (final r in routes)
-              _PillItem(label: r.to, selected: r.id == route?.id, onTap: () => notifier.selectRoute(r.id)),
+              _PillItem(label: r.title, selected: r.id == route?.id, onTap: () => notifier.selectRoute(r.id)),
           ],
         ),
         const SizedBox(height: AppSpacing.lg),
       ]);
+
+      if (route != null && route.isSample) {
+        children.addAll([
+          InfoBanner(icon: AppIcons.info, message: l10n.routeSampleBanner),
+          const SizedBox(height: AppSpacing.lg),
+        ]);
+      }
 
       if (route == null) {
         children.add(
@@ -350,6 +357,8 @@ class _NextDepartureCard extends StatelessWidget {
     } else {
       final n = next!;
       title = l10n.dayAndTime(HomeTexts.relativeDay(l10n, n.date, today), n.departure.time.toString());
+      final arrival = n.departure.arrival;
+      if (arrival != null) subtitle[0] = '${subtitle[0]} · ${l10n.arrivalAt(arrival.toString())}';
       final minutes = today.daysUntil(n.date) * 24 * 60 + n.departure.time.minutesOfDay - (now.hour * 60 + now.minute);
       subtitle.add(HomeTexts.remaining(l10n, Duration(minutes: minutes)));
       if (n.departure.note != null) subtitle.add(n.departure.note!);
@@ -459,6 +468,7 @@ class _DepartureRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final p = context.palette;
     final color = isNext ? p.primary : (isPast ? p.textSecondary : p.textBody);
     return Container(
@@ -479,9 +489,20 @@ class _DepartureRow extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Text(
-              departure.note ?? '',
-              style: AppTypography.caption.copyWith(color: isPast ? p.textSecondary : p.textBody),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (departure.arrival != null)
+                  Text(
+                    l10n.arrivalAt(departure.arrival.toString()),
+                    style: AppTypography.tileLabel.copyWith(color: isPast ? p.textSecondary : p.textBody),
+                  ),
+                if (departure.note != null)
+                  Text(
+                    departure.note!,
+                    style: AppTypography.caption.copyWith(color: p.textSecondary),
+                  ),
+              ],
             ),
           ),
           if (isNext)

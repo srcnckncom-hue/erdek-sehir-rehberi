@@ -14,10 +14,11 @@ enum TransportMode {
 }
 
 class Departure {
-  const Departure({required this.time, required this.weekdays, this.note});
+  const Departure({required this.time, required this.weekdays, this.note, this.arrival});
 
   factory Departure.fromJson(Map<String, dynamic> json) => Departure(
         time: ClockTime.parse(json['time'] as String),
+        arrival: json['arrival'] == null ? null : ClockTime.parse(json['arrival'] as String),
         weekdays: json['days'] == null
             ? allWeekdays
             : (json['days'] as List<dynamic>).cast<int>().toSet(),
@@ -30,7 +31,12 @@ class Departure {
 
   /// 1 = Pazartesi ... 7 = Pazar
   final Set<int> weekdays;
+
+  /// Ara duraklar vb. ("Balıklı üzerinden")
   final String? note;
+
+  /// Varış saati (biliniyorsa).
+  final ClockTime? arrival;
 
   bool runsOn(CalendarDate date) => weekdays.contains(date.weekday);
 }
@@ -73,6 +79,8 @@ class TransportRoute {
     this.operatorName,
     this.phone,
     this.note,
+    this.isOutbound = true,
+    this.isSample = false,
   });
 
   factory TransportRoute.fromJson(Map<String, dynamic> json) => TransportRoute(
@@ -84,6 +92,8 @@ class TransportRoute {
         operatorName: json['operator'] as String?,
         phone: json['phone'] as String?,
         note: json['note'] as String?,
+        isOutbound: (json['direction'] as String? ?? 'outbound') == 'outbound',
+        isSample: json['isSample'] as bool? ?? false,
         timetables: (json['timetables'] as List<dynamic>)
             .map((e) => Timetable.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -97,6 +107,12 @@ class TransportRoute {
   final String? operatorName;
   final String? phone;
   final String? note;
+
+  /// true: Erdek'ten kalkış (ana sayfadaki "sıradaki" kartlarında kullanılır).
+  final bool isOutbound;
+
+  /// Bu hattın saatleri henüz örnek.
+  final bool isSample;
   final List<Timetable> timetables;
 
   Timetable? timetableFor(CalendarDate date) =>
@@ -124,6 +140,10 @@ class TransportData {
 
   List<TransportRoute> byMode(TransportMode mode) =>
       routes.where((r) => r.mode == mode).toList();
+
+  /// Erdek'ten kalkan hatlar.
+  List<TransportRoute> outboundByMode(TransportMode mode) =>
+      byMode(mode).where((r) => r.isOutbound).toList();
 }
 
 class UpcomingDeparture {
