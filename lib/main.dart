@@ -16,6 +16,7 @@ import 'core/settings/usage_store.dart';
 import 'core/system/system_bridge.dart';
 import 'core/time/erdek_time.dart';
 import 'features/prayer/notifications/prayer_notifications.dart';
+import 'features/push/push_service.dart';
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
@@ -32,6 +33,9 @@ Future<void> main() async {
   final localeStore = HiveLocaleStore(settingsBox);
   final l10n = lookupAppLocalizations(localeStore.load());
 
+  // Önemli duyuru bildirimleri (Firebase ayarlıysa). Ayarlı değilse null.
+  final push = await FirebasePushService.initialize();
+
   // Logo parçaları çözülmeden ilk kare çizilmesin (animasyon takılmadan başlar).
   await _precacheLogo();
 
@@ -47,6 +51,11 @@ Future<void> main() async {
         localeStoreProvider.overrideWithValue(localeStore),
         usageStoreProvider.overrideWithValue(HiveUsageStore(settingsBox)),
         systemBridgeProvider.overrideWithValue(ChannelSystemBridge()),
+        pushPrefsStoreProvider.overrideWithValue(HivePushPrefsStore(settingsBox)),
+        if (push != null) ...[
+          pushServiceProvider.overrideWithValue(push),
+          pushAvailableProvider.overrideWithValue(true),
+        ],
         prayerNotificationSettingsStoreProvider.overrideWithValue(
           HivePrayerNotificationSettingsStore(settingsBox),
         ),

@@ -28,6 +28,9 @@ dependencies:
   phosphoricons_flutter: ^1.1.1
   url_launcher: ^6.3.0
   flutter_local_notifications: ^23.0.3
+  # Önemli duyuru bildirimleri (FCM). Analytics/Crashlytics YOK.
+  firebase_core: ^5.1.0
+  firebase_messaging: ^17.0.1
   # Diğer paketler (supabase_flutter, home_widget ...)
   # ilgili adımlarda eklenecek; kullanılmayan bağımlılık eklemiyoruz.
 

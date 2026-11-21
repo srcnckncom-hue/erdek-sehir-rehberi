@@ -94,7 +94,15 @@
   - Yazı boyutları küçültüldü: sectionTitle 20→17 (tüm bölüm başlıkları), "Tümünü Gör" caption 13 w500 + ok 16, tileLabel 13→12 (8 beyaz kutucuk), arama kutusu metni 13.5 + ikon 20.
   - Ana sayfadaki renkli kısayollar 3 → 2: Nöbetçi Eczane + Feribot Saatleri (Namaz Vakitleri çıkarıldı; alt sekmede ve kutucuklarda var). "Tüm Hizmetler" sayfasında da 2 sütun.
   - İNGİLİZCE (Aşama 3'ten öne alındı): lib/l10n/app_en.arb (tüm 218 metin). VARSAYILAN TÜRKÇE, telefon dilinden BAĞIMSIZ; Ayarlar → Dil (Türkçe / English). core/settings/locale_store.dart (Hive 'app_locale'), localeProvider + LocaleNotifier.setLocale. Bildirim metinleri kayıtlı dilde (dil değişince bir sonraki açılışta). Panelden gelen içerik ve iOS widget metinleri Türkçe kalır. Testler Türkçe (testApp locale tr).
-- Firebase: ERTELENDİ.
+- FIREBASE / ÖNEMLİ DUYURU BİLDİRİMLERİ (21.11.2026, kullanıcı istedi; YAZILDI, kurulum sürüyor):
+  - Yalnızca FCM (firebase_core ^5.1.0, firebase_messaging ^17.0.1). Analytics/Crashlytics YOK. Konu (topic): "duyurular". Herkese aynı bildirim; kişiye özel değil.
+  - Ayar: lib/app/firebase_config.dart (GoogleService-Info.plist değerleri; gizli değil; boşken Firebase hiç başlamaz). Kullanıcı plist'i config/ klasörüne koyar → Claude değerleri aktarır; plist .gitignore'da.
+  - lib/features/push/push_service.dart: FirebasePushService.initialize (ön planda da göster), setAnnouncementsEnabled (izin → setAutoInitEnabled(true) → APNs anahtarını bekle → subscribe/unsubscribe); Hive 'push_announcements'; announcementsPushProvider (+ refresh açılışta LaunchGate'te); pushAvailableProvider (Firebase ayarlıysa true).
+  - Varsayılan KAPALI. Ayarlar → Bildirimler → "Önemli duyurular" anahtarı; tanıtımın 3. sayfasında da ikinci anahtar. Info.plist FirebaseMessagingAutoInitEnabled=false (açılmadan kimlik üretilmez).
+  - iOS: Runner.entitlements aps-environment=production; AppDelegate'te FLTFirebaseMessagingPlugin.configureNotificationCenterDelegate çalışma anında (NSClassFromString) çağrılır. Fastfile certificates lane: match force:true (Push yetkisiyle profil yeniden üretimi için ios-signing-setup tekrar çalıştırılmalı).
+  - Apple: App ID'de Push Notifications açık; APNs anahtarı (.p8, "Erdek APNs", Sandbox & Production) Firebase'e yüklendi (kullanıcı yapar).
+  - Gönderme (şimdilik): Firebase konsolu → Messaging → yeni kampanya → Hedef: Konu "duyurular". Panelden gönderme SONRA (Supabase Edge Function + servis hesabı).
+  - Gizlilik politikası güncellendi. App Store "App Privacy": Identifiers → Device ID (Uygulama İşlevselliği, kullanıcıyla ilişkilendirilmez, izleme yok) eklenecek.
 - SIRADAKİ:
   1. CI yeşil + 0003 SQL çalıştırıldı → panelden bir yere fotoğraf ekle + Kaydet → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)
   2. 14. adım App Store hazırlığı: ekran görüntüleri (golden 6.9" 1320×2868 tabanlı), açıklama/anahtar kelimeler/kategori, gizlilik politikası + kullanım koşulları (docs/legal → Pages /legal/), App Privacy formu (konum yok, takip yok; reklam sayımı anonim), destek URL'si, yaş derecelendirmesi, hero fotoğrafı kullanım hakkı teyidi, "resmi değil" ibaresi.

@@ -23,7 +23,9 @@ platform :ios do
       type: "appstore",
       app_identifier: [APP_ID, WIDGET_ID],
       api_key: asc_api_key,
-      readonly: false
+      readonly: false,
+      # Yetki değişince (ör. Push Notifications eklendi) profiller yeniden üretilsin.
+      force: true
     )
   end
 

@@ -2,6 +2,8 @@
 config/env.json
 config/env.*.json
 !config/env.example.json
+# Firebase'den indirilen dosya; değerleri lib/app/firebase_config.dart'a aktarılır.
+config/GoogleService-Info.plist
 *.p8
 *.p12
 *.mobileprovision

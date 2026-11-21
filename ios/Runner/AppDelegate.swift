@@ -16,6 +16,17 @@ import WidgetKit
     // flutter_local_notifications: uygulama açıkken de vakit bildirimleri
     // görünsün diye bildirim merkezinin temsilcisi uygulama olur.
     UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    // firebase_messaging (UIScene yaşam döngüsü): bildirim merkezi temsilcisi
+    // didFinishLaunching bitmeden kurulmalı. Eklenti başlığını içe aktarmadan,
+    // çalışma anında çağrılır (eklenti yoksa sessizce geçer). Önceki temsilci
+    // (yerel vakit bildirimleri) eklenti tarafından korunur ve ona iletilir.
+    if let pluginClass = NSClassFromString("FLTFirebaseMessagingPlugin") {
+      let target = pluginClass as AnyObject
+      let selector = NSSelectorFromString("configureNotificationCenterDelegate")
+      if target.responds(to: selector) {
+        _ = target.perform(selector)
+      }
+    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

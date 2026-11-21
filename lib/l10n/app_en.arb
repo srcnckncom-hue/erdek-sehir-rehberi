@@ -217,5 +217,7 @@
   "thisIsLastDepartureToday": "Last departure today",
   "languageTitle": "Language",
   "languageTurkish": "Türkçe",
-  "languageEnglish": "English"
+  "languageEnglish": "English",
+  "announcementsPushTitle": "Important announcements",
+  "announcementsPushSubtitle": "Notifications about outages, emergencies and important news"
 }

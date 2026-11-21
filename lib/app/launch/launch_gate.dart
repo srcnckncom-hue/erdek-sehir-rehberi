@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../core/settings/usage_store.dart';
 import '../../core/system/system_bridge.dart';
 import '../../features/ads/presentation/ad_slot.dart';
+import '../../features/push/push_service.dart';
 import '../providers.dart';
 import '../shell/app_shell.dart';
 import 'launch_splash.dart';
@@ -40,6 +41,8 @@ class _LaunchGateState extends ConsumerState<LaunchGate> {
   /// Açılışı sayar; yeterince kullanıldıysa (bkz. [shouldAskForReview]) bir
   /// kez Apple'ın puanlama penceresini ister. Tanıtım ekranı açılışında sormaz.
   Future<void> _countLaunch({required bool askReview}) async {
+    // Duyuru bildirimleri açıksa aboneliği tazele.
+    await ref.read(announcementsPushProvider.notifier).refresh();
     final store = ref.read(usageStoreProvider);
     final now = ref.read(clockProvider)();
     await store.recordLaunch(now);

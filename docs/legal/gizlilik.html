@@ -13,7 +13,7 @@
 </head>
 <body>
   <h1>Gizlilik Politikası</h1>
-  <p class="muted">Son güncelleme: 21 Kasım 2026</p>
+  <p class="muted">Son güncelleme: 21 Kasım 2026 (bildirimler eklendi)</p>
 
   <p>Erdek Şehir Rehberi ("Uygulama"), Erdek için hazırlanmış bağımsız bir rehber uygulamasıdır.
   Erdek Belediyesi, Balıkesir Eczacı Odası veya başka bir resmi kurumla bağlantısı yoktur.
@@ -26,6 +26,7 @@
     <li>Konumunuz, rehberiniz, fotoğraflarınız kullanılmaz.</li>
     <li>Sizi uygulamalar veya web siteleri arasında takip etmeyiz; reklam kimliği (IDFA) kullanılmaz.</li>
     <li>Analiz/izleme aracı (ör. Google Analytics, Facebook SDK) bulunmaz.</li>
+    <li>"Önemli duyurular" bildirimini yalnızca siz açarsanız, bildirim iletmek için rastgele bir cihaz anahtarı oluşturulur.</li>
   </ul>
 
   <h2>Cihazınızda tutulan bilgiler</h2>
@@ -37,6 +38,15 @@
     <li>İnternetsiz kullanım için indirilen içeriklerin (eczane, vakit, ulaşım vb.) kopyası.</li>
   </ul>
   <p>Vakit bildirimleri telefonunuzda kurulur; bunun için bir sunucuya bilgi gönderilmez.</p>
+
+  <h2>Önemli duyuru bildirimleri (isteğe bağlı)</h2>
+  <p>Ayarlar'dan "Önemli duyurular"ı açarsanız, kesinti ve önemli duyuruların telefonunuza ulaşması için
+  <strong>Firebase Cloud Messaging</strong> (Google LLC) kullanılır. Bu durumda Apple ve Google, bildirimi
+  iletebilmek için cihazınıza özel rastgele bir bildirim anahtarı (anlık bildirim belirteci ve Firebase
+  kurulum kimliği) oluşturur. Bu anahtar adınız, telefon numaranız veya konumunuzla ilişkilendirilmez;
+  bildirimler herkese aynı anda gönderilir. Özelliği kapattığınızda aboneliğiniz sonlandırılır.
+  Açmadığınız sürece bu anahtar oluşturulmaz. Google'ın uygulamaları için:
+  <a href="https://firebase.google.com/support/privacy">firebase.google.com/support/privacy</a>.</p>
 
   <h2>İnternet bağlantıları</h2>
   <p>Uygulama içerikleri aşağıdaki hizmetlerden indirir. Bu hizmetler, her internet bağlantısında olduğu gibi,

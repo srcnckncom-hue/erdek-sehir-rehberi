@@ -72,5 +72,8 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<!-- Firebase: kullanıcı "Önemli duyurular"ı açana kadar FCM kimliği üretilmez. -->
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<false/>
 </dict>
 </plist>

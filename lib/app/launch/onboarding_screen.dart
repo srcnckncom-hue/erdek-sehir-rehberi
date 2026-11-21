@@ -9,6 +9,8 @@ import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
 import '../../features/prayer/notifications/prayer_notifications.dart';
 import '../../features/prayer/presentation/notification_settings_sheet.dart';
+import '../../features/push/push_service.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../providers.dart';
 
@@ -358,22 +360,42 @@ class _NotificationCard extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     final enabled = ref.watch(prayerNotificationSettingsProvider.select((s) => s.enabled));
+    final pushAvailable = ref.watch(pushAvailableProvider);
     return Material(
       color: p.surface,
       borderRadius: AppRadius.cardAll,
       clipBehavior: Clip.antiAlias,
-      child: SwitchListTile.adaptive(
-        value: enabled,
-        onChanged: (on) => toggleNotifications(context, ref, on: on),
-        secondary: AppIcon(AppIcons.bellRinging, size: 26, color: p.iconOrange),
-        title: Text(
-          l10n.notificationsTitle,
-          style: AppTypography.label.copyWith(color: p.textHeading),
-        ),
-        subtitle: Text(
-          l10n.onboardingNotifBody,
-          style: AppTypography.caption.copyWith(color: p.textSecondary),
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SwitchListTile.adaptive(
+            value: enabled,
+            onChanged: (on) => toggleNotifications(context, ref, on: on),
+            secondary: AppIcon(AppIcons.bellRinging, size: 26, color: p.iconOrange),
+            title: Text(
+              l10n.notificationsTitle,
+              style: AppTypography.label.copyWith(color: p.textHeading),
+            ),
+            subtitle: Text(
+              l10n.onboardingNotifBody,
+              style: AppTypography.caption.copyWith(color: p.textSecondary),
+            ),
+          ),
+          if (pushAvailable)
+            SwitchListTile.adaptive(
+              value: ref.watch(announcementsPushProvider),
+              onChanged: (on) => toggleAnnouncementsPush(context, ref, on: on),
+              secondary: AppIcon(AppIcons.announcements, size: 26, color: p.iconPurple),
+              title: Text(
+                l10n.announcementsPushTitle,
+                style: AppTypography.label.copyWith(color: p.textHeading),
+              ),
+              subtitle: Text(
+                l10n.announcementsPushSubtitle,
+                style: AppTypography.caption.copyWith(color: p.textSecondary),
+              ),
+            ),
+        ],
       ),
     );
   }

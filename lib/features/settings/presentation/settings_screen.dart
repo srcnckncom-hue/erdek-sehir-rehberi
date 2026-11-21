@@ -14,6 +14,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../prayer/notifications/prayer_notifications.dart';
 import '../../prayer/presentation/notification_settings_sheet.dart';
+import '../../push/push_service.dart';
 import 'report_issue.dart';
 
 Future<void> openSettings(BuildContext context) => Navigator.of(context).push(
@@ -89,6 +90,21 @@ class SettingsScreen extends ConsumerWidget {
                 value: notificationsOn ? l10n.notificationsOn : l10n.notificationsOff,
                 onTap: () => showNotificationSettingsSheet(context),
               ),
+              if (ref.watch(pushAvailableProvider))
+                SwitchListTile.adaptive(
+                  key: const Key('settings_announcements_push'),
+                  value: ref.watch(announcementsPushProvider),
+                  onChanged: (on) => toggleAnnouncementsPush(context, ref, on: on),
+                  secondary: AppIcon(AppIcons.announcements, size: 24, color: p.iconPurple),
+                  title: Text(
+                    l10n.announcementsPushTitle,
+                    style: AppTypography.label.copyWith(color: p.textHeading),
+                  ),
+                  subtitle: Text(
+                    l10n.announcementsPushSubtitle,
+                    style: AppTypography.caption.copyWith(color: p.textSecondary),
+                  ),
+                ),
             ],
           ),
           const SizedBox(height: AppSpacing.section),
@@ -241,4 +257,12 @@ class _TextCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Duyuru bildirimlerini aç/kapat; izin verilmezse uyarı gösterir.
+Future<void> toggleAnnouncementsPush(BuildContext context, WidgetRef ref, {required bool on}) async {
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  final denied = AppLocalizations.of(context).notificationPermissionDenied;
+  final ok = await ref.read(announcementsPushProvider.notifier).setEnabled(on);
+  if (!ok) messenger?.showSnackBar(SnackBar(content: Text(denied)));
 }

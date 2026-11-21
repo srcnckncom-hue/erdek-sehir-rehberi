@@ -642,5 +642,7 @@
   "thisIsLastDepartureToday": "Bugünün son seferi",
   "languageTitle": "Dil",
   "languageTurkish": "Türkçe",
-  "languageEnglish": "English"
+  "languageEnglish": "English",
+  "announcementsPushTitle": "Önemli duyurular",
+  "announcementsPushSubtitle": "Kesinti, acil durum ve önemli haberler için bildirim"
 }
