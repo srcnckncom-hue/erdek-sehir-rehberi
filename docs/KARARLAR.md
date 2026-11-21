@@ -30,9 +30,14 @@
     - Uygulama: ContentJsonFetcher (lib/core/network) → bu 6 dosya için önce Supabase get_content, belge yoksa/ayarsızsa GitHub Pages; hata olursa önbellek/gömülü kopya (OfflineFirstLoader). Namaz vakitleri hep Pages.
     - Panel: NavigationRail (Reklamlar, Telefonlar, Duyurular, Nöbetçi Eczane, Gezilecek Yerler, Erdek Tarihi, Ulaşım[yakında]). ContentEditor: belge Supabase'te yoksa yayındaki kopyadan (../data/<id>.json) başlar; ÖRNEK uyarısı anahtarı, kaynak notu, Kaydet (updatedAt TR saati). form_kit: diyalog formları, telefon normalize (+90…), paragraflar boş satırla, ipuçları satır satır.
     - repo data/*.json artık yalnızca uygulamayla gelen yedek kopya (validate_data.py hâlâ kontrol eder).
-  - 9d yazıldı (CI bekleniyor): panel Ulaşım düzenleyicisi (admin/lib/content/transport_editor.dart): tür sekmeleri, hat ekle/düzenle (yön, işletme, telefon, not, ÖRNEK işareti), tarife ekle/kopyala/sil (tarih aralığı), sefer sayfası (kalkış, varış, günler [boş = her gün], not; toplu ekleme "07:30-09:00" satırlarıyla). Bununla 9. adım tamamlanır.
+  - 9d TAMAM: panel Ulaşım düzenleyicisi (admin/lib/content/transport_editor.dart): tür sekmeleri, hat ekle/düzenle (yön, işletme, telefon, not, ÖRNEK işareti), tarife ekle/kopyala/sil (tarih aralığı), sefer sayfası (kalkış, varış, günler [boş = her gün], not; toplu ekleme "07:30-09:00" satırlarıyla). Bununla 9. adım tamamlanır.
+- 10. adım widget yazıldı (CI bekleniyor). Karar: küçük = sıradaki vakit, orta = vakit + nöbetçi eczane. Kullanıcının ücretli Apple Developer hesabı VAR (daha önce uygulama yayınlamış).
+  - Bundle: com.erdek.sehirrehberi.erdekrehberi, widget: …erdekrehberi.widget, App Group: group.com.erdek.sehirrehberi.erdekrehberi (12. adımda Apple'da App ID'lere App Groups yetkisi + match profilleri İKİ bundle için).
+  - Flutter: lib/features/home_widget_sync/widget_sync.dart (7 günlük vakitler + 08:30 nöbet pencereleri, ISO +03:00) → MethodChannel 'erdek/widget' → AppDelegate UserDefaults(suiteName) 'widget_data' + WidgetCenter.reloadAllTimelines. AppShell veri değişince ve uygulama öne gelince gönderir.
+  - iOS: ios/ErdekWidget (SwiftUI, StaticConfiguration, küçük/orta, iOS 16+, iOS 17 containerBackground), Info.plist sürümleri $(FLUTTER_BUILD_NAME/NUMBER) Widget.xcconfig ile; Runner.entitlements.
+  - Hedef Xcode projesine CI'da scripts/add_widget_target.rb (xcodeproj gem, tekrar çalıştırılabilir, embed fazı Thin Binary'den önce) ile eklenir — ios-ci'de adım var, ios-release'de de OLMALI.
 - Firebase: ERTELENDİ.
-- Sonra: 10 WidgetKit, 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
+- Sonra: 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
 
 ## Kullanıcıdan beklenen gerçek veriler
 - Gestaş tarifesinin gerçek geçerlilik tarihleri ve telefonu.

@@ -7,6 +7,8 @@ import '../../core/theme/app_icons.dart';
 import '../../core/widgets/widgets.dart';
 import '../../features/contacts/presentation/directory_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/home_widget_sync/widget_sync.dart';
+import '../../features/pharmacy/data/pharmacy_repository.dart';
 import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../features/prayer/data/prayer_repository.dart';
 import '../../features/prayer/notifications/prayer_notifications.dart';
@@ -42,6 +44,9 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
     // Vakit verisi ya da bildirim ayarı değişince bildirimleri yeniden kur.
     ref.listenManual(prayerTimesProvider, (_, _) => _syncNotifications(), fireImmediately: true);
     ref.listenManual(prayerNotificationSettingsProvider, (_, _) => _syncNotifications());
+    // iOS ana ekran widget'ı: vakit ya da eczane verisi değişince güncelle.
+    ref.listenManual(prayerTimesProvider, (_, _) => _syncWidget(), fireImmediately: true);
+    ref.listenManual(pharmacyDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
   }
 
   @override
@@ -53,7 +58,24 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
   /// Uygulama öne gelince 60 bildirimlik pencereyi ileri kaydır.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) _syncNotifications();
+    if (state == AppLifecycleState.resumed) {
+      _syncNotifications();
+      _syncWidget();
+    }
+  }
+
+  void _syncWidget() {
+    final pharmacy = ref.read(pharmacyDataProvider).value;
+    unawaited(
+      HomeWidgetSync.push(
+        HomeWidgetSync.buildSnapshot(
+          erdekNow: ref.read(clockProvider)(),
+          prayer: ref.read(prayerTimesProvider).value?.data,
+          pharmacy: pharmacy?.data,
+          pharmacyIsSample: pharmacy?.isSample ?? false,
+        ),
+      ),
+    );
   }
 
   void _syncNotifications() {

@@ -60,6 +60,7 @@ jobs:
             app:
               - 'lib/**'
               - 'ios/**'
+              - 'scripts/add_widget_target.rb'
               - 'packages/**'
               - 'assets/**'
               - 'pubspec.yaml'
@@ -166,6 +167,11 @@ jobs:
 
       - run: flutter pub get
       - run: flutter gen-l10n
+
+      # Ana ekran widget'ı (ios/ErdekWidget) Xcode projesine eklenir.
+      # Tekrar çalıştırılabilir; ios-release'de de aynı adım olmalı.
+      - name: Widget hedefini ekle
+        run: ruby scripts/add_widget_target.rb
 
       - name: flutter build ios --release --no-codesign
         run: |

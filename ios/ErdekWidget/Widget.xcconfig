@@ -1,0 +1,4 @@
+// Widget hedefi, sürüm numaralarını uygulamayla aynı tutmak için Flutter'ın
+// ürettiği ayarları okur (FLUTTER_BUILD_NAME / FLUTTER_BUILD_NUMBER).
+// Pods ayarları BİLEREK dahil edilmez (widget Flutter'a bağlanmaz).
+#include? "../Flutter/Generated.xcconfig"
