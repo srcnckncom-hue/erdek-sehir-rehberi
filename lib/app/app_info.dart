@@ -8,7 +8,7 @@ abstract final class AppInfo {
   /// App Store Connect → Uygulamalar → Erdek Şehir Rehberi → Uygulama Bilgileri
   /// → "Apple Kimliği" (yalnızca rakam, ör. 6751234567).
   /// Boşken paylaşımda web sayfası kullanılır, "Değerlendir" düğmesi gizlenir.
-  static const appStoreId = '';
+  static const appStoreId = '6837640872';
 
   static bool get hasStoreId => appStoreId.isNotEmpty;
 
