@@ -1,4 +1,5 @@
 import Flutter
+import StoreKit
 import UIKit
 import UserNotifications
 import WidgetKit
@@ -38,5 +39,56 @@ import WidgetKit
         result(nil)
       }
     }
+
+    // Flutter → iOS yerel özellikleri (lib/core/system/system_bridge.dart):
+    // paylaşım penceresi, Apple puanlama penceresi, sürüm numarası.
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "ErdekSystemChannel") {
+      let channel = FlutterMethodChannel(name: "erdek/system", binaryMessenger: registrar.messenger())
+      channel.setMethodCallHandler { call, result in
+        switch call.method {
+        case "share":
+          let args = call.arguments as? [String: Any]
+          let text = args?["text"] as? String ?? ""
+          AppDelegate.presentShareSheet(text: text)
+          result(nil)
+        case "requestReview":
+          if let scene = AppDelegate.activeScene() {
+            SKStoreReviewController.requestReview(in: scene)
+          }
+          result(nil)
+        case "appVersion":
+          let info = Bundle.main.infoDictionary
+          let version = info?["CFBundleShortVersionString"] as? String ?? "?"
+          let build = info?["CFBundleVersion"] as? String ?? "?"
+          result("\(version) (\(build))")
+        default:
+          result(FlutterMethodNotImplemented)
+        }
+      }
+    }
+  }
+
+  private static func activeScene() -> UIWindowScene? {
+    UIApplication.shared.connectedScenes
+      .compactMap { $0 as? UIWindowScene }
+      .first { $0.activationState == .foregroundActive }
+      ?? UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
+  }
+
+  private static func presentShareSheet(text: String) {
+    guard let scene = activeScene(),
+          let root = scene.windows.first(where: { $0.isKeyWindow })?.rootViewController
+            ?? scene.windows.first?.rootViewController
+    else { return }
+    var top = root
+    while let presented = top.presentedViewController { top = presented }
+    let sheet = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+    // iPad: açılır pencere ekranın ortasından çıksın.
+    if let popover = sheet.popoverPresentationController {
+      popover.sourceView = top.view
+      popover.sourceRect = CGRect(x: top.view.bounds.midX, y: top.view.bounds.midY, width: 0, height: 0)
+      popover.permittedArrowDirections = []
+    }
+    top.present(sheet, animated: true)
   }
 }

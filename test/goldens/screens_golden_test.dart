@@ -14,6 +14,7 @@ import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/explore/presentation/history_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/place_detail_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/places_screen.dart';
+import 'package:erdek_rehberi/features/settings/presentation/settings_screen.dart';
 
 import '../helpers/test_overrides.dart';
 import 'golden_helpers.dart';
@@ -145,6 +146,16 @@ void main() {
           );
         });
       }
+
+      testWidgets('ayarlar · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '13_ayarlar_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1500),
+          brightness: brightness,
+          builder: () => testScope(child: const SettingsScreen()),
+        );
+      });
 
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {

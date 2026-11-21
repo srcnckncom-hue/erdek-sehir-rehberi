@@ -12,9 +12,13 @@ class PharmacyCard extends StatelessWidget {
     required this.pharmacy,
     required this.onCall,
     required this.onDirections,
+    this.note,
   });
 
   final Pharmacy pharmacy;
+
+  /// O güne özel not (Eczacı Odası listesinden), ör. "Gece 22:00'a kadar nöbetçidir."
+  final String? note;
   final VoidCallback onCall;
   final VoidCallback onDirections;
 
@@ -73,6 +77,26 @@ class PharmacyCard extends StatelessWidget {
               ),
             ],
           ),
+          if (note case final text?) ...[
+            const SizedBox(height: AppSpacing.md),
+            Container(
+              key: const Key('pharmacy_duty_note'),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+              decoration: BoxDecoration(color: p.warning, borderRadius: AppRadius.tileAll),
+              child: Row(
+                children: [
+                  AppIcon(AppIcons.dutyNote, size: 20, color: p.iconOrange),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: AppTypography.tileLabel.copyWith(color: p.textHeading),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [

@@ -21,7 +21,10 @@ void main() {
     expect(find.text('21 Kasım 08:30 – 22 Kasım 08:30'), findsOneWidget);
     // Kartta + 25 Kasım satırında (örnek veride 4'lü sıra)
     expect(find.text('ÖRNEK Eczane 1'), findsNWidgets(2));
-    expect(find.text('Pazar, 22 Kasım'), findsOneWidget);
+    expect(find.text('Yarın · Pazar, 22 Kasım'), findsOneWidget);
+    // Eczacı Odası notu kartta
+    expect(find.text("Gece 22:00'a kadar nöbetçidir."), findsOneWidget);
+    expect(find.text('Bu bilgi yanlış mı? Bildirin'), findsOneWidget);
     expect(find.text('Gitmeden önce telefonla teyit edin.'), findsOneWidget);
     expect(find.text('Ara'), findsOneWidget);
     expect(find.text('Yol tarifi'), findsOneWidget);

@@ -9,10 +9,14 @@ import '../../core/widgets/widgets.dart';
 import '../../features/explore/presentation/history_screen.dart';
 import '../../features/explore/presentation/places_screen.dart';
 import '../../l10n/app_localizations.dart';
+import '../../core/system/system_bridge.dart';
+import '../../features/settings/presentation/report_issue.dart';
+import '../../features/settings/presentation/settings_screen.dart';
+import '../app_info.dart';
 import '../providers.dart';
 
 /// ☰ menüsü: bağımsızlık notu, Keşfet (gezilecek yerler, tarih), Görünüm
-/// (açık/koyu tema), veri kaynakları. Gizlilik bağlantısı 14. adımda eklenecek.
+/// (açık/koyu tema), Ayarlar ve Hakkında, paylaş, hata bildir.
 class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
 
@@ -76,7 +80,34 @@ class AppDrawer extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.xxl),
-            _Section(icon: AppIcons.info, title: l10n.drawerDataSources, body: l10n.dataSourcesBody),
+            Text(
+              l10n.settingsSupportTitle,
+              style: AppTypography.label.copyWith(color: p.textSecondary),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_settings'),
+              icon: AppIcons.settings,
+              color: p.primary,
+              title: l10n.settingsTitle,
+              onTap: () => _push(context, const SettingsScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              icon: AppIcons.share,
+              color: p.iconBlue,
+              title: l10n.shareAppTitle,
+              onTap: () => unawaited(
+                ref.read(systemBridgeProvider).share(l10n.shareAppText(AppInfo.shareUrl)),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              icon: AppIcons.report,
+              color: p.iconRed,
+              title: l10n.reportIssueTitle,
+              onTap: () => openReportEmail(context, ref, section: l10n.appTitle),
+            ),
           ],
         ),
       ),
@@ -92,6 +123,7 @@ void _push(BuildContext context, Widget page) {
 
 class _NavRow extends StatelessWidget {
   const _NavRow({
+    super.key,
     required this.icon,
     required this.color,
     required this.title,
@@ -125,37 +157,6 @@ class _NavRow extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _Section extends StatelessWidget {
-  const _Section({required this.icon, required this.title, required this.body});
-
-  final AppIconData icon;
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.palette;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(color: p.surface, borderRadius: AppRadius.tileAll),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              AppIcon(icon, size: 22, color: p.primary),
-              const SizedBox(width: AppSpacing.sm),
-              Text(title, style: AppTypography.label.copyWith(color: p.textHeading)),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(body, style: AppTypography.caption.copyWith(color: p.textBody)),
-        ],
       ),
     );
   }

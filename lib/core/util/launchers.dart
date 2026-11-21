@@ -34,6 +34,13 @@ abstract final class Launchers {
     return launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
+  /// Mail uygulamasını hazır konu ve metinle açar.
+  /// (Uri.queryParameters boşlukları "+" yaptığı için elle kodlanır.)
+  static Future<bool> email({required String to, required String subject, String body = ''}) {
+    final query = 'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
+    return launchUrl(Uri.parse('mailto:$to?$query'));
+  }
+
   /// "+902665551234" → "0266 555 12 34"; diğerleri olduğu gibi.
   static String formatPhone(String phone) {
     final digits = phone.replaceAll(RegExp(r'[^0-9]'), '');

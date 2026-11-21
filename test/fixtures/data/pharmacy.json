@@ -157,7 +157,10 @@
         "date": "2026-11-21",
         "pharmacyIds": [
           "ornek-1"
-        ]
+        ],
+        "notes": {
+          "ornek-1": "Gece 22:00'a kadar nöbetçidir."
+        }
       },
       {
         "date": "2026-11-22",

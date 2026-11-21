@@ -96,6 +96,14 @@
                   "type": "string",
                   "minLength": 1
                 }
+              },
+              "notes": {
+                "type": "object",
+                "description": "Eczane kimliği → o güne özel not, ör. \"Gece 22:00'a kadar nöbetçidir.\"",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
               }
             }
           }

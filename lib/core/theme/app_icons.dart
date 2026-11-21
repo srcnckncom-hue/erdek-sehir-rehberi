@@ -68,6 +68,13 @@ abstract final class AppIcons {
   static AppIconData get themeSystem => _i(PhosphorIconsRegular.deviceMobile);
   static AppIconData get appearance => _d(PhosphorIconsDuotone.palette);
   static AppIconData get image => _d(PhosphorIconsDuotone.image);
+  static AppIconData get settings => _d(PhosphorIconsDuotone.gear);
+  static AppIconData get share => _d(PhosphorIconsDuotone.shareNetwork);
+  static AppIconData get report => _d(PhosphorIconsDuotone.flag);
+  static AppIconData get star => _d(PhosphorIconsDuotone.star);
+  static AppIconData get shield => _d(PhosphorIconsDuotone.shieldCheck);
+  static AppIconData get document => _d(PhosphorIconsDuotone.fileText);
+  static AppIconData get dutyNote => _d(PhosphorIconsDuotone.clockCountdown);
 
   // Alt menü: pasif = çizgi, aktif = dolu
   static AppIconData tabHome({required bool active}) =>

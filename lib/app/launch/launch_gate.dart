@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../core/settings/usage_store.dart';
+import '../../core/system/system_bridge.dart';
 import '../../features/ads/presentation/ad_slot.dart';
 import '../providers.dart';
 import '../shell/app_shell.dart';
@@ -30,6 +34,20 @@ class _LaunchGateState extends ConsumerState<LaunchGate> {
   void _onSplashFinished() {
     final needsOnboarding = !ref.read(onboardingStoreProvider).isDone;
     setState(() => _phase = needsOnboarding ? _Phase.onboarding : _Phase.done);
+    unawaited(_countLaunch(askReview: !needsOnboarding));
+  }
+
+  /// Açılışı sayar; yeterince kullanıldıysa (bkz. [shouldAskForReview]) bir
+  /// kez Apple'ın puanlama penceresini ister. Tanıtım ekranı açılışında sormaz.
+  Future<void> _countLaunch({required bool askReview}) async {
+    final store = ref.read(usageStoreProvider);
+    final now = ref.read(clockProvider)();
+    await store.recordLaunch(now);
+    if (!askReview || !shouldAskForReview(store, now)) return;
+    await store.markReviewAsked();
+    // Ana sayfa göründükten biraz sonra, kullanıcıyı bölmeden.
+    await Future<void>.delayed(const Duration(seconds: 4));
+    if (mounted) await ref.read(systemBridgeProvider).requestReview();
   }
 
   void _onOnboardingFinished() => setState(() => _phase = _Phase.done);

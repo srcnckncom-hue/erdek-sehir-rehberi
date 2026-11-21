@@ -26,6 +26,8 @@ void main() {
     expect(find.textContaining('14 sa 55 dk kaldı'), findsOneWidget);
     expect(find.text('Pzt 23'), findsOneWidget);
     expect(find.text('Sıradaki'), findsNothing); // bugün seçili, sıradaki yarın
+    // Bugünkü feribotlar bitti → "son sefer" satırı yok
+    expect(find.textContaining('Bugünkü son sefer'), findsNothing);
   });
 
   testWidgets('otobüse geçiş: sıradaki bugün 19:00 ve vurgulu', (tester) async {
@@ -38,6 +40,8 @@ void main() {
     expect(find.text('Bugün · 19:00'), findsOneWidget);
     expect(find.textContaining('55 dk kaldı'), findsOneWidget);
     expect(find.text('Sıradaki'), findsOneWidget);
+    // Otobüs saat başı 07:00–20:00 → bugünkü son sefer 20:00
+    expect(find.textContaining('Bugünkü son sefer 20:00'), findsOneWidget);
   });
 
   testWidgets('yarın seçilince yarının seferleri, sıradaki vurgulu', (tester) async {

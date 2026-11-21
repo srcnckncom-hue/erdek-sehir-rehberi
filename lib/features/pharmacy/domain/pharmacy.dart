@@ -33,15 +33,19 @@ class Pharmacy {
 
 /// Bir nöbet günü: [date] 08:30'dan ertesi gün 08:30'a kadar.
 class PharmacyDuty {
-  const PharmacyDuty({required this.date, required this.pharmacyIds});
+  const PharmacyDuty({required this.date, required this.pharmacyIds, this.notes = const {}});
 
   factory PharmacyDuty.fromJson(Map<String, dynamic> json) => PharmacyDuty(
         date: CalendarDate.parse(json['date'] as String),
         pharmacyIds: (json['pharmacyIds'] as List<dynamic>).cast<String>(),
+        notes: (json['notes'] as Map<String, dynamic>? ?? const {}).cast<String, String>(),
       );
 
   final CalendarDate date;
   final List<String> pharmacyIds;
+
+  /// Eczane kimliği → o güne özel not ("Gece 22:00'a kadar nöbetçidir.").
+  final Map<String, String> notes;
 }
 
 class PharmacyData {
@@ -68,6 +72,10 @@ class PharmacyData {
       for (final id in duty.pharmacyIds) ?byId[id],
     ];
   }
+
+  /// [dutyDate] gününde [pharmacyId] için özel not (yoksa null).
+  String? noteFor(CalendarDate dutyDate, String pharmacyId) =>
+      duties.where((d) => d.date == dutyDate).firstOrNull?.notes[pharmacyId];
 
   /// Listede kayıtlı son nöbet günü (veri ne zamana kadar dolu?).
   CalendarDate? get lastDutyDate => duties.isEmpty

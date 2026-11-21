@@ -212,7 +212,7 @@
       }
     }
   },
-  "pharmacySourceNote": "Nöbet listesi Balıkesir Eczacı Odası duyurularından elle derlenir. Değişiklik olabilir; lütfen gitmeden önce arayın.",
+  "pharmacySourceNote": "Nöbet listesi Balıkesir Eczacı Odası'nın yayınladığı listeden her gün otomatik alınır. Değişiklik olabilir; lütfen gitmeden önce arayın.",
   "pharmacyEmptyTitle": "Bugün için nöbet kaydı yok",
   "pharmacyEmptyMessage": "Nöbet listesi henüz güncellenmemiş olabilir. Acil durumda 112'yi arayın.",
   "callEmergency": "112'yi ara",
@@ -578,5 +578,66 @@
         "type": "String"
       }
     }
-  }
+  },
+  "settingsTitle": "Ayarlar ve Hakkında",
+  "settingsSubtitle": "Görünüm, bildirimler, destek ve uygulama bilgileri",
+  "settingsNotificationsTitle": "Bildirimler",
+  "settingsSupportTitle": "Destek",
+  "aboutTitle": "Hakkında",
+  "notificationsOn": "Açık",
+  "reportIssueTitle": "Hata bildir",
+  "reportIssueLink": "Bu bilgi yanlış mı? Bildirin",
+  "reportSubject": "Erdek Şehir Rehberi – Hata bildirimi: {section}",
+  "@reportSubject": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "reportBody": "Merhaba,\n\nŞu bilgi yanlış ya da eksik:\n\n\n(Uygulama sürümü: {version})",
+  "@reportBody": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAppTitle": "Uygulamayı paylaş",
+  "shareAppText": "Erdek Şehir Rehberi: nöbetçi eczane, namaz vakitleri, feribot ve otobüs saatleri tek uygulamada. {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "rateAppTitle": "Uygulamayı değerlendir",
+  "privacyPolicyTitle": "Gizlilik Politikası",
+  "termsTitle": "Kullanım Koşulları",
+  "versionLabel": "Erdek Şehir Rehberi · Sürüm {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "tomorrowWithDate": "Yarın · {date}",
+  "@tomorrowWithDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "lastDepartureToday": "Bugünkü son sefer {time}",
+  "@lastDepartureToday": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "thisIsLastDepartureToday": "Bugünün son seferi"
 }

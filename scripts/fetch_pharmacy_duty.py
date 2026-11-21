@@ -93,6 +93,18 @@ def slug(name: str) -> str:
     return "-".join(words) or "eczane"
 
 
+def tidy_note(raw: str | None) -> str | None:
+    """'GECE 22:00 ´A KADAR NÖBETÇİDİR.' → "Gece 22:00'a kadar nöbetçidir." """
+    if not raw:
+        return None
+    text = re.sub(r"\s*[´`’']\s*", "'", tr_lower(raw)).strip(" !")
+    if not text:
+        return None
+    first = "İ" if text[0] == "i" else text[0].upper()
+    text = first + text[1:]
+    return text if text.endswith(".") else text + "."
+
+
 def normalize_phone(raw: str) -> str | None:
     digits = re.sub(r"\D", "", raw)
     if digits.startswith("90") and len(digits) == 12:
@@ -188,8 +200,19 @@ def merge(doc: dict | None, found_by_day: dict[dt.date, list[dict]], now: dt.dat
     by_date = {d["date"]: d for d in duties}
     for day, items in sorted(found_by_day.items()):
         if items:
-            ids = list(dict.fromkeys(pharmacy_id(i) for i in items))
-            by_date[day.isoformat()] = {"date": day.isoformat(), "pharmacyIds": ids}
+            ids: list[str] = []
+            notes: dict[str, str] = {}
+            for item in items:
+                pid = pharmacy_id(item)
+                if pid not in ids:
+                    ids.append(pid)
+                note = tidy_note(item.get("note"))
+                if note:
+                    notes[pid] = note
+            entry: dict = {"date": day.isoformat(), "pharmacyIds": ids}
+            if notes:
+                entry["notes"] = notes
+            by_date[day.isoformat()] = entry
     today = now.astimezone(TZ).date()
     cutoff = (today - dt.timedelta(days=KEEP_DAYS)).isoformat()
     data["duties"] = sorted((d for d in by_date.values() if d["date"] >= cutoff), key=lambda d: d["date"])
@@ -304,6 +327,8 @@ def self_test() -> None:
     assert tr_title("İSKELE ECZANESİ") == "İskele Eczanesi"
     assert tr_title("SIHHAT ECZANESİ") == "Sıhhat Eczanesi"
     assert slug("ÖNKAL ECZANESİ") == "onkal"
+    assert tidy_note("GECE 22:00 ´A KADAR NÖBETÇİDİR.") == "Gece 22:00'a kadar nöbetçidir.", tidy_note("GECE 22:00 ´A KADAR NÖBETÇİDİR.")
+    assert tidy_note("  ") is None and tidy_note(None) is None
 
     now = dt.datetime(2026, 11, 22, 9, 0, tzinfo=TZ)
     # 1) Belge yok → yeni belge; boş gün yazılmaz
@@ -329,6 +354,11 @@ def self_test() -> None:
         {"date": "2026-11-23", "pharmacyIds": ["e2"]},
     ], doc["data"]["duties"]
     assert manual["data"]["pharmacies"][0].get("lat") is None  # girdi değişmedi
+    # 2b) Not varsa nöbet kaydına yazılır
+    noted = [dict(found[0], note="GECE 22:00 ´A KADAR NÖBETÇİDİR.")]
+    doc = merge(None, {day: noted}, now)
+    validate(doc)
+    assert doc["data"]["duties"][0]["notes"] == {"doga": "Gece 22:00'a kadar nöbetçidir."}, doc
     # 3) Örnek veri → temizlenir
     sample = {"schemaVersion": 1, "isSample": True, "updatedAt": "x",
               "data": {"pharmacies": [{"id": "ornek-1", "name": "ÖRNEK", "address": "a", "phone": "+900000000000"}],

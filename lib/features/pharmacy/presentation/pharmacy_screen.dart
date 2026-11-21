@@ -11,6 +11,7 @@ import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ads/presentation/ad_slot.dart';
+import '../../settings/presentation/report_issue.dart';
 import '../data/pharmacy_repository.dart';
 import '../domain/duty_schedule.dart';
 import '../domain/pharmacy.dart';
@@ -21,7 +22,8 @@ import 'pharmacy_card.dart';
 class PharmacyScreen extends ConsumerWidget {
   const PharmacyScreen({super.key});
 
-  static const upcomingDays = 6;
+  /// Yarın dahil önümüzdeki 7 gün.
+  static const upcomingDays = 7;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,7 +93,7 @@ class PharmacyScreen extends ConsumerWidget {
       } else {
         for (var i = 0; i < onDuty.length; i++) {
           if (i > 0) children.add(const SizedBox(height: AppSpacing.gap));
-          children.add(_card(context, onDuty[i]));
+          children.add(_card(context, onDuty[i], data.noteFor(dutyDate, onDuty[i].id)));
         }
       }
 
@@ -103,8 +105,18 @@ class PharmacyScreen extends ConsumerWidget {
           children: [
             for (var i = 1; i <= upcomingDays; i++)
               _UpcomingRow(
-                label: DateTexts.weekdayDayMonth(l10n, dutyDate.addDays(i)),
-                names: data.onDutyFor(dutyDate.addDays(i)).map((p) => p.name).toList(),
+                // İlk satır: "Yarın · Pazar, 22 Kasım" (vurgulu)
+                label: i == 1
+                    ? l10n.tomorrowWithDate(DateTexts.weekdayDayMonth(l10n, dutyDate.addDays(i)))
+                    : DateTexts.weekdayDayMonth(l10n, dutyDate.addDays(i)),
+                highlight: i == 1,
+                names: [
+                  for (final p in data.onDutyFor(dutyDate.addDays(i)))
+                    switch (data.noteFor(dutyDate.addDays(i), p.id)) {
+                      final note? => '${p.name}\n($note)',
+                      null => p.name,
+                    },
+                ],
               ),
           ],
         ),
@@ -116,6 +128,8 @@ class PharmacyScreen extends ConsumerWidget {
             style: AppTypography.tabLabel.copyWith(color: context.palette.textSecondary),
           ),
         ),
+        const SizedBox(height: AppSpacing.xs),
+        ReportIssueLink(section: l10n.pharmacyScreenTitle),
       ]);
     }
 
@@ -143,8 +157,9 @@ class PharmacyScreen extends ConsumerWidget {
     );
   }
 
-  Widget _card(BuildContext context, Pharmacy pharmacy) => PharmacyCard(
+  Widget _card(BuildContext context, Pharmacy pharmacy, String? note) => PharmacyCard(
         pharmacy: pharmacy,
+        note: note,
         onCall: () => launchOrNotify(context, () => Launchers.call(pharmacy.phone)),
         onDirections: () => launchOrNotify(
           context,
@@ -159,10 +174,13 @@ class PharmacyScreen extends ConsumerWidget {
 }
 
 class _UpcomingRow extends StatelessWidget {
-  const _UpcomingRow({required this.label, required this.names});
+  const _UpcomingRow({required this.label, required this.names, this.highlight = false});
 
   final String label;
   final List<String> names;
+
+  /// Yarın satırı: etiket kalın ve ana renkte.
+  final bool highlight;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +192,12 @@ class _UpcomingRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Text(label, style: AppTypography.caption.copyWith(color: p.textSecondary)),
+            child: Text(
+              label,
+              style: highlight
+                  ? AppTypography.tileLabel.copyWith(color: p.primary, fontWeight: FontWeight.w600)
+                  : AppTypography.caption.copyWith(color: p.textSecondary),
+            ),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(

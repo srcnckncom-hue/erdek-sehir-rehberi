@@ -36,11 +36,13 @@ hatalı veri **yayınlanmaz**, uygulama eski bilgiyle çalışmaya devam eder.
     "lat": 40.3990, "lng": 27.7930 }
 ],
 "duties": [
-  { "date": "2026-12-01", "pharmacyIds": ["merkez"] }
+  { "date": "2026-12-01", "pharmacyIds": ["merkez"],
+    "notes": { "merkez": "Gece 22:00'a kadar nöbetçidir." } }
 ]
 ```
 
 - `id`: kısa, Türkçe karaktersiz, boşluksuz bir ad. Nöbet listesinde bununla anılır.
+- `notes` isteğe bağlı: o güne özel not (Eczacı Odası listesindeki "gece 22:00'a kadar" gibi). Eczane kartında uyarı olarak görünür.
 - `lat` / `lng` opsiyonel. "Yol tarifi" butonu bununla çalışır. Google Maps'te eczaneye
   sağ tıklayınca çıkan ilk sayı `lat`, ikincisi `lng`.
 - Nöbet günü **08:30'da başlar, ertesi gün 08:30'da biter**. Uygulama gece 00:00–08:30

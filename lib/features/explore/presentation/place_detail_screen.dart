@@ -7,6 +7,7 @@ import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/explore.dart';
+import '../../settings/presentation/report_issue.dart';
 import 'place_photos.dart';
 import 'place_style.dart';
 
@@ -107,6 +108,8 @@ class PlaceDetailScreen extends StatelessWidget {
               ),
             ),
           ],
+          const SizedBox(height: AppSpacing.lg),
+          ReportIssueLink(section: '${l10n.placesTitle}: ${place.title}'),
         ],
       ),
     );

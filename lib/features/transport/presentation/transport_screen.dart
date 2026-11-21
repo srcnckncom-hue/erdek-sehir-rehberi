@@ -13,6 +13,7 @@ import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ads/presentation/ad_slot.dart';
+import '../../settings/presentation/report_issue.dart';
 import '../../home/presentation/home_texts.dart';
 import '../data/transport_repository.dart';
 import '../domain/transport.dart';
@@ -143,6 +144,8 @@ class TransportScreen extends ConsumerWidget {
             style: AppTypography.tabLabel.copyWith(color: p.textSecondary),
           ),
         ),
+        const SizedBox(height: AppSpacing.xs),
+        ReportIssueLink(section: l10n.transportScreenTitle),
       ]);
     }
 
@@ -227,6 +230,14 @@ class _NextDepartureCard extends StatelessWidget {
       final minutes = today.daysUntil(n.date) * 24 * 60 + n.departure.time.minutesOfDay - (now.hour * 60 + now.minute);
       subtitle.add(HomeTexts.remaining(l10n, Duration(minutes: minutes)));
       if (n.departure.note != null) subtitle.add(n.departure.note!);
+    }
+    // Bugünkü son sefer (henüz kalkmadıysa): "Bugünkü son sefer 18:00"
+    final todays = route.departuresOn(today);
+    if (todays.isNotEmpty && todays.last.time.minutesOfDay > now.hour * 60 + now.minute) {
+      final isLast = next != null && next!.date == today && next!.departure.time == todays.last.time;
+      subtitle.add(
+        isLast ? l10n.thisIsLastDepartureToday : l10n.lastDepartureToday(todays.last.time.toString()),
+      );
     }
 
     return FeatureCard(

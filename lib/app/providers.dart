@@ -9,6 +9,7 @@ import '../core/network/dio_json_fetcher.dart';
 import '../core/settings/onboarding_store.dart';
 import '../core/settings/seen_store.dart';
 import '../core/settings/theme_store.dart';
+import '../core/settings/usage_store.dart';
 import '../core/time/erdek_time.dart';
 import 'env.dart';
 
@@ -33,6 +34,9 @@ final announcementsSeenStoreProvider = Provider<AnnouncementsSeenStore>(
 final onboardingStoreProvider = Provider<OnboardingStore>(
   (ref) => MemoryOnboardingStore(isDone: true),
 );
+
+/// main() içinde Hive ile override edilir (puanlama penceresi zamanlaması).
+final usageStoreProvider = Provider<UsageStore>((ref) => MemoryUsageStore());
 
 /// main() içinde Hive ile override edilir.
 final themeModeStoreProvider = Provider<ThemeModeStore>((ref) => MemoryThemeModeStore());
