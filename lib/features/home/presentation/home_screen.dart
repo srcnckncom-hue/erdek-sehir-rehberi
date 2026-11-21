@@ -14,9 +14,13 @@ import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ads/presentation/ad_slot.dart';
 import '../../announcements/data/announcements_repository.dart';
+import '../../announcements/data/announcements_seen.dart';
+import '../../announcements/domain/announcement.dart';
+import '../../contacts/presentation/directory_selection.dart';
 import '../../pharmacy/data/pharmacy_repository.dart';
 import '../../pharmacy/domain/duty_schedule.dart';
 import '../../pharmacy/domain/pharmacy.dart';
+import '../../search/presentation/search_screen.dart';
 import '../../prayer/data/prayer_repository.dart';
 import '../../prayer/domain/prayer_times.dart';
 import '../../transport/data/transport_repository.dart';
@@ -45,7 +49,7 @@ class HomeScreen extends ConsumerWidget {
     final transport = ref.watch(transportDataProvider);
     final announcements = ref.watch(announcementsProvider);
     final weather = ref.watch(currentWeatherProvider);
-    final lastSeen = ref.watch(announcementsSeenStoreProvider).lastSeen;
+    final lastSeen = ref.watch(announcementsLastSeenProvider);
 
     final unread = announcements.value?.data
             .activeAt(now)
@@ -83,7 +87,8 @@ class HomeScreen extends ConsumerWidget {
               others: [pharmacy, prayer],
               unread: unread,
               onMenu: onOpenMenu,
-              onBell: () => onOpenTab(AppTab.directory),
+              onBell: () => _openAnnouncements(ref),
+              onSearch: () => openSearch(context, onOpenTab),
             ),
             if (showSampleBanner) ...[
               const SizedBox(height: AppSpacing.md),
@@ -187,6 +192,16 @@ class HomeScreen extends ConsumerWidget {
     onOpenTab(AppTab.transport);
   }
 
+  void _openAnnouncements(WidgetRef ref, [AnnouncementCategory? category]) {
+    ref.read(directorySelectionProvider.notifier).showAnnouncements(category);
+    onOpenTab(AppTab.directory);
+  }
+
+  void _openContacts(WidgetRef ref) {
+    ref.read(directorySelectionProvider.notifier).showContacts();
+    onOpenTab(AppTab.directory);
+  }
+
   List<Widget> _chips(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
@@ -215,19 +230,18 @@ class HomeScreen extends ConsumerWidget {
   List<Widget> _tiles(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
-    void directory() => onOpenTab(AppTab.directory);
     return [
       QuickActionTile(
         icon: AppIcons.announcements,
         label: l10n.actionAnnouncements,
         iconColor: p.iconPurple,
-        onTap: directory,
+        onTap: () => _openAnnouncements(ref),
       ),
       QuickActionTile(
         icon: AppIcons.contacts,
         label: l10n.actionContacts,
         iconColor: p.iconBlue,
-        onTap: directory,
+        onTap: () => _openContacts(ref),
       ),
       QuickActionTile(
         icon: AppIcons.bus,
@@ -245,19 +259,19 @@ class HomeScreen extends ConsumerWidget {
         icon: AppIcons.outage,
         label: l10n.actionOutages,
         iconColor: p.iconCrimson,
-        onTap: directory,
+        onTap: () => _openAnnouncements(ref, AnnouncementCategory.outage),
       ),
       QuickActionTile(
         icon: AppIcons.market,
         label: l10n.actionMarketDays,
         iconColor: p.iconPurple,
-        onTap: directory,
+        onTap: () => _openAnnouncements(ref, AnnouncementCategory.market),
       ),
       QuickActionTile(
         icon: AppIcons.event,
         label: l10n.actionEvents,
         iconColor: p.iconOrange,
-        onTap: directory,
+        onTap: () => _openAnnouncements(ref, AnnouncementCategory.event),
       ),
       QuickActionTile(
         icon: AppIcons.emergency,
@@ -331,6 +345,7 @@ class _Hero extends StatelessWidget {
     required this.unread,
     required this.onMenu,
     required this.onBell,
+    required this.onSearch,
   });
 
   final DateTime now;
@@ -339,6 +354,7 @@ class _Hero extends StatelessWidget {
   final int unread;
   final VoidCallback onMenu;
   final VoidCallback onBell;
+  final VoidCallback onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -402,11 +418,7 @@ class _Hero extends StatelessWidget {
           left: AppSpacing.page,
           right: AppSpacing.page,
           bottom: 0,
-          child: AppSearchBar(
-            hint: l10n.searchHint,
-            onTap: () => ScaffoldMessenger.maybeOf(context)
-                ?.showSnackBar(SnackBar(content: Text(l10n.searchComingSoon))),
-          ),
+          child: AppSearchBar(hint: l10n.searchHint, onTap: onSearch),
         ),
       ],
     );

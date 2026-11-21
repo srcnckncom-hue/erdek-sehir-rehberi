@@ -26,6 +26,7 @@ abstract final class AppIcons {
   static AppIconData get imsakiye => _d(PhosphorIconsDuotone.calendarBlank);
   static AppIconData get ferry => _d(PhosphorIconsDuotone.boat);
   static AppIconData get bus => _d(PhosphorIconsDuotone.bus);
+  static AppIconData get cityBus => _d(PhosphorIconsDuotone.signpost);
   static AppIconData get announcements => _d(PhosphorIconsDuotone.megaphone);
   static AppIconData get contacts => _d(PhosphorIconsDuotone.phone);
   static AppIconData get outage => _d(PhosphorIconsDuotone.lightning);

@@ -3,7 +3,12 @@ import '../../../core/time/clock_time.dart';
 
 enum TransportMode {
   ferry('ferry'),
-  bus('bus');
+
+  /// Şehirlerarası (Bandırma, Balıkesir)
+  bus('bus'),
+
+  /// Erdek içi Balıkesir Büyükşehir hatları (merkez ↔ mahalleler)
+  city('city');
 
   const TransportMode(this.jsonValue);
 

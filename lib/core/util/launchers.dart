@@ -26,4 +26,21 @@ abstract final class Launchers {
       mode: LaunchMode.externalApplication,
     );
   }
+
+  /// Web bağlantısını tarayıcıda açar (yalnızca https).
+  static Future<bool> openUrl(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null || uri.scheme != 'https') return Future.value(false);
+    return launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  /// "+902665551234" → "0266 555 12 34"; diğerleri olduğu gibi.
+  static String formatPhone(String phone) {
+    final digits = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.length == 12 && digits.startsWith('90')) {
+      final d = digits.substring(2);
+      return '0${d.substring(0, 3)} ${d.substring(3, 6)} ${d.substring(6, 8)} ${d.substring(8)}';
+    }
+    return phone;
+  }
 }

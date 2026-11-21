@@ -415,5 +415,72 @@
       }
     }
   },
-  "routeSampleBanner": "Bu hattın saatleri ÖRNEK VERİ — gerçek değildir."
+  "routeSampleBanner": "Bu hattın saatleri ÖRNEK VERİ — gerçek değildir.",
+  "modeCity": "Şehir İçi",
+  "directoryScreenTitle": "Rehber",
+  "directorySubtitle": "Önemli telefonlar ve duyurular",
+  "segmentContacts": "Telefonlar",
+  "segmentAnnouncements": "Duyurular",
+  "filterAll": "Tümü",
+  "categoryName": "{category, select, kesinti{Kesinti} pazar{Pazar} etkinlik{Etkinlik} other{Genel}}",
+  "@categoryName": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "newBadge": "Yeni",
+  "noAnnouncementsTitle": "Şu an duyuru yok",
+  "noAnnouncementsMessage": "Su/elektrik kesintileri, pazar günleri ve etkinlikler burada görünecek.",
+  "dateTimeShort": "{date} {time}",
+  "@dateTimeShort": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRange": "{start} – {end}",
+  "@dateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyTitle": "Acil Çağrı 112",
+  "emergencySubtitle": "Ambulans, itfaiye, polis ve jandarma için tek numara.",
+  "emergencyOverline": "Acil durumda",
+  "contactsSourceNote": "Numaralar değişmiş olabilir; acil olmayan durumlarda aramadan önce kurumun resmi sitesinden teyit edin.",
+  "callNamed": "{name} ara",
+  "@callNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "openDetails": "Ayrıntılar",
+  "searchTitle": "Ara",
+  "searchEmptyPrompt": "Eczane, telefon, sefer veya duyuru arayın.",
+  "searchNoResults": "\"{query}\" için sonuç bulunamadı.",
+  "@searchNoResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchSectionPharmacies": "Eczaneler",
+  "searchSectionContacts": "Telefonlar",
+  "searchSectionRoutes": "Seferler",
+  "searchSectionAnnouncements": "Duyurular",
+  "close": "Kapat"
 }

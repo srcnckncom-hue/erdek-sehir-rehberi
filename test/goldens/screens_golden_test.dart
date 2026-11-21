@@ -57,6 +57,16 @@ void main() {
         );
       });
 
+      testWidgets('rehber · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '07_rehber_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1500),
+          brightness: brightness,
+          builder: () => testScope(child: const AppShell(initialTab: AppTab.directory)),
+        );
+      });
+
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {
         await takeScreenshot(

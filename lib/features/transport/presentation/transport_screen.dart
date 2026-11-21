@@ -66,21 +66,21 @@ class TransportScreen extends ConsumerWidget {
       final selectedDate = today.addDays(selection.dayOffset);
 
       children.addAll([
-        Padding(
-          padding: AppSpacing.pagePadding,
-          child: _ModeToggle(
-            selected: selection.mode,
-            onSelected: notifier.selectMode,
-            ferryLabel: l10n.modeFerry,
-            busLabel: l10n.modeBus,
-          ),
+        SegmentedPills<TransportMode>(
+          selected: selection.mode,
+          onSelected: notifier.selectMode,
+          options: [
+            SegmentOption(value: TransportMode.ferry, label: l10n.modeFerry, icon: AppIcons.ferry),
+            SegmentOption(value: TransportMode.bus, label: l10n.modeBus, icon: AppIcons.bus),
+            SegmentOption(value: TransportMode.city, label: l10n.modeCity, icon: AppIcons.cityBus),
+          ],
         ),
         const SizedBox(height: AppSpacing.md),
-        _PillRow(
+        PillChoiceRow(
           semanticsLabel: l10n.selectRoute,
           items: [
             for (final r in routes)
-              _PillItem(label: r.title, selected: r.id == route?.id, onTap: () => notifier.selectRoute(r.id)),
+              PillChoice(label: r.title, selected: r.id == route?.id, onTap: () => notifier.selectRoute(r.id)),
           ],
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -96,7 +96,7 @@ class TransportScreen extends ConsumerWidget {
       if (route == null) {
         children.add(
           MessageView(
-            icon: selection.mode == TransportMode.ferry ? AppIcons.ferry : AppIcons.bus,
+            icon: modeIcon(selection.mode),
             title: l10n.noTimetableTitle,
             message: l10n.noTimetableMessage,
           ),
@@ -111,10 +111,10 @@ class TransportScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.section),
           SectionHeader(title: l10n.departuresTitle),
           const SizedBox(height: AppSpacing.md),
-          _PillRow(
+          PillChoiceRow(
             items: [
               for (var i = 0; i < dayCount; i++)
-                _PillItem(
+                PillChoice(
                   label: _dayLabel(l10n, today.addDays(i), today),
                   selected: i == selection.dayOffset,
                   onTap: () => notifier.selectDay(i),
@@ -194,140 +194,6 @@ class TransportScreen extends ConsumerWidget {
       ];
 }
 
-// ─── Feribot / Otobüs anahtarı ────────────────────────────────────────────
-
-class _ModeToggle extends StatelessWidget {
-  const _ModeToggle({
-    required this.selected,
-    required this.onSelected,
-    required this.ferryLabel,
-    required this.busLabel,
-  });
-
-  final TransportMode selected;
-  final ValueChanged<TransportMode> onSelected;
-  final String ferryLabel;
-  final String busLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.palette;
-    Widget option(TransportMode mode, AppIconData icon, String label) {
-      final isSelected = mode == selected;
-      return Expanded(
-        child: Semantics(
-          selected: isSelected,
-          button: true,
-          label: label,
-          excludeSemantics: true,
-          child: GestureDetector(
-            onTap: () => onSelected(mode),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              constraints: const BoxConstraints(minHeight: AppSpacing.minTouchTarget),
-              decoration: BoxDecoration(
-                color: isSelected ? p.surface : Colors.transparent,
-                borderRadius: AppRadius.pillAll,
-                boxShadow: isSelected ? AppShadows.card(p.shadow) : null,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppIcon(icon, size: 22, color: isSelected ? p.primary : p.textSecondary),
-                  const SizedBox(width: AppSpacing.xs),
-                  Text(
-                    label,
-                    style: AppTypography.label.copyWith(
-                      color: isSelected ? p.primary : p.textSecondary,
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.xxs),
-      decoration: BoxDecoration(color: p.surfaceMuted, borderRadius: AppRadius.pillAll),
-      child: Row(
-        children: [
-          option(TransportMode.ferry, AppIcons.ferry, ferryLabel),
-          option(TransportMode.bus, AppIcons.bus, busLabel),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── Yatay hap seçiciler (hat, gün) ───────────────────────────────────────
-
-class _PillItem {
-  const _PillItem({required this.label, required this.selected, required this.onTap});
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-}
-
-class _PillRow extends StatelessWidget {
-  const _PillRow({required this.items, this.semanticsLabel});
-
-  final List<_PillItem> items;
-  final String? semanticsLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.palette;
-    return Semantics(
-      label: semanticsLabel,
-      container: true,
-      child: SizedBox(
-        height: AppSpacing.minTouchTarget,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: AppSpacing.pagePadding,
-          itemCount: items.length,
-          separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
-          itemBuilder: (context, i) {
-            final item = items[i];
-            return Semantics(
-              selected: item.selected,
-              button: true,
-              child: Material(
-                color: item.selected ? p.primary : p.surface,
-                borderRadius: AppRadius.pillAll,
-                child: InkWell(
-                  onTap: item.onTap,
-                  borderRadius: AppRadius.pillAll,
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                    decoration: BoxDecoration(
-                      borderRadius: AppRadius.pillAll,
-                      border: item.selected ? null : Border.all(color: p.divider),
-                    ),
-                    child: Text(
-                      item.label,
-                      style: AppTypography.tileLabel.copyWith(
-                        color: item.selected ? p.onPrimary : p.textBody,
-                        fontWeight: item.selected ? FontWeight.w600 : FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
 // ─── Sıradaki sefer kartı ─────────────────────────────────────────────────
 
 class _NextDepartureCard extends StatelessWidget {
@@ -347,7 +213,6 @@ class _NextDepartureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
-    final isFerry = route.mode == TransportMode.ferry;
     final timetable = route.timetableFor(today);
 
     final String title;
@@ -365,8 +230,12 @@ class _NextDepartureCard extends StatelessWidget {
     }
 
     return FeatureCard(
-      color: isFerry ? p.aqua.foreground : p.primary,
-      icon: isFerry ? AppIcons.ferry : AppIcons.bus,
+      color: switch (route.mode) {
+        TransportMode.ferry => p.aqua.foreground,
+        TransportMode.bus => p.primary,
+        TransportMode.city => p.mint.foreground,
+      },
+      icon: modeIcon(route.mode),
       overline: l10n.nextDepartureOverline,
       title: title,
       subtitle: subtitle.join('\n'),
@@ -519,3 +388,9 @@ class _DepartureRow extends StatelessWidget {
     );
   }
 }
+
+AppIconData modeIcon(TransportMode mode) => switch (mode) {
+      TransportMode.ferry => AppIcons.ferry,
+      TransportMode.bus => AppIcons.bus,
+      TransportMode.city => AppIcons.cityBus,
+    };

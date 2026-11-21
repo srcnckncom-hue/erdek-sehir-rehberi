@@ -53,7 +53,8 @@
               "mode": {
                 "enum": [
                   "ferry",
-                  "bus"
+                  "bus",
+                  "city"
                 ]
               },
               "title": {

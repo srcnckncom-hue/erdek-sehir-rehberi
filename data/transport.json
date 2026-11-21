@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "isSample": false,
   "updatedAt": "2026-11-21T09:30:00+03:00",
-  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Otobüs: ÖRNEK VERİ.",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Otobüs ve şehir içi: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
@@ -863,6 +863,664 @@
         ],
         "isSample": true,
         "direction": "outbound"
+      },
+      {
+        "id": "sehirici-1-gidis",
+        "mode": "city",
+        "direction": "outbound",
+        "isSample": true,
+        "title": "ÖRNEK Hat 1: Merkez → ÖRNEK Mahalle A",
+        "from": "Erdek Merkez",
+        "to": "ÖRNEK Mahalle A",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "timetables": [
+          {
+            "name": "Genel tarife (ÖRNEK)",
+            "validFrom": "2026-01-01",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "07:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "08:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "10:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "12:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "14:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "16:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "18:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "20:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "07:00",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "10:00",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "14:00",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "18:00",
+                "days": [
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-1-donus",
+        "mode": "city",
+        "direction": "inbound",
+        "isSample": true,
+        "title": "ÖRNEK Hat 1: ÖRNEK Mahalle A → Merkez",
+        "from": "ÖRNEK Mahalle A",
+        "to": "Erdek Merkez",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "timetables": [
+          {
+            "name": "Genel tarife (ÖRNEK)",
+            "validFrom": "2026-01-01",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "07:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "09:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "10:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "12:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "14:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "16:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "18:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "20:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "07:30",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "10:30",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "14:30",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "18:30",
+                "days": [
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-2-gidis",
+        "mode": "city",
+        "direction": "outbound",
+        "isSample": true,
+        "title": "ÖRNEK Hat 2: Merkez → ÖRNEK Mahalle B",
+        "from": "Erdek Merkez",
+        "to": "ÖRNEK Mahalle B",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "timetables": [
+          {
+            "name": "Genel tarife (ÖRNEK)",
+            "validFrom": "2026-01-01",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "07:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "09:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "11:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "13:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "15:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "17:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "19:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "07:15",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "11:15",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "15:15",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "19:15",
+                "days": [
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-2-donus",
+        "mode": "city",
+        "direction": "inbound",
+        "isSample": true,
+        "title": "ÖRNEK Hat 2: ÖRNEK Mahalle B → Merkez",
+        "from": "ÖRNEK Mahalle B",
+        "to": "Erdek Merkez",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "timetables": [
+          {
+            "name": "Genel tarife (ÖRNEK)",
+            "validFrom": "2026-01-01",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "07:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "09:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "11:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "13:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "15:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "17:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "19:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "07:45",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "11:45",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "15:45",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "19:45",
+                "days": [
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-3-gidis",
+        "mode": "city",
+        "direction": "outbound",
+        "isSample": true,
+        "title": "ÖRNEK Hat 3: Merkez → ÖRNEK Mahalle C",
+        "from": "Erdek Merkez",
+        "to": "ÖRNEK Mahalle C",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "timetables": [
+          {
+            "name": "Genel tarife (ÖRNEK)",
+            "validFrom": "2026-01-01",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "08:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "11:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "14:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "17:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "08:00",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "14:00",
+                "days": [
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-3-donus",
+        "mode": "city",
+        "direction": "inbound",
+        "isSample": true,
+        "title": "ÖRNEK Hat 3: ÖRNEK Mahalle C → Merkez",
+        "from": "ÖRNEK Mahalle C",
+        "to": "Erdek Merkez",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "timetables": [
+          {
+            "name": "Genel tarife (ÖRNEK)",
+            "validFrom": "2026-01-01",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "08:40",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "11:40",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "14:40",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "17:40",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "time": "08:40",
+                "days": [
+                  7
+                ]
+              },
+              {
+                "time": "14:40",
+                "days": [
+                  7
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/theme/app_icons.dart';
-import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
+import '../../features/contacts/presentation/directory_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../features/prayer/data/prayer_repository.dart';
@@ -97,42 +97,7 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
           const PharmacyScreen(),
           const PrayerScreen(),
           const TransportScreen(),
-          // 8. adımda gerçek ekranla değişecek.
-          _ComingSoon(title: l10n.tabDirectory, icon: AppIcons.contacts),
-        ],
-      ),
-    );
-  }
-}
-
-class _ComingSoon extends StatelessWidget {
-  const _ComingSoon({required this.title, required this.icon});
-
-  final String title;
-  final AppIconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Text(
-              title,
-              style: AppTypography.sectionTitle.copyWith(color: context.palette.textHeading),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: MessageView(
-                icon: icon,
-                title: l10n.comingSoonTitle,
-                message: l10n.comingSoonMessage,
-              ),
-            ),
-          ),
+          DirectoryScreen(isActive: _tab == AppTab.directory),
         ],
       ),
     );
