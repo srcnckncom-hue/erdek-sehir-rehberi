@@ -67,6 +67,9 @@
   - iOS açılış ekranı artık BOŞ BEYAZ (LaunchImage saydam) → animasyon beyazdan başlar.
   - Açılış animasyonu (LaunchSplash, 3,2 sn; "Hareketi azalt"ta 1,2 sn, dönme yok): amblem küçükten büyüyerek 3 TUR döner (easeOutCubic, ölçek easeOutBack) → üzerinden çapraz ışık geçer → "ERDEK" ortadan iki yana açılarak → "ŞEHİR REHBERİ" yukarı kayarak → slogan (Poppins 500, #1C2439, harf aralığı daralarak). Gri→renkli efekti KALDIRILDI. Slogan Flutter metni (testler 'Şehrin rehberi, cebinde' metnini arar).
   - Golden 11_acilis_donus / _yazilar / _son.
+- LOGO YİNE DEĞİŞTİ (21.11.2026 16:00, KESİN): renkli amblem — yeşil zeytin dalı (yeşil + mor zeytinler), mavi çizgisel yelkenli + dalgalar, koyu yeşil/lacivert dağlar, turuncu güneş ve turuncu çift çember; altında mavi "ERDEK" (#258DC2, kalın sans), turuncu "ŞEHİR REHBERİ", lacivert slogan. Kaynak design/logo_kaynak.jpg. Altın logo artık KULLANILMIYOR.
+  - Parçalar: logo_emblem.png (778×685), logo_emblem_line.png (amblemin gri ÇİZGİ hâli, kenar algılamayla üretildi, aynı boyut), logo_erdek.png (832×185), logo_sehir.png (715×123), logo.png (☰ menü). Aralıklar (px): amblem→ERDEK 53, ERDEK→ŞEHİR 23, ŞEHİR→slogan 37. Uygulama ikonu: beyaz zemin + renkli amblem %80.
+  - Açılış (2,8 sn; "Hareketi azalt"ta 1 sn, çizim yok): 0–0,40 gri çizgiler tepeden saat yönünde çizilir (SweepGradient maskesi) → 0,32–0,50 gri tonlu dolgu → 0,48–0,62 renklenir → ERDEK (ortadan açılarak) 0,58 → ŞEHİR REHBERİ 0,66 → slogan 0,74 (Poppins 500 #142036). Dönme efekti KALDIRILDI. Golden 11_acilis_cizim / _gri / _yazilar / _son.
 - NÖBETÇİ ECZANE OTOMATİK (21.11.2026, kullanıcı kararı; izin e-postası da önerildi, oda: yonetim@balikesireczaciodasi.org.tr):
   - Kaynak: https://www.balikesireczaciodasi.org.tr/nobetci-eczaneler . GET sayfası yalnız bugünü gösterir AMA sayfadaki form POST ile her günü verir: tarih1=YYYY-MM-DD, ilce=1356 (ERDEK), gnr=" NÖBETLERİ GÖSTER ". Sonuç kartları: class "nobet-kart", h4 "DD.MM.YYYY / ERDEK<br><strong>AD</strong>", fa-home adres, tel:, google maps?q=lat,lng. Oda listeyi önceden yayınlıyor (21.11'de 31.12'ye kadar dolu, Ocak boş). robots.txt izin veriyor; ayrı kullanım koşulu yok.
   - scripts/fetch_pharmacy_duty.py: bugün + 45 gün (1,5 sn arayla), get_content ile mevcut belgeyi okur, birleştirir (eczaneyi telefon/ad ile eşler, panelde düzeltilen ad/adres korunur, yalnız eksik konum tamamlanır; boş günlerde elle kayıt korunur; 60 günden eski nöbet atılır; isSample belge sıfırlanır), şemayla doğrular, sync_pharmacy_duty RPC ile yazar. --dry-run, --self-test (fixture scripts/fixtures/eczaci_odasi_ornek.html; data-validate.yml'de de çalışır). Notlar ("GECE 22:00'A KADAR") şimdilik yalnız loglanır, uygulamada gösterilmiyor.
@@ -106,7 +109,7 @@
 - Font: Poppins 400/500/600/700. Ölçek: pageTitle 26/700, display 56/700, cardTitle 22/700, section 20/600, greeting 17/500, label 15/500, body 15/400, tile 13/500, caption 13/400, tab 11/500.
 - Ölçüler: kenar 14, boşluk 8, bölüm 24, chip h50 r14, tile h70 r16, arama h48, kart r20, hero ~295 alt köşe 28.
 - Reklam: ana sayfada YALNIZCA home_feed_1 (2:1, 1200×600). Sayfa altları: pharmacy_bottom, prayer_bottom, transport_bottom, contacts_bottom; liste içi transport_list_inline (her 5 sefer).
-- Logo: 21.11.2026'da yenilendi (altın amblem; assets/images/logo_*.png). Eski logo.svg kullanılmıyor. Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
+- Logo: 21.11.2026 16:00'da KESİNLEŞTİ (renkli amblem; assets/images/logo_*.png). logo.svg ve altın logo kullanılmıyor. Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
 
 ## İkonlar
 - phosphor_flutter KULLANMA. phosphoricons_flutter ^1.1.1; AppIconData + AppIcon; tek dosya app_icons.dart.

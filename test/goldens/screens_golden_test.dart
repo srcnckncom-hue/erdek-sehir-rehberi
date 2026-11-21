@@ -28,10 +28,10 @@ void main() {
         as Map<String, dynamic>)['data'] as Map<String, dynamic>,
   ).places.first;
 
-  // Açılış animasyonu: amblem dönerken, yazılar gelirken ve son kare.
+  // Açılış animasyonu: çizim, gri dolgu, yazılar gelirken ve son kare.
   // Zemin her temada beyaz olduğu için yalnızca açık tema.
   for (final device in GoldenDevice.all) {
-    for (final (name, value) in [('donus', 0.25), ('yazilar', 0.70), ('son', 1.0)]) {
+    for (final (name, value) in [('cizim', 0.22), ('gri', 0.47), ('yazilar', 0.76), ('son', 1.0)]) {
       testWidgets('açılış $name · ${device.name}', (tester) async {
         await takeScreenshot(
           tester,
