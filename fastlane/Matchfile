@@ -1,0 +1,7 @@
+# Sertifika ve profiller AYRI, GİZLİ bir GitHub reposunda şifreli durur.
+# MATCH_GIT_URL içinde erişim anahtarı vardır → yalnızca GitHub Secrets'ta.
+# Şifre çözme parolası: MATCH_PASSWORD (GitHub Secrets).
+git_url(ENV["MATCH_GIT_URL"])
+storage_mode("git")
+type("appstore")
+team_id(ENV["APPLE_TEAM_ID"])
