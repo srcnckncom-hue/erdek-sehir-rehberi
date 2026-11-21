@@ -23,9 +23,13 @@ class AppDrawer extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            Text(
-              l10n.appTitle,
-              style: AppTypography.sectionTitle.copyWith(color: p.textHeading),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(
+                'assets/images/logo.png',
+                height: 120,
+                semanticLabel: l10n.appTitle,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(

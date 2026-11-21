@@ -31,11 +31,12 @@
     - Panel: NavigationRail (Reklamlar, Telefonlar, Duyurular, Nöbetçi Eczane, Gezilecek Yerler, Erdek Tarihi, Ulaşım[yakında]). ContentEditor: belge Supabase'te yoksa yayındaki kopyadan (../data/<id>.json) başlar; ÖRNEK uyarısı anahtarı, kaynak notu, Kaydet (updatedAt TR saati). form_kit: diyalog formları, telefon normalize (+90…), paragraflar boş satırla, ipuçları satır satır.
     - repo data/*.json artık yalnızca uygulamayla gelen yedek kopya (validate_data.py hâlâ kontrol eder).
   - 9d TAMAM: panel Ulaşım düzenleyicisi (admin/lib/content/transport_editor.dart): tür sekmeleri, hat ekle/düzenle (yön, işletme, telefon, not, ÖRNEK işareti), tarife ekle/kopyala/sil (tarih aralığı), sefer sayfası (kalkış, varış, günler [boş = her gün], not; toplu ekleme "07:30-09:00" satırlarıyla). Bununla 9. adım tamamlanır.
-- 10. adım widget yazıldı (CI bekleniyor). Karar: küçük = sıradaki vakit, orta = vakit + nöbetçi eczane. Kullanıcının ücretli Apple Developer hesabı VAR (daha önce uygulama yayınlamış).
+- 10. adım TAMAM (CI yeşil). Karar: küçük = sıradaki vakit, orta = vakit + nöbetçi eczane. Kullanıcının ücretli Apple Developer hesabı VAR (daha önce uygulama yayınlamış).
   - Bundle: com.erdek.sehirrehberi.erdekrehberi, widget: …erdekrehberi.widget, App Group: group.com.erdek.sehirrehberi.erdekrehberi (12. adımda Apple'da App ID'lere App Groups yetkisi + match profilleri İKİ bundle için).
   - Flutter: lib/features/home_widget_sync/widget_sync.dart (7 günlük vakitler + 08:30 nöbet pencereleri, ISO +03:00) → MethodChannel 'erdek/widget' → AppDelegate UserDefaults(suiteName) 'widget_data' + WidgetCenter.reloadAllTimelines. AppShell veri değişince ve uygulama öne gelince gönderir.
   - iOS: ios/ErdekWidget (SwiftUI, StaticConfiguration, küçük/orta, iOS 16+, iOS 17 containerBackground), Info.plist sürümleri $(FLUTTER_BUILD_NAME/NUMBER) Widget.xcconfig ile; Runner.entitlements.
   - Hedef Xcode projesine CI'da scripts/add_widget_target.rb (xcodeproj gem, tekrar çalıştırılabilir, embed fazı Thin Binary'den önce) ile eklenir — ios-ci'de adım var, ios-release'de de OLMALI.
+- 11. adım yazıldı (CI bekleniyor): logo ONAYLANDI ("şimdilik"): Bursa şehir rehberi rozet stilinden ilham; kemer içinde gün batımı + Kapıdağ silueti + deniz + yelkenli + martılar, sol kenarda zeytin dalı (Düzlerspor'dan yalnızca fikir, kopya değil), mavi levhada ERDEK, turuncu kurdelede ŞEHİR REHBERİ, Poppins Bold. Kaynak: assets/images/logo.svg; logo.png (drawer). İkon: krem #FFF6EA zemin + logo (tüm AppIcon boyutları). Açılış: LaunchImage 240×210 pt, beyaz zemin. Not: küçük boyda alt yazı zor okunuyor; kullanıcı böyle kalsın dedi.
 - Firebase: ERTELENDİ.
 - Sonra: 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
 
@@ -65,7 +66,7 @@
 - Font: Poppins 400/500/600/700. Ölçek: pageTitle 26/700, display 56/700, cardTitle 22/700, section 20/600, greeting 17/500, label 15/500, body 15/400, tile 13/500, caption 13/400, tab 11/500.
 - Ölçüler: kenar 14, boşluk 8, bölüm 24, chip h50 r14, tile h70 r16, arama h48, kart r20, hero ~295 alt köşe 28.
 - Reklam: ana sayfada YALNIZCA home_feed_1 (2:1, 1200×600). Sayfa altları: pharmacy_bottom, prayer_bottom, transport_bottom, contacts_bottom; liste içi transport_list_inline (her 5 sefer).
-- Logo: geçici logo 11. adımda onaya. Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
+- Logo: 11. adımda onaylandı (assets/images/logo.svg). Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
 
 ## İkonlar
 - phosphor_flutter KULLANMA. phosphoricons_flutter ^1.1.1; AppIconData + AppIcon; tek dosya app_icons.dart.
