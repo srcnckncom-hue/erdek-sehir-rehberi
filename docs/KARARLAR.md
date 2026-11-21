@@ -1,0 +1,91 @@
+# Erdek Şehir Rehberi — Alınan kararlar
+
+> Yeni bir Claude sohbetinde devam ederken önce bu dosyayı okut. Proje kuralları,
+> tasarım, sürümler ve sıradaki adım burada. Kod ve veri bu repoda.
+
+## Durum
+- 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
+- 5. adım TAMAM: PharmacyScreen, PageHeader/GroupedCard, DateTexts, launchOrNotify.
+- 6. adım TAMAM (prayer-sync çalıştı → data/prayer_times.json gerçek veri, 2026-11-01..2026-12-31, isSample:false): vakit çekme scripti + prayer-sync.yml, bildirim planlayıcı + flutter_local_notifications ^23.0.3 (timezone ^0.11.2), AppDelegate delegate, PrayerScreen + imsakiye + bildirim ayar sayfası, test/fixtures/data.
+- 7. adım TAMAM: TransportScreen, transport_selection.dart, golden 06_ulasim. Gestaş feribot tarifesi GERÇEK (8 hat, gidiş/dönüş + varış saati, Kış tarifesi); geçerlilik tarihleri 2026-11-21..2027-03-31 YER TUTUCU.
+- 8. adım TAMAM:
+  - Rehber sekmesi: DirectoryScreen(isActive) → Telefonlar / Duyurular anahtarı (directory_selection.dart). Telefonlar: kırmızı 112 kartı + kategori GroupedCard + ContactRow. Duyurular: kategori hapları, AnnouncementCard ("Yeni" rozeti, tarih aralığı, bağlantı). Duyurular yalnızca sekme gerçekten görünürken okundu sayılır (announcementsLastSeenProvider). Alt reklam contacts_bottom.
+  - Ana sayfa: zil → Duyurular (okunmamış sayısı), kutucuklar Rehber'e segment seçerek gider.
+  - Arama: openSearch() tam ekran; TextSearch Türkçe büyük/küçük + aksan katlama; en az 2 karakter, bölüm başına en fazla 8 sonuç.
+  - Ulaşım 3. tür "Şehir İçi" (TransportMode.city): Balıkesir Büyükşehir mahalle hatları ÖRNEK, rota düzeyinde isSample:true. Şehirlerarası otobüs de ÖRNEK.
+  - Ortak: pill_selectors.dart (SegmentedPills, PillChoiceRow), Launchers.openUrl/formatPhone, golden 07_rehber.
+- 8b ara adım (Keşfet) yazıldı (21.11.2026); CI'da bir test düzeltildi (geri düğmesi PageHeader.backKey ile bulunuyor), sonuç bekleniyor:
+  - Ana sayfada "Şehir Hizmetleri" altına "Keşfet" bölümü (Gezilecek Yerler aqua, Erdek Tarihi mor); ☰ menüde de var. Metinler ÖRNEK. Fotoğraf yok → tür ikonu + "Fotoğraf yakında" (hakkı bize ait fotoğraflar gelince eklenecek).
+  - data/places.json (area erdek/kapidag; category plaj/tarihi/doga/koy/manzara/diger; summary, paragraphs, tips?, address?, latitude/longitude?) — 6 ÖRNEK yer. data/history.json (intro?, sections: id/title/period?/paragraphs) — 4 ÖRNEK dönem.
+  - lib/features/explore: PlacesScreen, PlaceDetailScreen, HistoryScreen (Navigator.push). PageHeader'a onBack eklendi.
+  - Arama gezilecek yerleri de arıyor. Bu sayfalarda reklam YOK.
+  - Golden 08_gezilecek_yerler, 09_yer_ayrinti, 10_erdek_tarihi.
+- Firebase: ERTELENDİ.
+- Sırada: 9. adım reklam sistemi (Supabase şema/RLS, Flutter Web admin, gerçek AdSlot + interstitial, istatistik). Sonra 10 WidgetKit, 11 ikon + splash, 12 imzalama (match), 13 ios-release + TestFlight, 14 App Store hazırlığı.
+
+## Kullanıcıdan beklenen gerçek veriler
+- Gestaş tarifesinin gerçek geçerlilik tarihleri ve telefonu.
+- Erdek–Bandırma, Erdek–Balıkesir otobüs saatleri.
+- Balıkesir Büyükşehir Erdek içi mahalle hatları (hat adı, mahalleler, saatler, gün tipleri).
+- Önemli telefonlar, nöbetçi eczane listesi, duyurular.
+- Gezilecek yerlerin ve Erdek tarihinin gerçek metinleri; kullanım hakkı olan fotoğraflar.
+
+## Kurallar (kullanıcının şartnamesinden)
+- Gizli anahtarlar repoya girmez; CI'da secrets'tan üretilen dosya + --dart-define-from-file.
+- Belediye / eczacı odası logosu veya "resmi" izlenimi KULLANILMAZ.
+- Diyanet API'si uygulamadan doğrudan çağrılmaz, kimlik bilgisi gömülmez.
+- Gerçek telefon / saat / işletme uydurulmaz. Emin olunmayan veri veya tasarım detayı sorulur ya da ÖRNEK/TODO işaretlenir.
+
+## Namaz vakti kaynağı
+- Hürriyet sayfası kazıma REDDEDİLDİ (telif/kırılganlık).
+- Şimdilik ezanvakti.imsakiyem.com (Diyanet verisi, ücretsiz, anahtarsız). Uç nokta: /api/prayer-times/{districtId}/range?startDate&endDate&limit=100; Erdek id 17881.
+- Kullanıcı Diyanet Awqat Salah başvurusunu sonra yapacak → fetch_diyanet() tamamlanacak, secrets AWQAT_USERNAME/AWQAT_PASSWORD, PRAYER_SOURCE=diyanet.
+
+## Tasarım (onaylandı 21.11.2026)
+- Görseller (design/02_ana_sayfa_v2.png) yalnızca GÖRSEL STİL kaynağı; içerik şartnameden. Görselden ek: hava durumu.
+- Ana sayfa: hero · ☰ menü · 🔔 duyurular · hava · arama · 3 renkli kart (Nöbetçi Eczane peach, Namaz Vakitleri mint, Feribot Saatleri aqua) · 8 kutucuk · home_feed_1 reklamı · Şehir Hizmetleri (kırmızı eczane kartı, sıradaki vakit, feribot + otobüs) · Keşfet. Alt sekmeler: Ana Sayfa, Eczane, Vakitler, Ulaşım, Rehber. Aktif sekme zemini primary %10.
+- Alt sayfalar: PageHeader (26/700 + ikincil satır, isteğe bağlı geri düğmesi), beyaz kartlar r20, GroupedCard, InfoBanner, hap seçiciler, segment anahtarı.
+- Palet: primary #0057FC, heading #061826, body #0A0F1A, secondary #5F6779, bg #F4F5F9, surface #FFF, accentRed #C81C18, badge #E82430, peach #FCE0B5/#D06F04, mint #C0F4D8/#068A55, aqua #BAF0F0/#00808C, ikon renkleri mor #6545C4 mavi #0858C2 kırmızı #E0241A bordo #D01030 turuncu #F49022 somon #F07A6E. Koyu tema türetildi.
+- Font: Poppins 400/500/600/700. Ölçek: pageTitle 26/700, display 56/700, cardTitle 22/700, section 20/600, greeting 17/500, label 15/500, body 15/400, tile 13/500, caption 13/400, tab 11/500.
+- Ölçüler: kenar 14, boşluk 8, bölüm 24, chip h50 r14, tile h70 r16, arama h48, kart r20, hero ~295 alt köşe 28.
+- Reklam: ana sayfada YALNIZCA home_feed_1 (2:1, 1200×600). Sayfa altları: pharmacy_bottom, prayer_bottom, transport_bottom, contacts_bottom; liste içi transport_list_inline (her 5 sefer).
+- Logo: geçici logo 11. adımda onaya. Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
+
+## İkonlar
+- phosphor_flutter KULLANMA. phosphoricons_flutter ^1.1.1; AppIconData + AppIcon; tek dosya app_icons.dart.
+
+## Hava durumu
+- Open-Meteo KULLANILMAZ (ücretsiz katman ticari değil). MET Norway: CC BY 4.0 atıf, User-Agent (WEATHER_USER_AGENT), Expires önbelleği.
+
+## Veri katmanı
+- Zarf: {schemaVersion:1, isSample, updatedAt, source, data}. data/*.json assets olarak gömülü ve GitHub Pages'te yayınlı; şemalar data/schemas, kontrol scripts/validate_data.py, açıklama docs/DATA.md.
+- Yükleme: önbellek → uygulamayla gelen kopya → ağ (OfflineFirstLoader).
+- Zaman hesapları Erdek saati ALANLARIYLA (CalendarDate/ClockTime). Tarih metinleri DateTexts (arb select).
+- Elle fromJson. hive_ce_flutter ^2.5.0; kutular: json_cache, settings.
+
+## Sürümler / dil kuralları
+- Flutter 3.50.0 (Dart 3.14). Runner macos-26, Xcode 26.6. Min iOS 16.0.
+- `package:material_ui/material_ui.dart`; analyze info'larda da fail.
+- Lokalizasyon: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates]. arb placeholder adlarında `from` gibi kelimelerden kaçın.
+- Lint dersleri: public `this.x` initializing formal; null-aware element (`?x`); parametre adı static üyeyle çakışmasın; doc yorumunda `<x>` backtick; buton metinleri Flexible + ellipsis; bekletilmeyen future'lar unawaited().
+- Paket seçerken Flutter 3.44+/3.50 uyumluluğunu ve bağımlılık çakışmalarını kontrol et.
+- Riverpod 3; testlerde testScope()/testApp(); test verisi test/fixtures/data, eşzamanlı File okuma. Testlerde bySemanticsLabel yerine Key kullan.
+
+## Golden / ekran görüntüsü
+- Cihazlar: iPhone SE 375×667@2, iPhone 16 Pro Max 440×956@3. Dosyalar 01–10.
+- CI: `--exclude-tags golden` + `--tags golden --update-goldens` → "screenshots" artifact.
+
+## Firebase (ERTELENDİ)
+- Crashlytics + FCM (topic). Analytics kapalı. APNs key 12. adımda. Admin "Bildirim gönder" 9. adımda.
+
+## Mimari
+- riverpod 3, hive_ce_flutter, phosphoricons_flutter, dio, timezone ^0.11.2, url_launcher, flutter_local_notifications ^23.0.3.
+- Admin paneli: Flutter Web. Pages: https://srcnckncom-hue.github.io/erdek-sehir-rehberi/
+- iOS derleme/imzalama tamamen GitHub Actions macOS'ta (Mac yok); Xcode'da elle işlem yok.
+
+## Çalışma düzeni
+- Repo: github.com/srcnckncom-hue/erdek-sehir-rehberi (public). Windows + GitHub Desktop. Klon: C:\Users\sercan\Documents\GitHub\erdek-sehir-rehberi
+- Claude dosyaları masaüstü uygulamasının klasör bağlantısıyla yazar; kullanıcı GitHub Desktop'ta commit + push eder, CI logunu yapıştırır.
+- .github/workflows/ dosyaları uzaktan yazılamıyorsa Desktop\erdek-workflows\adimN klasörüne konur, kullanıcı elle taşır.
+- Prayer-sync bot commit'lerinden sonra kullanıcı Pull yapmalı.
+- Kullanıcı adım adım, kısa talimat istiyor; tam tıklama yolu ver.

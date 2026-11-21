@@ -24,6 +24,9 @@ class PageHeader extends StatelessWidget {
   final VoidCallback? onBack;
   final String? backLabel;
 
+  /// Geri düğmesinin anahtarı (testler için).
+  static const backKey = ValueKey('page-header-back');
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
@@ -43,7 +46,7 @@ class PageHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (onBack != null) ...[
-                  _BackButton(onTap: onBack!, label: backLabel),
+                  _BackButton(key: PageHeader.backKey, onTap: onBack!, label: backLabel),
                   const SizedBox(height: AppSpacing.md),
                 ],
                 Semantics(
@@ -65,7 +68,7 @@ class PageHeader extends StatelessWidget {
 }
 
 class _BackButton extends StatelessWidget {
-  const _BackButton({required this.onTap, this.label});
+  const _BackButton({super.key, required this.onTap, this.label});
 
   final VoidCallback onTap;
   final String? label;

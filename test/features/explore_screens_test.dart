@@ -1,3 +1,4 @@
+import 'package:erdek_rehberi/core/widgets/widgets.dart';
 import 'package:erdek_rehberi/features/explore/presentation/history_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/places_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,7 +37,6 @@ void main() {
   });
 
   testWidgets('yer kartı ayrıntı sayfasını açar', (tester) async {
-    final semantics = tester.ensureSemantics();
     await pump(tester, const PlacesScreen());
 
     await tester.tap(find.text('ÖRNEK Yer A'));
@@ -48,10 +48,9 @@ void main() {
     // Koordinat/adres yok → yol tarifi düğmesi gösterilmez
     expect(find.text('Yol tarifi'), findsNothing);
 
-    await tester.tap(find.bySemanticsLabel('Geri'));
+    await tester.tap(find.byKey(PageHeader.backKey));
     await tester.pumpAndSettle();
     expect(find.text('ÖRNEK Yer B'), findsOneWidget);
-    semantics.dispose();
   });
 
   testWidgets('erdek tarihi: giriş ve dönemler', (tester) async {
