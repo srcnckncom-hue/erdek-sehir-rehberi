@@ -146,7 +146,7 @@
   "drawerDataSources": "Veri kaynakları",
   "drawerPrivacy": "Gizlilik Politikası",
   "drawerIndependentNote": "Bu uygulama bağımsızdır; Erdek Belediyesi, Eczacı Odası veya başka bir resmi kurumla bağlantısı yoktur.",
-  "dataSourcesBody": "Hava durumu: MET Norway (CC BY 4.0). Namaz vakitleri: Diyanet İşleri Başkanlığı. Nöbetçi eczane, ulaşım, telefon ve duyurular: elle derlenir; değişmiş olabilir, lütfen teyit edin.",
+  "dataSourcesBody": "Hava durumu: MET Norway (CC BY 4.0). Namaz vakitleri: Diyanet İşleri Başkanlığı. Nöbetçi eczane: Balıkesir Eczacı Odası nöbet listesi (her gün otomatik alınır). Ulaşım, telefon ve duyurular: elle derlenir. Bilgiler değişmiş olabilir, lütfen teyit edin.",
   "adLabel": "Reklam",
   "cannotOpen": "Bağlantı açılamadı.",
   "pharmacyScreenTitle": "Nöbetçi Eczane",

@@ -24,6 +24,12 @@ hatalı veri **yayınlanmaz**, uygulama eski bilgiyle çalışmaya devam eder.
 
 ## pharmacy.json — Nöbetçi eczane
 
+> **Otomatik:** `pharmacy-sync` görevi her gün Balıkesir Eczacı Odası nöbet
+> listesinden Erdek'i okur (bugün + 45 gün) ve paneldeki eczane belgesine yazar
+> (`scripts/fetch_pharmacy_duty.py`, `supabase/migrations/0004_pharmacy_sync.sql`).
+> Yeni eczaneyi kendisi ekler; panelden düzeltilen ad/adres korunur. Listede
+> olmayan günlere elle girilen nöbet de korunur. Bu dosya yalnızca yedek kopyadır.
+
 ```json
 "pharmacies": [
   { "id": "merkez", "name": "Merkez Eczanesi", "address": "...", "phone": "+902660000000",

@@ -1,0 +1,57 @@
+# Her gün (ve elle) Erdek nöbetçi eczanelerini Balıkesir Eczacı Odası
+# sitesinden okur (bugün + 45 gün) → panelin eczane belgesine (Supabase) yazar.
+# Uygulama siteye doğrudan istek ATMAZ.
+#
+# Gereken secrets: SUPABASE_URL, SUPABASE_ANON_KEY, PHARMACY_SYNC_TOKEN
+# (PHARMACY_SYNC_TOKEN: supabase/migrations/0004_pharmacy_sync.sql içindeki
+#  create_automation_token('pharmacy-sync') çıktısı).
+#
+# Site okunamazsa ya da Erdek kaydı yoksa HİÇBİR ŞEY yazılmaz ve görev kırmızı
+# olur; o durumda nöbetler panelden elle girilir.
+name: pharmacy-sync
+
+on:
+  schedule:
+    - cron: '41 4 * * *' # Her gün 07:41 (TSİ)
+    - cron: '23 15 * * *' # Her gün 18:23 (TSİ) — gün içi değişiklikler için
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Yalnızca dene, kaydetme'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pharmacy-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install jsonschema
+
+      - name: Ayrıştırıcı kendi testi
+        run: python3 scripts/fetch_pharmacy_duty.py --self-test
+
+      - name: Nöbetleri çek ve kaydet
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          PHARMACY_SYNC_TOKEN: ${{ secrets.PHARMACY_SYNC_TOKEN }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python3 scripts/fetch_pharmacy_duty.py --dry-run
+          else
+            python3 scripts/fetch_pharmacy_duty.py
+          fi

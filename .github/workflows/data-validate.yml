@@ -7,11 +7,14 @@ on:
     paths:
       - 'data/**'
       - 'scripts/validate_data.py'
+      - 'scripts/fetch_pharmacy_duty.py'
+      - 'scripts/fixtures/**'
       - '.github/workflows/data-validate.yml'
   pull_request:
     paths:
       - 'data/**'
       - 'scripts/validate_data.py'
+      - 'scripts/fetch_pharmacy_duty.py'
   workflow_dispatch:
 
 permissions:
@@ -29,3 +32,5 @@ jobs:
       - run: pip install jsonschema
       - name: Veri dosyalarını doğrula
         run: python3 scripts/validate_data.py
+      - name: Nöbet ayrıştırıcısı testi
+        run: python3 scripts/fetch_pharmacy_duty.py --self-test

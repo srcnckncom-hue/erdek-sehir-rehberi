@@ -8,7 +8,7 @@
 > (+ → Add folder) ve şunu yaz: "docs/KARARLAR.md'yi oku, Erdek Şehir Rehberi'ne
 > kaldığımız yerden devam ediyoruz."
 >
-> Son güncelleme: 21.11.2026, YENİ LOGO (altın amblem) + dönerek gelen açılış animasyonu yazıldı (CI bekleniyor). Tema seçimi + yer fotoğrafları CI yeşil.
+> Son güncelleme: 21.11.2026, yeni logo + açılış animasyonu CI yeşil (TestFlight bekleniyor). Nöbetçi eczane OTOMATİK ÇEKME yazıldı (0004 SQL + secret + ilk çalıştırma bekleniyor).
 
 ## Durum
 - 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
@@ -67,6 +67,12 @@
   - iOS açılış ekranı artık BOŞ BEYAZ (LaunchImage saydam) → animasyon beyazdan başlar.
   - Açılış animasyonu (LaunchSplash, 3,2 sn; "Hareketi azalt"ta 1,2 sn, dönme yok): amblem küçükten büyüyerek 3 TUR döner (easeOutCubic, ölçek easeOutBack) → üzerinden çapraz ışık geçer → "ERDEK" ortadan iki yana açılarak → "ŞEHİR REHBERİ" yukarı kayarak → slogan (Poppins 500, #1C2439, harf aralığı daralarak). Gri→renkli efekti KALDIRILDI. Slogan Flutter metni (testler 'Şehrin rehberi, cebinde' metnini arar).
   - Golden 11_acilis_donus / _yazilar / _son.
+- NÖBETÇİ ECZANE OTOMATİK (21.11.2026, kullanıcı kararı; izin e-postası da önerildi, oda: yonetim@balikesireczaciodasi.org.tr):
+  - Kaynak: https://www.balikesireczaciodasi.org.tr/nobetci-eczaneler . GET sayfası yalnız bugünü gösterir AMA sayfadaki form POST ile her günü verir: tarih1=YYYY-MM-DD, ilce=1356 (ERDEK), gnr=" NÖBETLERİ GÖSTER ". Sonuç kartları: class "nobet-kart", h4 "DD.MM.YYYY / ERDEK<br><strong>AD</strong>", fa-home adres, tel:, google maps?q=lat,lng. Oda listeyi önceden yayınlıyor (21.11'de 31.12'ye kadar dolu, Ocak boş). robots.txt izin veriyor; ayrı kullanım koşulu yok.
+  - scripts/fetch_pharmacy_duty.py: bugün + 45 gün (1,5 sn arayla), get_content ile mevcut belgeyi okur, birleştirir (eczaneyi telefon/ad ile eşler, panelde düzeltilen ad/adres korunur, yalnız eksik konum tamamlanır; boş günlerde elle kayıt korunur; 60 günden eski nöbet atılır; isSample belge sıfırlanır), şemayla doğrular, sync_pharmacy_duty RPC ile yazar. --dry-run, --self-test (fixture scripts/fixtures/eczaci_odasi_ornek.html; data-validate.yml'de de çalışır). Notlar ("GECE 22:00'A KADAR") şimdilik yalnız loglanır, uygulamada gösterilmiyor.
+  - supabase/migrations/0004_pharmacy_sync.sql: automation_tokens (yalnız SHA-256 özet, RLS kapalı-erişim), create_automation_token(name) (yalnız SQL Editor), sync_pharmacy_duty(p_token, p_doc) security definer, yalnız 'pharmacy' belgesi. Secret key YOK.
+  - .github/workflows/pharmacy-sync.yml: her gün 07:41 ve 18:23 TSİ + elle (dry_run seçeneği). Secrets: SUPABASE_URL, SUPABASE_ANON_KEY, PHARMACY_SYNC_TOKEN (YENİ).
+  - Menüdeki "Veri kaynakları" metni güncellendi (Eczacı Odası, otomatik). Oda logosu / "resmi" ibaresi YOK.
 - Firebase: ERTELENDİ.
 - SIRADAKİ:
   1. CI yeşil + 0003 SQL çalıştırıldı → panelden bir yere fotoğraf ekle + Kaydet → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)
@@ -78,7 +84,7 @@
 - Gestaş tarifesinin gerçek geçerlilik tarihleri ve telefonu.
 - Erdek–Bandırma, Erdek–Balıkesir otobüs saatleri.
 - Balıkesir Büyükşehir Erdek içi mahalle hatları (hat adı, mahalleler, saatler, gün tipleri).
-- Önemli telefonlar, nöbetçi eczane listesi, duyurular.
+- Önemli telefonlar, duyurular. (Nöbetçi eczane artık otomatik.)
 - Gezilecek yerlerin ve Erdek tarihinin gerçek metinleri; kullanım hakkı olan fotoğraflar (artık panelden yüklenebilir).
 
 ## Kurallar (kullanıcının şartnamesinden)
