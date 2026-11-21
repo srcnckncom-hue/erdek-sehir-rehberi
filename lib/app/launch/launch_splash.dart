@@ -52,7 +52,7 @@ class _LaunchSplashState extends State<LaunchSplash> with SingleTickerProviderSt
     curve: const Interval(0.08, 0.50, curve: Curves.easeInOut),
   );
   late final Animation<double> _scale = TweenSequence<double>([
-    const TweenSequenceItem(tween: ConstantTween(1.0), weight: 30),
+    TweenSequenceItem(tween: ConstantTween(1.0), weight: 30),
     TweenSequenceItem(
       tween: Tween(begin: 1.0, end: 1.04).chain(CurveTween(curve: Curves.easeOut)),
       weight: 20,
@@ -61,7 +61,7 @@ class _LaunchSplashState extends State<LaunchSplash> with SingleTickerProviderSt
       tween: Tween(begin: 1.04, end: 1.0).chain(CurveTween(curve: Curves.easeInOut)),
       weight: 18,
     ),
-    const TweenSequenceItem(tween: ConstantTween(1.0), weight: 32),
+    TweenSequenceItem(tween: ConstantTween(1.0), weight: 32),
   ]).animate(_controller);
   late final Animation<double> _slogan = CurvedAnimation(
     parent: _controller,
