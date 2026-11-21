@@ -1,5 +1,5 @@
 name: erdek_admin
-description: Erdek Şehir Rehberi — reklam yönetim paneli (Flutter Web).
+description: Erdek Şehir Rehberi — yönetim paneli (Flutter Web).
 publish_to: none
 version: 0.1.0
 
@@ -21,3 +21,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/

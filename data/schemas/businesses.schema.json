@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "İşletmeler",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isSample",
+    "updatedAt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isSample": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?([+-]\\d{2}:\\d{2}|Z)$"
+    },
+    "source": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "categories",
+        "businesses"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "icon": {
+                "enum": [
+                  "food",
+                  "cafe",
+                  "hotel",
+                  "market",
+                  "shopping",
+                  "service",
+                  "car",
+                  "health",
+                  "beauty",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        "businesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "categoryId"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "categoryId": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string",
+                "pattern": "^(\\+90\\d{10}|1\\d{2,3})$"
+              },
+              "whatsapp": {
+                "type": "string",
+                "pattern": "^(\\+90\\d{10}|1\\d{2,3})$"
+              },
+              "address": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number",
+                "minimum": 40,
+                "maximum": 41
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": 27,
+                "maximum": 28.5
+              },
+              "website": {
+                "type": "string",
+                "pattern": "^https://"
+              },
+              "instagram": {
+                "type": "string",
+                "pattern": "^https://"
+              },
+              "hours": {
+                "type": "string"
+              },
+              "photos": {
+                "type": "array",
+                "maxItems": 10,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "pattern": "^https://"
+                    },
+                    "credit": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

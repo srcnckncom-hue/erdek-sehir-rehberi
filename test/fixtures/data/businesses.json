@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-21T22:00:00+03:00",
+  "source": "TEST",
+  "data": {
+    "categories": [
+      {
+        "id": "yeme-icme",
+        "title": "Yeme-İçme",
+        "icon": "food"
+      },
+      {
+        "id": "kafe",
+        "title": "Kafe & Pastane",
+        "icon": "cafe"
+      },
+      {
+        "id": "konaklama",
+        "title": "Konaklama",
+        "icon": "hotel"
+      },
+      {
+        "id": "market",
+        "title": "Market",
+        "icon": "market"
+      },
+      {
+        "id": "alisveris",
+        "title": "Alışveriş",
+        "icon": "shopping"
+      },
+      {
+        "id": "hizmet",
+        "title": "Hizmetler",
+        "icon": "service"
+      },
+      {
+        "id": "oto",
+        "title": "Oto & Ulaşım",
+        "icon": "car"
+      },
+      {
+        "id": "diger",
+        "title": "Diğer",
+        "icon": "other"
+      }
+    ],
+    "businesses": [
+      {
+        "id": "test-lokanta",
+        "name": "Test Lokantası",
+        "categoryId": "yeme-icme",
+        "summary": "Ev yemekleri",
+        "phone": "+902660000000",
+        "address": "Erdek merkez",
+        "hours": "09:00–22:00"
+      },
+      {
+        "id": "test-otel",
+        "name": "Test Oteli",
+        "categoryId": "konaklama",
+        "website": "https://example.com",
+        "latitude": 40.39,
+        "longitude": 27.79
+      },
+      {
+        "id": "test-kafe",
+        "name": "Test Kafe",
+        "categoryId": "kafe",
+        "instagram": "https://instagram.com/example"
+      }
+    ]
+  }
+}

@@ -3,10 +3,12 @@ import 'dart:io';
 
 import 'package:erdek_rehberi/core/data/data_envelope.dart';
 import 'package:erdek_rehberi/features/announcements/domain/announcement.dart';
+import 'package:erdek_rehberi/features/businesses/domain/business.dart';
 import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/prayer/domain/prayer_times.dart';
+import 'package:erdek_rehberi/features/social/social_links.dart';
 import 'package:erdek_rehberi/features/transport/domain/transport.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -56,5 +58,18 @@ void main() {
   test('history.json', () {
     final env = _load('history.json', HistoryData.fromJson);
     expect(env.data.sections, isNotEmpty);
+  });
+
+  test('businesses.json', () {
+    final env = _load('businesses.json', BusinessesData.fromJson);
+    expect(env.data.categories, isNotEmpty);
+    final ids = {for (final c in env.data.categories) c.id};
+    for (final b in env.data.businesses) {
+      expect(ids, contains(b.categoryId), reason: b.id);
+    }
+  });
+
+  test('social.json', () {
+    _load('social.json', SocialLinks.fromJson);
   });
 }

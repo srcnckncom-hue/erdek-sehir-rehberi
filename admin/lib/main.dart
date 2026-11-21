@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'api.dart';
 import 'screens/login_screen.dart';
 import 'shell.dart';
+import 'theme.dart';
 
 /// Derleme sırasında GitHub Secrets'tan gelir (pages-deploy.yml).
 const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -20,15 +21,12 @@ class AdminApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Erdek Rehberi · Reklam Paneli',
+      title: 'Erdek Rehberi · Yönetim Paneli',
       debugShowCheckedModeBanner: false,
       locale: const Locale('tr'),
       supportedLocales: const [Locale('tr')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF0057FC),
-        scaffoldBackgroundColor: const Color(0xFFF4F5F9),
-      ),
+      theme: AdminTheme.light,
       home: api.isConfigured ? _Gate(api: api) : const _NotConfigured(),
     );
   }

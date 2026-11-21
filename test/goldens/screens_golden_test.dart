@@ -10,11 +10,13 @@ import 'package:material_ui/material_ui.dart';
 import 'package:erdek_rehberi/app/launch/launch_splash.dart';
 import 'package:erdek_rehberi/app/launch/onboarding_screen.dart';
 import 'package:erdek_rehberi/app/shell/app_shell.dart';
+import 'package:erdek_rehberi/features/businesses/presentation/businesses_screen.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/explore/presentation/history_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/place_detail_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/places_screen.dart';
 import 'package:erdek_rehberi/features/settings/presentation/settings_screen.dart';
+import 'package:erdek_rehberi/features/weather/presentation/weather_screen.dart';
 
 import '../helpers/test_overrides.dart';
 import 'golden_helpers.dart';
@@ -154,6 +156,26 @@ void main() {
           device: device.withHeight(1500),
           brightness: brightness,
           builder: () => testScope(child: const SettingsScreen()),
+        );
+      });
+
+      testWidgets('işletmeler · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '14_isletmeler_${themeName(brightness)}_${device.name}',
+          device: device,
+          brightness: brightness,
+          builder: () => testScope(child: const BusinessesScreen()),
+        );
+      });
+
+      testWidgets('hava durumu · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '15_hava_durumu_${themeName(brightness)}_${device.name}',
+          device: device,
+          brightness: brightness,
+          builder: () => testScope(child: const WeatherScreen()),
         );
       });
 

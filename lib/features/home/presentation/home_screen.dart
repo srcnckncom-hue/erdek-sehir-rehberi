@@ -17,6 +17,8 @@ import '../../ads/presentation/ad_slot.dart';
 import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/data/announcements_seen.dart';
 import '../../announcements/domain/announcement.dart';
+import '../../businesses/data/businesses_repository.dart';
+import '../../businesses/presentation/businesses_screen.dart';
 import '../../contacts/presentation/directory_selection.dart';
 import '../../explore/data/explore_repository.dart';
 import '../../explore/presentation/history_screen.dart';
@@ -32,6 +34,7 @@ import '../../transport/domain/transport.dart';
 import '../../transport/presentation/transport_selection.dart';
 import '../../weather/data/weather_repository.dart';
 import '../../weather/domain/weather.dart';
+import '../../weather/presentation/weather_screen.dart';
 import 'home_texts.dart';
 
 const _heroImage = AssetImage('assets/images/hero_erdek.jpg');
@@ -56,6 +59,8 @@ class HomeScreen extends ConsumerWidget {
     final lastSeen = ref.watch(announcementsLastSeenProvider);
     final placeCount = ref.watch(placesDataProvider).value?.data.places.length;
     final periodCount = ref.watch(historyDataProvider).value?.data.sections.length;
+    final businessCount = ref.watch(businessesDataProvider).value?.data.businesses.length;
+    final forecastDays = weather.value?.data.daily.length ?? 0;
 
     final unread = announcements.value?.data
             .activeAt(now)
@@ -96,6 +101,7 @@ class HomeScreen extends ConsumerWidget {
               onMenu: onOpenMenu,
               onBell: () => _openAnnouncements(ref),
               onSearch: () => openSearch(context, onOpenTab),
+              onWeather: () => openWeather(context),
             ),
             if (showSampleBanner) ...[
               const SizedBox(height: AppSpacing.md),
@@ -207,6 +213,42 @@ class HomeScreen extends ConsumerWidget {
                         title: l10n.historyTitle,
                         subtitle: periodCount == null ? l10n.historySubtitle : l10n.historyCount(periodCount),
                         onTap: () => openHistory(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.gap),
+            Padding(
+              padding: AppSpacing.pagePadding,
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _ExploreCard(
+                        key: const Key('home_businesses'),
+                        icon: AppIcons.businesses,
+                        color: context.palette.iconOrange,
+                        title: l10n.businessesTitle,
+                        subtitle: businessCount == null || businessCount == 0
+                            ? l10n.businessesShortSubtitle
+                            : l10n.businessesCount(businessCount),
+                        onTap: () => openBusinesses(context),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.gap),
+                    Expanded(
+                      child: _ExploreCard(
+                        key: const Key('home_weather'),
+                        icon: AppIcons.forecast,
+                        color: context.palette.iconBlue,
+                        title: l10n.weatherTitle,
+                        subtitle: forecastDays == 0
+                            ? l10n.weatherShortSubtitle
+                            : l10n.weatherSubtitle(forecastDays),
+                        onTap: () => openWeather(context),
                       ),
                     ),
                   ],
@@ -379,6 +421,7 @@ class _Hero extends StatelessWidget {
     required this.onMenu,
     required this.onBell,
     required this.onSearch,
+    required this.onWeather,
   });
 
   final DateTime now;
@@ -388,6 +431,7 @@ class _Hero extends StatelessWidget {
   final VoidCallback onMenu;
   final VoidCallback onBell;
   final VoidCallback onSearch;
+  final VoidCallback onWeather;
 
   @override
   Widget build(BuildContext context) {
@@ -440,6 +484,7 @@ class _Hero extends StatelessWidget {
             menuLabel: l10n.menu,
             weather: heroWeather,
             onMenu: onMenu,
+            onWeatherTap: onWeather,
             bell: NotificationBell(
               count: unread,
               tooltip: l10n.announcementsTooltip,
@@ -612,6 +657,7 @@ class _NextDepartureCard extends StatelessWidget {
 /// "Keşfet" bölümündeki kart: renkli ikon kutusu + başlık + alt satır.
 class _ExploreCard extends StatelessWidget {
   const _ExploreCard({
+    super.key,
     required this.icon,
     required this.color,
     required this.title,

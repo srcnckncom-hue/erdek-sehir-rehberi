@@ -46,6 +46,20 @@ abstract final class AppIcons {
   static AppIconData get placeViewpoint => _d(PhosphorIconsDuotone.binoculars);
   static AppIconData get placeOther => _d(PhosphorIconsDuotone.mapPin);
   static AppIconData get lightbulb => _d(PhosphorIconsDuotone.lightbulb);
+  static AppIconData get businesses => _d(PhosphorIconsDuotone.buildings);
+  static AppIconData get forecast => _d(PhosphorIconsDuotone.cloudSun);
+
+  // İşletme kategorileri (panelde seçilen ikon anahtarı → ikon)
+  static AppIconData get bizFood => _d(PhosphorIconsDuotone.forkKnife);
+  static AppIconData get bizCafe => _d(PhosphorIconsDuotone.coffee);
+  static AppIconData get bizHotel => _d(PhosphorIconsDuotone.bed);
+  static AppIconData get bizMarket => _d(PhosphorIconsDuotone.shoppingCart);
+  static AppIconData get bizShopping => _d(PhosphorIconsDuotone.shoppingBag);
+  static AppIconData get bizService => _d(PhosphorIconsDuotone.wrench);
+  static AppIconData get bizCar => _d(PhosphorIconsDuotone.car);
+  static AppIconData get bizHealth => _d(PhosphorIconsDuotone.heartbeat);
+  static AppIconData get bizBeauty => _d(PhosphorIconsDuotone.scissors);
+  static AppIconData get bizOther => _d(PhosphorIconsDuotone.storefront);
 
   // Genel (düz)
   static AppIconData get menu => _i(PhosphorIconsRegular.list);
@@ -59,6 +73,12 @@ abstract final class AppIcons {
   static AppIconData get humidity => _i(PhosphorIconsRegular.drop);
   static AppIconData get wind => _i(PhosphorIconsRegular.wind);
   static AppIconData get thermometer => _i(PhosphorIconsRegular.thermometer);
+  static AppIconData get globe => _i(PhosphorIconsRegular.globe);
+  static AppIconData get whatsapp => _i(PhosphorIconsRegular.whatsappLogo);
+  static AppIconData get instagram => _i(PhosphorIconsRegular.instagramLogo);
+  static AppIconData get facebook => _i(PhosphorIconsRegular.facebookLogo);
+  static AppIconData get xLogo => _i(PhosphorIconsRegular.xLogo);
+  static AppIconData get precipitation => _i(PhosphorIconsRegular.umbrella);
   static AppIconData get caretLeft => _i(PhosphorIconsRegular.caretLeft);
   static AppIconData get caretRight => _i(PhosphorIconsRegular.caretRight);
   static AppIconData get bellRinging => _d(PhosphorIconsDuotone.bellRinging);

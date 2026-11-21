@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import '../data/json_sources.dart';
 
 /// Panelden düzenlenen içerikleri (telefonlar, duyurular, eczane, ulaşım,
-/// gezilecek yerler, tarih) Supabase'ten okur: get_content(id).
+/// gezilecek yerler, tarih, işletmeler, sosyal medya) Supabase'ten okur: get_content(id).
 /// Supabase ayarlı değilse ya da o belge henüz panelden kaydedilmemişse
 /// GitHub Pages'teki dosyaya [fallback] düşer. Namaz vakitleri hep Pages'ten.
 class ContentJsonFetcher implements JsonFetcher {
@@ -26,6 +26,8 @@ class ContentJsonFetcher implements JsonFetcher {
     'transport.json': 'transport',
     'places.json': 'places',
     'history.json': 'history',
+    'businesses.json': 'businesses',
+    'social.json': 'social',
   };
 
   final Dio dio;

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "isSample": false,
+  "updatedAt": "2026-11-21T22:00:00+03:00",
+  "source": "Panelden eklenir",
+  "data": {
+    "categories": [
+      {
+        "id": "yeme-icme",
+        "title": "Yeme-İçme",
+        "icon": "food"
+      },
+      {
+        "id": "kafe",
+        "title": "Kafe & Pastane",
+        "icon": "cafe"
+      },
+      {
+        "id": "konaklama",
+        "title": "Konaklama",
+        "icon": "hotel"
+      },
+      {
+        "id": "market",
+        "title": "Market",
+        "icon": "market"
+      },
+      {
+        "id": "alisveris",
+        "title": "Alışveriş",
+        "icon": "shopping"
+      },
+      {
+        "id": "hizmet",
+        "title": "Hizmetler",
+        "icon": "service"
+      },
+      {
+        "id": "oto",
+        "title": "Oto & Ulaşım",
+        "icon": "car"
+      },
+      {
+        "id": "diger",
+        "title": "Diğer",
+        "icon": "other"
+      }
+    ],
+    "businesses": []
+  }
+}

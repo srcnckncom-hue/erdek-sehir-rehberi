@@ -644,5 +644,58 @@
   "languageTurkish": "Türkçe",
   "languageEnglish": "English",
   "announcementsPushTitle": "Önemli duyurular",
-  "announcementsPushSubtitle": "Kesinti, acil durum ve önemli haberler için bildirim"
+  "announcementsPushSubtitle": "Kesinti, acil durum ve önemli haberler için bildirim",
+  "businessesTitle": "İşletmeler",
+  "businessesSubtitle": "Erdek'teki işletmeler, kategorilere göre",
+  "businessesShortSubtitle": "Yeme-içme, konaklama, alışveriş",
+  "businessesCount": "{count} işletme",
+  "@businessesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "businessesEmptyTitle": "Henüz işletme eklenmedi",
+  "businessesEmptyMessage": "İşletmeler eklendikçe burada kategorilere göre listelenecek.",
+  "businessCategoryFilter": "İşletme kategorisi",
+  "businessHours": "Çalışma saatleri",
+  "businessCall": "Ara",
+  "businessWhatsapp": "WhatsApp",
+  "businessWebsite": "Web sitesi",
+  "businessContactTitle": "İletişim",
+  "socialTitle": "Bizi takip edin",
+  "socialInstagram": "Instagram",
+  "socialFacebook": "Facebook",
+  "socialX": "X",
+  "weatherTitle": "Hava Durumu",
+  "weatherSubtitle": "{days} günlük tahmin · Erdek",
+  "@weatherSubtitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "weatherShortSubtitle": "Günlük tahmin",
+  "weatherDailyTitle": "Günlük tahmin",
+  "weatherNow": "Şu an",
+  "weatherToday": "Bugün",
+  "weatherTomorrow": "Yarın",
+  "weatherPrecipitation": "{value} mm",
+  "@weatherPrecipitation": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "weatherCondition": "{condition, select, thunder{Gök gürültülü} sleet{Karla karışık yağmur} snow{Kar yağışlı} heavyrain{Kuvvetli yağmur} lightrain{Hafif yağmur} rain{Yağmurlu} fog{Sisli} partlycloudy{Parçalı bulutlu} cloudy{Bulutlu} fair{Az bulutlu} clearsky{Açık} other{Bilinmiyor}}",
+  "@weatherCondition": {
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      }
+    }
+  }
 }

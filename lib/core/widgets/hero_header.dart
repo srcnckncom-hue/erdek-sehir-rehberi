@@ -46,6 +46,7 @@ class HeroHeader extends StatelessWidget {
     this.weather,
     this.onMenu,
     this.onStatusTap,
+    this.onWeatherTap,
   });
 
   final ImageProvider image;
@@ -64,6 +65,9 @@ class HeroHeader extends StatelessWidget {
   final HeroWeather? weather;
   final VoidCallback? onMenu;
   final VoidCallback? onStatusTap;
+
+  /// Sıcaklığa dokununca (günlük tahmin sayfası).
+  final VoidCallback? onWeatherTap;
 
   static const _fg = Colors.white;
 
@@ -132,8 +136,13 @@ class HeroHeader extends StatelessWidget {
                   if (weather != null)
                     Semantics(
                       label: '${weather!.temperature} derece, ${weather!.description}',
+                      button: onWeatherTap != null,
                       excludeSemantics: true,
-                      child: Row(
+                      child: GestureDetector(
+                        key: const Key('hero_weather'),
+                        behavior: HitTestBehavior.opaque,
+                        onTap: onWeatherTap,
+                        child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -142,7 +151,15 @@ class HeroHeader extends StatelessWidget {
                           ),
                           const SizedBox(width: AppSpacing.xs),
                           AppIcon(AppIcons.weather(weather!.symbolCode), size: 40, color: _fg),
+                          if (onWeatherTap != null) ...[
+                            const SizedBox(width: AppSpacing.xxs),
+                            Padding(
+                              padding: const EdgeInsets.only(top: AppSpacing.md),
+                              child: AppIcon(AppIcons.caretRight, size: 18, color: _fg.withValues(alpha: 0.8)),
+                            ),
+                          ],
                         ],
+                      ),
                       ),
                     ),
                   const SizedBox(height: AppSpacing.xs),

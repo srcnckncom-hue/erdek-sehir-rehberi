@@ -19,7 +19,10 @@ import jsonschema
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-FILES = ["pharmacy", "prayer_times", "transport", "contacts", "announcements", "places", "history"]
+FILES = [
+    "pharmacy", "prayer_times", "transport", "contacts", "announcements", "places", "history",
+    "businesses", "social",
+]
 
 errors: list[str] = []
 
@@ -87,6 +90,24 @@ def check_history(d):
         err("history", f"dönem kimliği birden fazla kez tanımlı: {x}")
 
 
+def check_businesses(d):
+    cat_ids = [c["id"] for c in d["categories"]]
+    for x in dupes(cat_ids):
+        err("businesses", f"kategori kimliği birden fazla kez tanımlı: {x}")
+    for x in dupes([b["id"] for b in d["businesses"]]):
+        err("businesses", f"işletme kimliği birden fazla kez tanımlı: {x}")
+    known = set(cat_ids)
+    for b in d["businesses"]:
+        if b["categoryId"] not in known:
+            err("businesses", f"{b['name']}: tanımsız kategori {b['categoryId']}")
+        if ("latitude" in b) != ("longitude" in b):
+            err("businesses", f"{b['name']}: enlem ve boylam birlikte girilmeli")
+
+
+def check_social(d):
+    pass
+
+
 CHECKS = {
     "pharmacy": check_pharmacy,
     "prayer_times": check_prayer,
@@ -95,6 +116,8 @@ CHECKS = {
     "announcements": check_announcements,
     "places": check_places,
     "history": check_history,
+    "businesses": check_businesses,
+    "social": check_social,
 }
 
 

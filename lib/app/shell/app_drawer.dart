@@ -8,6 +8,9 @@ import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
 import '../../features/explore/presentation/history_screen.dart';
 import '../../features/explore/presentation/places_screen.dart';
+import '../../features/businesses/presentation/businesses_screen.dart';
+import '../../features/social/social_links.dart';
+import '../../features/weather/presentation/weather_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../core/system/system_bridge.dart';
 import '../../features/settings/presentation/report_issue.dart';
@@ -63,6 +66,21 @@ class AppDrawer extends ConsumerWidget {
               title: l10n.historyTitle,
               onTap: () => _push(context, const HistoryScreen()),
             ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_businesses'),
+              icon: AppIcons.businesses,
+              color: p.iconOrange,
+              title: l10n.businessesTitle,
+              onTap: () => _push(context, const BusinessesScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              icon: AppIcons.forecast,
+              color: p.iconBlue,
+              title: l10n.weatherTitle,
+              onTap: () => _push(context, const WeatherScreen()),
+            ),
             const SizedBox(height: AppSpacing.xxl),
             Text(
               l10n.appearanceTitle,
@@ -108,6 +126,8 @@ class AppDrawer extends ConsumerWidget {
               title: l10n.reportIssueTitle,
               onTap: () => openReportEmail(context, ref, section: l10n.appTitle),
             ),
+            const SizedBox(height: AppSpacing.xxl),
+            const SocialLinksRow(),
           ],
         ),
       ),

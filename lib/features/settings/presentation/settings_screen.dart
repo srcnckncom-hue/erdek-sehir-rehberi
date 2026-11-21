@@ -15,6 +15,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../prayer/notifications/prayer_notifications.dart';
 import '../../prayer/presentation/notification_settings_sheet.dart';
 import '../../push/push_service.dart';
+import '../../social/social_links.dart';
 import 'report_issue.dart';
 
 Future<void> openSettings(BuildContext context) => Navigator.of(context).push(
@@ -141,6 +142,9 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.section),
+
+          // Sosyal medya (panelden girilen hesaplar; yoksa görünmez)
+          const SocialFollowSection(),
 
           // Hakkında
           SectionHeader(title: l10n.aboutTitle),

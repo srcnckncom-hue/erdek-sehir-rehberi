@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../api.dart';
 import '../shell.dart';
+import '../theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.api});
@@ -52,19 +53,29 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 380),
+          constraints: const BoxConstraints(maxWidth: 420),
           child: Card(
             margin: const EdgeInsets.all(24),
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(32),
               child: AutofillGroup(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('Reklam Paneli', style: Theme.of(context).textTheme.headlineSmall),
+                    Center(child: Image.asset('assets/logo.png', height: 150)),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Yönetim Paneli',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: AdminColors.navy),
+                    ),
                     const SizedBox(height: 4),
-                    const Text('Erdek Şehir Rehberi'),
+                    const Text(
+                      'Yalnızca yetkili hesaplar giriş yapabilir.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: AdminColors.muted),
+                    ),
                     const SizedBox(height: 24),
                     TextField(
                       controller: _email,
