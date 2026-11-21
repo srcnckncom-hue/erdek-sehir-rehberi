@@ -6,6 +6,7 @@ import 'content/contacts_editor.dart';
 import 'content/history_editor.dart';
 import 'content/pharmacy_editor.dart';
 import 'content/places_editor.dart';
+import 'content/transport_editor.dart';
 import 'screens/ads_screen.dart';
 import 'screens/login_screen.dart';
 
@@ -39,7 +40,7 @@ class _AdminShellState extends State<AdminShell> {
         3 => PharmacyEditor(api: widget.api),
         4 => PlacesEditor(api: widget.api),
         5 => HistoryEditor(api: widget.api),
-        _ => const _TransportSoon(),
+        _ => TransportEditor(api: widget.api),
       };
 
   Future<void> _signOut() async {
@@ -83,23 +84,4 @@ class _AdminShellState extends State<AdminShell> {
       ),
     );
   }
-}
-
-class _TransportSoon extends StatelessWidget {
-  const _TransportSoon();
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Ulaşım')),
-        body: const Center(
-          child: Padding(
-            padding: EdgeInsets.all(24),
-            child: Text(
-              'Ulaşım (feribot / otobüs / şehir içi sefer saatleri) düzenleyicisi bir sonraki adımda eklenecek.\n'
-              'O zamana kadar saatleri Claude\'a gönderin.',
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      );
 }
