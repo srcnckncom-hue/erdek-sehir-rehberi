@@ -28,10 +28,10 @@ void main() {
         as Map<String, dynamic>)['data'] as Map<String, dynamic>,
   ).places.first;
 
-  // Açılış animasyonu: başlangıç (gri, iOS açılış ekranıyla aynı) ve son kare.
+  // Açılış animasyonu: amblem dönerken, yazılar gelirken ve son kare.
   // Zemin her temada beyaz olduğu için yalnızca açık tema.
   for (final device in GoldenDevice.all) {
-    for (final (name, value) in [('gri', 0.0), ('renkli', 1.0)]) {
+    for (final (name, value) in [('donus', 0.25), ('yazilar', 0.70), ('son', 1.0)]) {
       testWidgets('açılış $name · ${device.name}', (tester) async {
         await takeScreenshot(
           tester,
@@ -41,7 +41,7 @@ void main() {
           builder: () => Scaffold(
             body: LaunchSplash(onFinished: () {}, previewValue: value),
           ),
-          precache: const [AssetImage(LaunchSplash.logoAsset)],
+          precache: [for (final a in LaunchSplash.precacheAssets) AssetImage(a)],
         );
       });
     }

@@ -8,7 +8,7 @@
 > (+ → Add folder) ve şunu yaz: "docs/KARARLAR.md'yi oku, Erdek Şehir Rehberi'ne
 > kaldığımız yerden devam ediyoruz."
 >
-> Son güncelleme: 21.11.2026, açılış animasyonu + tanıtım ONAYLANDI (golden); tema seçimi + yer fotoğrafları yazıldı (CI + 0003 SQL bekleniyor).
+> Son güncelleme: 21.11.2026, YENİ LOGO (altın amblem) + dönerek gelen açılış animasyonu yazıldı (CI bekleniyor). Tema seçimi + yer fotoğrafları CI yeşil.
 
 ## Durum
 - 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
@@ -43,7 +43,7 @@
   - Flutter: lib/features/home_widget_sync/widget_sync.dart (7 günlük vakitler + 08:30 nöbet pencereleri, ISO +03:00) → MethodChannel 'erdek/widget' → AppDelegate UserDefaults(suiteName) 'widget_data' + WidgetCenter.reloadAllTimelines. AppShell veri değişince ve uygulama öne gelince gönderir.
   - iOS: ios/ErdekWidget (SwiftUI, StaticConfiguration, küçük/orta, iOS 16+, iOS 17 containerBackground), Info.plist sürümleri $(FLUTTER_BUILD_NAME/NUMBER) Widget.xcconfig ile; Runner.entitlements.
   - Hedef Xcode projesine CI'da scripts/add_widget_target.rb (xcodeproj gem, tekrar çalıştırılabilir, embed fazı Thin Binary'den önce) ile eklenir — ios-ci'de adım var, ios-release'de de OLMALI.
-- 11. adım TAMAM (CI yeşil): logo ONAYLANDI ("şimdilik"): Bursa şehir rehberi rozet stilinden ilham; kemer içinde gün batımı + Kapıdağ silueti + deniz + yelkenli + martılar, sol kenarda zeytin dalı (Düzlerspor'dan yalnızca fikir, kopya değil), mavi levhada ERDEK, turuncu kurdelede ŞEHİR REHBERİ, Poppins Bold. Kaynak: assets/images/logo.svg; logo.png (drawer). İkon: krem #FFF6EA zemin + logo (tüm AppIcon boyutları). Açılış: LaunchImage 240×210 pt, beyaz zemin. Not: küçük boyda alt yazı zor okunuyor; kullanıcı böyle kalsın dedi.
+- 11. adım TAMAM (CI yeşil) — NOT: bu logo 21.11.2026'da yenisiyle DEĞİŞTİRİLDİ (aşağıda "YENİ LOGO"): logo ONAYLANDI ("şimdilik"): Bursa şehir rehberi rozet stilinden ilham; kemer içinde gün batımı + Kapıdağ silueti + deniz + yelkenli + martılar, sol kenarda zeytin dalı (Düzlerspor'dan yalnızca fikir, kopya değil), mavi levhada ERDEK, turuncu kurdelede ŞEHİR REHBERİ, Poppins Bold. Kaynak: assets/images/logo.svg; logo.png (drawer). İkon: krem #FFF6EA zemin + logo (tüm AppIcon boyutları). Açılış: LaunchImage 240×210 pt, beyaz zemin. Not: küçük boyda alt yazı zor okunuyor; kullanıcı böyle kalsın dedi.
 - 12. adım TAMAM (ios-signing-setup yeşil; certs/profiles erdek-certificates'ta; PAT adı erdek-match-2, süresi dolunca MATCH_GIT_URL yenilenmeli): Gemfile (fastlane), fastlane/Appfile, Matchfile (git storage, appstore), Fastfile (lane certificates: match appstore, APP + WIDGET, API key ile, readonly false). Workflow ios-signing-setup.yml (workflow_dispatch, macos-26). Secrets: APPLE_TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 (p8 içeriği), MATCH_PASSWORD, MATCH_GIT_URL (https://x-access-token:<fine-grained PAT>@github.com/srcnckncom-hue/erdek-certificates.git). Apple tarafı elle: App Group + iki App ID (App Groups yetkisi, gruba bağlı) + App Store Connect API anahtarı (App Manager).
 - 13. adım TAMAM (ios-release yeşil, ilk derleme TestFlight'a gitti; widget betiği ios-release'de `bundle exec ruby` ile çalışır): pubspec version 1.0.0+1. Fastfile lane beta: match readonly → update_code_signing_settings (Runner + ErdekWidget, manual, Apple Distribution) → build no = latest_testflight_build_number+1 → ExportOptions (app-store-connect, manual, iki profil) → flutter build ipa --dart-define-from-file=config/env.json → upload_to_testflight (beklemeden). Workflow ios-release.yml (workflow_dispatch, macos-26, Xcode 26.6): make_env.sh (DATA_BASE_URL Pages, WEATHER_USER_AGENT "ErdekSehirRehberi/1.0 github.com/srcnckncom-hue/erdek-sehir-rehberi"), add_widget_target.rb, fastlane ios beta. App Store Connect'te uygulama kaydı açıldı.
 - TestFlight geri bildirimi 1 (21.11.2026): ilk derleme kullanıcının iPhone'unda çalıştı. İstek: açılış animasyonu + 3 tanıtım ekranı. YAZILDI, CI + yeni TestFlight derlemesi bekleniyor:
@@ -61,6 +61,12 @@
     - Panel (places_editor): her yer kartının altında fotoğraf şeridi: ekle (≤2 MB, isteğe bağlı sahibi/kaynak), "Kapak yap", sil; yükleme anında Storage'a gider ama yayına "Kaydet" ile çıkar. Silinen fotoğraf Storage'da kalır (kaydedilmemiş belgeyi bozmamak için). Api.uploadContentImage(folder: 'places') herkese açık adres döndürür.
     - Uygulama: liste kartında kapak (64×64), ayrıntıda 4:3 kaydırmalı galeri + noktalar + "Fotoğraf: …"; yüklenemezse/yoksa tür ikonu (PlaceIconTile, PlacePhotoImage, PlacePhotoGallery — explore/presentation/place_photos.dart).
     - Kural: yalnızca kullanım hakkı bize ait / izinli fotoğraflar.
+- YENİ LOGO (21.11.2026, kullanıcı verdi): altın/bronz çizgisel amblem (zeytin dalı + yelkenli + güneş + dalgalar, çember), altında serif "ERDEK" ve "ŞEHİR REHBERİ", slogan "Şehrin rehberi, cebinde". Eski rozet logosu (logo.svg) ARTIK KULLANILMIYOR.
+  - Kaynak görselden (JPG, beyaz zemin) parçalara ayrıldı, beyaz zemin saydamlaştırıldı (gölgeler atıldı): assets/images/logo_emblem.png (759×702), logo_erdek.png (860×197), logo_sehir.png (717×123); logo.png = üçü birlikte (☰ menüde, yükseklik 150).
+  - Uygulama ikonu: beyaz zemin + amblem (%80), tüm AppIcon boyutları yeniden üretildi.
+  - iOS açılış ekranı artık BOŞ BEYAZ (LaunchImage saydam) → animasyon beyazdan başlar.
+  - Açılış animasyonu (LaunchSplash, 3,2 sn; "Hareketi azalt"ta 1,2 sn, dönme yok): amblem küçükten büyüyerek 3 TUR döner (easeOutCubic, ölçek easeOutBack) → üzerinden çapraz ışık geçer → "ERDEK" ortadan iki yana açılarak → "ŞEHİR REHBERİ" yukarı kayarak → slogan (Poppins 500, #1C2439, harf aralığı daralarak). Gri→renkli efekti KALDIRILDI. Slogan Flutter metni (testler 'Şehrin rehberi, cebinde' metnini arar).
+  - Golden 11_acilis_donus / _yazilar / _son.
 - Firebase: ERTELENDİ.
 - SIRADAKİ:
   1. CI yeşil + 0003 SQL çalıştırıldı → panelden bir yere fotoğraf ekle + Kaydet → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)
@@ -94,7 +100,7 @@
 - Font: Poppins 400/500/600/700. Ölçek: pageTitle 26/700, display 56/700, cardTitle 22/700, section 20/600, greeting 17/500, label 15/500, body 15/400, tile 13/500, caption 13/400, tab 11/500.
 - Ölçüler: kenar 14, boşluk 8, bölüm 24, chip h50 r14, tile h70 r16, arama h48, kart r20, hero ~295 alt köşe 28.
 - Reklam: ana sayfada YALNIZCA home_feed_1 (2:1, 1200×600). Sayfa altları: pharmacy_bottom, prayer_bottom, transport_bottom, contacts_bottom; liste içi transport_list_inline (her 5 sefer).
-- Logo: 11. adımda onaylandı (assets/images/logo.svg). Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
+- Logo: 21.11.2026'da yenilendi (altın amblem; assets/images/logo_*.png). Eski logo.svg kullanılmıyor. Hero fotoğrafının kullanım hakkı App Store öncesi teyit edilmeli.
 
 ## İkonlar
 - phosphor_flutter KULLANMA. phosphoricons_flutter ^1.1.1; AppIconData + AppIcon; tek dosya app_icons.dart.

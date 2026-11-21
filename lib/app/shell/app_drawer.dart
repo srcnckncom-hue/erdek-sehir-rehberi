@@ -31,7 +31,7 @@ class AppDrawer extends ConsumerWidget {
               alignment: Alignment.centerLeft,
               child: Image.asset(
                 'assets/images/logo.png',
-                height: 120,
+                height: 150,
                 semanticLabel: l10n.appTitle,
               ),
             ),

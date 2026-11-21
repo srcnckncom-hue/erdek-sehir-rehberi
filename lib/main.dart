@@ -27,8 +27,7 @@ Future<void> main() async {
   final notifications = await LocalPrayerNotificationScheduler.initialize();
   final l10n = lookupAppLocalizations(const Locale('tr'));
 
-  // Logo çözülmeden ilk kare çizilmesin: iOS açılış ekranı (gri logo)
-  // animasyonun ilk karesine boşluksuz geçer.
+  // Logo parçaları çözülmeden ilk kare çizilmesin (animasyon takılmadan başlar).
   await _precacheLogo();
 
   runApp(
@@ -52,10 +51,17 @@ Future<void> main() async {
   );
 }
 
-/// Logoyu görüntü önbelleğine alır (en fazla 2 sn bekler; hata olursa geçer).
+/// Açılış logosu parçalarını görüntü önbelleğine alır (en fazla 2 sn bekler;
+/// hata olursa geçer). Böylece animasyonun ilk karelerinde boşluk olmaz.
 Future<void> _precacheLogo() async {
+  await Future.wait([
+    for (final asset in LaunchSplash.precacheAssets) _precacheAsset(asset),
+  ]);
+}
+
+Future<void> _precacheAsset(String asset) async {
   final done = Completer<void>();
-  final stream = const AssetImage(LaunchSplash.logoAsset).resolve(ImageConfiguration.empty);
+  final stream = AssetImage(asset).resolve(ImageConfiguration.empty);
   late final ImageStreamListener listener;
   void finish() {
     if (!done.isCompleted) done.complete();
