@@ -54,7 +54,8 @@ jobs:
         run: bash scripts/make_env.sh config/env.json
 
       - name: Widget hedefini ekle
-        run: ruby scripts/add_widget_target.rb
+        # setup-ruby kendi Ruby'sini kurar; xcodeproj gem'i fastlane ile (Gemfile) gelir.
+        run: bundle exec ruby scripts/add_widget_target.rb
 
       - name: Derle, imzala ve TestFlight'a gönder
         run: bundle exec fastlane ios beta
