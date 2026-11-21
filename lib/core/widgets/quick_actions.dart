@@ -40,12 +40,13 @@ class QuickActionChip extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  AppIcon(icon, size: 26, color: tone.foreground),
+                  AppIcon(icon, size: 24, color: tone.foreground),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       label,
-                      style: AppTypography.label.copyWith(color: p.textBody),
+                      // 14: küçük ekranda (SE) "Nöbetçi Eczane" tek satıra sığsın.
+                      style: AppTypography.label.copyWith(color: p.textBody, fontSize: 14),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
