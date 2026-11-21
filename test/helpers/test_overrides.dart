@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:erdek_rehberi/app/providers.dart';
 import 'package:erdek_rehberi/core/data/data_result.dart';
 import 'package:erdek_rehberi/core/data/json_sources.dart';
+import 'package:erdek_rehberi/core/settings/onboarding_store.dart';
 import 'package:erdek_rehberi/core/settings/seen_store.dart';
 import 'package:erdek_rehberi/core/theme/app_theme.dart';
 import 'package:erdek_rehberi/features/weather/data/weather_repository.dart';
@@ -54,7 +55,8 @@ final testWeather = DataResult<CurrentWeather>(
 );
 
 /// Ağ, Hive ve gerçek saat olmadan uygulamayı çalıştıran ProviderScope.
-Widget testScope({required Widget child, DateTime? now}) {
+/// [onboardingStore] verilmezse tanıtım "görüldü" sayılır.
+Widget testScope({required Widget child, DateTime? now, OnboardingStore? onboardingStore}) {
   final fixed = now ?? testNow;
   return ProviderScope(
     overrides: [
@@ -62,6 +64,9 @@ Widget testScope({required Widget child, DateTime? now}) {
       jsonFetcherProvider.overrideWithValue(FileJsonFetcher()),
       bundledJsonProvider.overrideWithValue(FileBundledJsonSource()),
       announcementsSeenStoreProvider.overrideWithValue(MemoryAnnouncementsSeenStore()),
+      onboardingStoreProvider.overrideWithValue(
+        onboardingStore ?? MemoryOnboardingStore(isDone: true),
+      ),
       clockProvider.overrideWithValue(() => fixed),
       nowProvider.overrideWith((ref) => Stream.value(fixed)),
       currentWeatherProvider.overrideWith((ref) => Stream.value(testWeather)),

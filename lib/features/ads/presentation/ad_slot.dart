@@ -52,7 +52,8 @@ class _AdSlotState extends ConsumerState<AdSlot> {
       rotation: ref.watch(adRotationSeedProvider) + widget.index,
     );
     if (ad == null) return const SizedBox.shrink();
-    _countImpression(ad);
+    // Açılış animasyonu / tanıtım üstteyken sayma; perde kalkınca sayılır.
+    if (!AdImpressionGate.isPaused(context)) _countImpression(ad);
 
     final repo = ref.read(adsRepositoryProvider);
     final link = ad.linkUrl;
@@ -72,4 +73,20 @@ class _AdSlotState extends ConsumerState<AdSlot> {
       ),
     );
   }
+}
+
+/// Altındaki reklam alanlarının gösterim sayımını durdurur. Açılış perdesi
+/// (logo animasyonu, tanıtım) ana sayfanın üstündeyken kullanılır: reklam
+/// kurulmuş ama kullanıcı onu henüz görmüyor. [paused] false olunca alanlar
+/// yeniden çizilir ve gösterim o an sayılır.
+class AdImpressionGate extends InheritedWidget {
+  const AdImpressionGate({super.key, required this.paused, required super.child});
+
+  final bool paused;
+
+  static bool isPaused(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<AdImpressionGate>()?.paused ?? false;
+
+  @override
+  bool updateShouldNotify(AdImpressionGate oldWidget) => paused != oldWidget.paused;
 }

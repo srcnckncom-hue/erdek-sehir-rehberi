@@ -5,6 +5,7 @@ import '../core/data/json_sources.dart';
 import '../core/data/offline_first_loader.dart';
 import '../core/network/content_json_fetcher.dart';
 import '../core/network/dio_json_fetcher.dart';
+import '../core/settings/onboarding_store.dart';
 import '../core/settings/seen_store.dart';
 import '../core/time/erdek_time.dart';
 import 'env.dart';
@@ -23,6 +24,12 @@ final nowProvider = StreamProvider<DateTime>((ref) async* {
 /// main() içinde Hive ile override edilir.
 final announcementsSeenStoreProvider = Provider<AnnouncementsSeenStore>(
   (ref) => MemoryAnnouncementsSeenStore(),
+);
+
+/// main() içinde Hive ile override edilir. Varsayılan "görüldü": testler ve
+/// önizlemeler tanıtım ekranına takılmasın.
+final onboardingStoreProvider = Provider<OnboardingStore>(
+  (ref) => MemoryOnboardingStore(isDone: true),
 );
 
 /// main() içinde HiveJsonCache ile override edilir.

@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import 'app/app.dart';
+import 'app/launch/launch_splash.dart';
 import 'app/providers.dart';
 import 'core/cache/hive_json_cache.dart';
+import 'core/settings/onboarding_store.dart';
 import 'core/settings/seen_store.dart';
 import 'core/time/erdek_time.dart';
 import 'features/prayer/notifications/prayer_notifications.dart';
@@ -22,6 +26,10 @@ Future<void> main() async {
   final notifications = await LocalPrayerNotificationScheduler.initialize();
   final l10n = lookupAppLocalizations(const Locale('tr'));
 
+  // Logo çözülmeden ilk kare çizilmesin: iOS açılış ekranı (gri logo)
+  // animasyonun ilk karesine boşluksuz geçer.
+  await _precacheLogo();
+
   runApp(
     ProviderScope(
       overrides: [
@@ -29,6 +37,7 @@ Future<void> main() async {
         announcementsSeenStoreProvider.overrideWithValue(
           HiveAnnouncementsSeenStore(settingsBox),
         ),
+        onboardingStoreProvider.overrideWithValue(HiveOnboardingStore(settingsBox)),
         prayerNotificationSettingsStoreProvider.overrideWithValue(
           HivePrayerNotificationSettingsStore(settingsBox),
         ),
@@ -39,4 +48,19 @@ Future<void> main() async {
       child: const ErdekApp(),
     ),
   );
+}
+
+/// Logoyu görüntü önbelleğine alır (en fazla 2 sn bekler; hata olursa geçer).
+Future<void> _precacheLogo() async {
+  final done = Completer<void>();
+  final stream = const AssetImage(LaunchSplash.logoAsset).resolve(ImageConfiguration.empty);
+  late final ImageStreamListener listener;
+  void finish() {
+    if (!done.isCompleted) done.complete();
+    stream.removeListener(listener);
+  }
+
+  listener = ImageStreamListener((_, _) => finish(), onError: (_, _) => finish());
+  stream.addListener(listener);
+  await done.future.timeout(const Duration(seconds: 2), onTimeout: () {});
 }

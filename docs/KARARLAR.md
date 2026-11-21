@@ -8,7 +8,7 @@
 > (+ → Add folder) ve şunu yaz: "docs/KARARLAR.md'yi oku, Erdek Şehir Rehberi'ne
 > kaldığımız yerden devam ediyoruz."
 >
-> Son güncelleme: 21.11.2026, 13. adım tamam (TestFlight'a ilk derleme gitti).
+> Son güncelleme: 21.11.2026, TestFlight'ta denendi (her şey çalıştı); açılış animasyonu + tanıtım ekranları yazıldı (CI bekleniyor).
 
 ## Durum
 - 1–4. adım TAMAM: iskelet + CI, veri katmanı, tasarım sistemi + bileşenler + golden, ana sayfa gerçek veriyle (AppShell, HomeScreen, AdSlot stub, nowProvider, AnnouncementsSeenStore, Launchers).
@@ -46,9 +46,16 @@
 - 11. adım TAMAM (CI yeşil): logo ONAYLANDI ("şimdilik"): Bursa şehir rehberi rozet stilinden ilham; kemer içinde gün batımı + Kapıdağ silueti + deniz + yelkenli + martılar, sol kenarda zeytin dalı (Düzlerspor'dan yalnızca fikir, kopya değil), mavi levhada ERDEK, turuncu kurdelede ŞEHİR REHBERİ, Poppins Bold. Kaynak: assets/images/logo.svg; logo.png (drawer). İkon: krem #FFF6EA zemin + logo (tüm AppIcon boyutları). Açılış: LaunchImage 240×210 pt, beyaz zemin. Not: küçük boyda alt yazı zor okunuyor; kullanıcı böyle kalsın dedi.
 - 12. adım TAMAM (ios-signing-setup yeşil; certs/profiles erdek-certificates'ta; PAT adı erdek-match-2, süresi dolunca MATCH_GIT_URL yenilenmeli): Gemfile (fastlane), fastlane/Appfile, Matchfile (git storage, appstore), Fastfile (lane certificates: match appstore, APP + WIDGET, API key ile, readonly false). Workflow ios-signing-setup.yml (workflow_dispatch, macos-26). Secrets: APPLE_TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 (p8 içeriği), MATCH_PASSWORD, MATCH_GIT_URL (https://x-access-token:<fine-grained PAT>@github.com/srcnckncom-hue/erdek-certificates.git). Apple tarafı elle: App Group + iki App ID (App Groups yetkisi, gruba bağlı) + App Store Connect API anahtarı (App Manager).
 - 13. adım TAMAM (ios-release yeşil, ilk derleme TestFlight'a gitti; widget betiği ios-release'de `bundle exec ruby` ile çalışır): pubspec version 1.0.0+1. Fastfile lane beta: match readonly → update_code_signing_settings (Runner + ErdekWidget, manual, Apple Distribution) → build no = latest_testflight_build_number+1 → ExportOptions (app-store-connect, manual, iki profil) → flutter build ipa --dart-define-from-file=config/env.json → upload_to_testflight (beklemeden). Workflow ios-release.yml (workflow_dispatch, macos-26, Xcode 26.6): make_env.sh (DATA_BASE_URL Pages, WEATHER_USER_AGENT "ErdekSehirRehberi/1.0 github.com/srcnckncom-hue/erdek-sehir-rehberi"), add_widget_target.rb, fastlane ios beta. App Store Connect'te uygulama kaydı açıldı.
+- TestFlight geri bildirimi 1 (21.11.2026): ilk derleme kullanıcının iPhone'unda çalıştı. İstek: açılış animasyonu + 3 tanıtım ekranı. YAZILDI, CI + yeni TestFlight derlemesi bekleniyor:
+  - Kararlar: slogan "Şehrin rehberi, cebinde". Logo animasyonu HER açılışta (~2,4 sn; "Hareketi azalt" açıkken 0,9 sn); tanıtım yalnız İLK açılışta ("Geç" / "Başla"). Tanıtım sayfaları: 1) nöbetçi eczane + namaz vakitleri, 2) feribot + otobüs, 3) rehber/duyurular/keşfet + widget; 3. sayfada vakit bildirimi anahtarı (iOS izni burada istenir, isteğe bağlı).
+  - lib/app/launch: LaunchGate (MaterialApp.home; AppShell perdenin ARKASINDA baştan kurulur, veri animasyon sırasında yüklenir), LaunchSplash (gri → renkli ColorFilter doygunluk matrisi Rec.709, hafif büyüme, slogan kayarak + harf aralığı daralarak, altında mavi çizgi; zemin her temada BEYAZ), OnboardingScreen (PageView, noktalar, Key: onboarding_skip / onboarding_next).
+  - iOS açılış ekranı (LaunchImage 1x/2x/3x) logonun GRİ hâli (aynı katsayılar) → Flutter'a boşluksuz geçiş. main() runApp'ten önce logoyu önbelleğe alır (en çok 2 sn).
+  - core/settings/onboarding_store.dart: Hive 'settings' kutusu, anahtar onboarding_done_v1 (içerik köklü değişirse v2 ile herkese yeniden gösterilir). onboardingStoreProvider varsayılanı "görüldü" (testler); testScope(onboardingStore:) parametresi.
+  - Reklam: AdImpressionGate (ad_slot.dart, InheritedWidget) perde açıkken gösterim SAYMAZ; perde kalkınca sayılır.
+  - Testler: test/features/launch_test.dart. Golden 11_acilis_gri/renkli (yalnız açık), 12_tanitim_1..3.
 - Firebase: ERTELENDİ.
 - SIRADAKİ:
-  1. Kullanıcı TestFlight'ta kendi iPhone'unda deneyecek (Internal Testing grubu) ve geri bildirim verecek: logo/açılış, reklam, widget, panelden gelen içerikler.
+  1. CI yeşil → golden 11/12 ekran görüntüleri onayı → ios-release ile yeni derleme → TestFlight'ta açılış/tanıtım denemesi (tanıtımı yeniden görmek için uygulamayı silip kur). Sonra kalan kontroller: reklam, widget, panelden gelen içerikler. (TestFlight: Internal Testing grubu "Ben" kuruldu.)
   2. 14. adım App Store hazırlığı: ekran görüntüleri (golden 6.9" 1320×2868 tabanlı), açıklama/anahtar kelimeler/kategori, gizlilik politikası + kullanım koşulları (docs/legal → Pages /legal/), App Privacy formu (konum yok, takip yok; reklam sayımı anonim), destek URL'si, yaş derecelendirmesi, hero fotoğrafı kullanım hakkı teyidi, "resmi değil" ibaresi.
   3. Gerçek veriler panelden girilecek (telefonlar, eczane nöbetleri, şehir içi hatlar, gezilecek yerler, tarih).
   4. Ertelenenler: Firebase (Crashlytics + FCM, admin'den bildirim), Diyanet API'ye geçiş.
@@ -102,7 +109,7 @@
 - Riverpod 3; testlerde testScope()/testApp(); test verisi test/fixtures/data, eşzamanlı File okuma. Testlerde bySemanticsLabel yerine Key kullan.
 
 ## Golden / ekran görüntüsü
-- Cihazlar: iPhone SE 375×667@2, iPhone 16 Pro Max 440×956@3. Dosyalar 01–10.
+- Cihazlar: iPhone SE 375×667@2, iPhone 16 Pro Max 440×956@3. Dosyalar 01–12.
 - CI: `--exclude-tags golden` + `--tags golden --update-goldens` → "screenshots" artifact.
 
 ## Firebase (ERTELENDİ)

@@ -7,6 +7,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:erdek_rehberi/app/launch/launch_splash.dart';
+import 'package:erdek_rehberi/app/launch/onboarding_screen.dart';
 import 'package:erdek_rehberi/app/shell/app_shell.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/explore/presentation/history_screen.dart';
@@ -25,6 +27,25 @@ void main() {
     (jsonDecode(File('$fixturesDir/places.json').readAsStringSync())
         as Map<String, dynamic>)['data'] as Map<String, dynamic>,
   ).places.first;
+
+  // Açılış animasyonu: başlangıç (gri, iOS açılış ekranıyla aynı) ve son kare.
+  // Zemin her temada beyaz olduğu için yalnızca açık tema.
+  for (final device in GoldenDevice.all) {
+    for (final (name, value) in [('gri', 0.0), ('renkli', 1.0)]) {
+      testWidgets('açılış $name · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '11_acilis_${name}_${device.name}',
+          device: device,
+          brightness: Brightness.light,
+          builder: () => Scaffold(
+            body: LaunchSplash(onFinished: () {}, previewValue: value),
+          ),
+          precache: const [AssetImage(LaunchSplash.logoAsset)],
+        );
+      });
+    }
+  }
 
   for (final brightness in Brightness.values) {
     for (final device in GoldenDevice.all) {
@@ -108,6 +129,22 @@ void main() {
           builder: () => testScope(child: const HistoryScreen()),
         );
       });
+
+      for (var page = 0; page < OnboardingScreen.pageCount; page++) {
+        testWidgets('tanıtım ${page + 1} · ${themeName(brightness)} · ${device.name}', (
+          tester,
+        ) async {
+          await takeScreenshot(
+            tester,
+            fileName: '12_tanitim_${page + 1}_${themeName(brightness)}_${device.name}',
+            device: device,
+            brightness: brightness,
+            builder: () => testScope(
+              child: OnboardingScreen(initialPage: page, onFinished: () {}),
+            ),
+          );
+        });
+      }
 
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {

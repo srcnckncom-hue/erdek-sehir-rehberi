@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../core/theme/app_theme.dart';
 import '../l10n/app_localizations.dart';
-import 'shell/app_shell.dart';
+import 'launch/launch_gate.dart';
 
 class ErdekApp extends StatelessWidget {
   const ErdekApp({super.key});
@@ -24,7 +24,8 @@ class ErdekApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      home: const AppShell(),
+      // Açılış animasyonu → (ilk açılışta) tanıtım → ana iskelet.
+      home: const LaunchGate(),
     );
   }
 }

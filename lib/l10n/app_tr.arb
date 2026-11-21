@@ -536,5 +536,27 @@
   "placeTipsTitle": "Bilmeniz gerekenler",
   "placePhotoSoon": "Fotoğraf yakında eklenecek",
   "placeCategoryFilter": "Yer türü",
-  "searchSectionPlaces": "Gezilecek Yerler"
+  "searchSectionPlaces": "Gezilecek Yerler",
+  "splashSlogan": "Şehrin rehberi, cebinde",
+  "onboardingSkip": "Geç",
+  "onboardingNext": "İleri",
+  "onboardingStart": "Başla",
+  "onboarding1Title": "Nöbetçi eczane ve namaz vakitleri",
+  "onboarding1Body": "Bugünün nöbetçi eczanesini, sıradaki namaz vaktini ve imsakiyeyi tek dokunuşla gör.",
+  "onboarding2Title": "Feribot ve otobüs saatleri",
+  "onboarding2Body": "Feribot, şehirlerarası ve şehir içi otobüs saatlerine sıradaki seferle birlikte hemen ulaş.",
+  "onboarding3Title": "Rehber, duyurular ve keşfet",
+  "onboarding3Body": "Önemli telefonlar, güncel duyurular, gezilecek yerler ve Erdek tarihi burada. Ana ekrana widget ekleyerek vakitleri ve nöbetçi eczaneyi uygulamayı açmadan gör.",
+  "onboardingNotifBody": "Vakitlerden önce hatırlatma al. Sonra Vakitler sayfasından değiştirebilirsin.",
+  "onboardingPageLabel": "Sayfa {page} / {count}",
+  "@onboardingPageLabel": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
