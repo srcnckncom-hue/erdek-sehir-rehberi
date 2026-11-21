@@ -37,6 +37,9 @@ class CalendarDate implements Comparable<CalendarDate> {
   CalendarDate addDays(int days) =>
       CalendarDate.fromDateTime(_utc.add(Duration(days: days)));
 
+  /// [other] tarihine kaç gün var (geçmişse negatif).
+  int daysUntil(CalendarDate other) => other._utc.difference(_utc).inDays;
+
   /// 1 = Pazartesi ... 7 = Pazar
   int get weekday => _utc.weekday;
 

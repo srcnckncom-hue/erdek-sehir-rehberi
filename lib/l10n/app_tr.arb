@@ -345,5 +345,66 @@
   "previousMonth": "Önceki ay",
   "nextMonth": "Sonraki ay",
   "done": "Tamam",
-  "prayerSourceName": "Diyanet İşleri Başkanlığı"
+  "prayerSourceName": "Diyanet İşleri Başkanlığı",
+  "transportScreenTitle": "Ulaşım",
+  "transportSubtitle": "Feribot ve otobüs saatleri · {date}",
+  "@transportSubtitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "modeFerry": "Feribot",
+  "modeBus": "Otobüs",
+  "nextDepartureOverline": "Sıradaki sefer",
+  "dayAndTime": "{day} · {time}",
+  "@dayAndTime": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "fromTo": "{origin} → {destination}",
+  "@fromTo": {
+    "placeholders": {
+      "origin": {
+        "type": "String"
+      },
+      "destination": {
+        "type": "String"
+      }
+    }
+  },
+  "departuresTitle": "Sefer Saatleri",
+  "nextBadge": "Sıradaki",
+  "dayChip": "{weekday} {day}",
+  "@dayChip": {
+    "placeholders": {
+      "weekday": {
+        "type": "String"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "noTimetableTitle": "Bu tarihte tarife yok",
+  "noTimetableMessage": "Sefer saatleri henüz yayınlanmamış olabilir. Yolculuktan önce işletmeyi arayın.",
+  "noDeparturesTitle": "Bu gün sefer yok",
+  "noUpcomingDepartures": "Önümüzdeki 7 günde sefer görünmüyor",
+  "callOperator": "İşletmeyi ara",
+  "transportSourceNote": "Saatler değişebilir; hava muhalefetinde seferler iptal edilebilir. Yolculuktan önce işletmeyi arayın. Son güncelleme: {date}.",
+  "@transportSourceNote": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "selectRoute": "Hat seçin"
 }

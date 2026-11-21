@@ -47,6 +47,16 @@ void main() {
         );
       });
 
+      testWidgets('ulaşım · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '06_ulasim_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1400),
+          brightness: brightness,
+          builder: () => testScope(child: const AppShell(initialTab: AppTab.transport)),
+        );
+      });
+
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {
         await takeScreenshot(

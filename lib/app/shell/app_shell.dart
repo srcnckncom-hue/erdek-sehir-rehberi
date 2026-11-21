@@ -11,6 +11,7 @@ import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../features/prayer/data/prayer_repository.dart';
 import '../../features/prayer/notifications/prayer_notifications.dart';
 import '../../features/prayer/presentation/prayer_screen.dart';
+import '../../features/transport/presentation/transport_screen.dart';
 import '../providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'app_drawer.dart';
@@ -95,8 +96,8 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
           ),
           const PharmacyScreen(),
           const PrayerScreen(),
-          // 7–8. adımlarda gerçek ekranlarla değişecek.
-          _ComingSoon(title: l10n.tabTransport, icon: AppIcons.ferry),
+          const TransportScreen(),
+          // 8. adımda gerçek ekranla değişecek.
           _ComingSoon(title: l10n.tabDirectory, icon: AppIcons.contacts),
         ],
       ),

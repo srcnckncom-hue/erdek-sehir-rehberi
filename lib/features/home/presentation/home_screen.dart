@@ -21,6 +21,7 @@ import '../../prayer/data/prayer_repository.dart';
 import '../../prayer/domain/prayer_times.dart';
 import '../../transport/data/transport_repository.dart';
 import '../../transport/domain/transport.dart';
+import '../../transport/presentation/transport_selection.dart';
 import '../../weather/data/weather_repository.dart';
 import '../../weather/domain/weather.dart';
 import 'home_texts.dart';
@@ -92,12 +93,12 @@ class HomeScreen extends ConsumerWidget {
             SectionHeader(
               title: l10n.quickActionsTitle,
               actionLabel: l10n.seeAll,
-              onAction: () => _showAllServices(context),
+              onAction: () => _showAllServices(context, ref),
             ),
             const SizedBox(height: AppSpacing.md),
-            QuickActionGrid(columns: 3, children: _chips(context)),
+            QuickActionGrid(columns: 3, children: _chips(context, ref)),
             const SizedBox(height: AppSpacing.gap),
-            QuickActionGrid(columns: 4, children: _tiles(context)),
+            QuickActionGrid(columns: 4, children: _tiles(context, ref)),
             const SizedBox(height: AppSpacing.section),
             const AdSlot(
               id: 'home_feed_1',
@@ -150,7 +151,7 @@ class HomeScreen extends ConsumerWidget {
                             now: now,
                             result: transport,
                             mode: TransportMode.ferry,
-                            onOpen: () => onOpenTab(AppTab.transport),
+                            onOpen: () => _openTransport(ref, TransportMode.ferry),
                           ),
                         ),
                         const SizedBox(width: AppSpacing.gap),
@@ -159,7 +160,7 @@ class HomeScreen extends ConsumerWidget {
                             now: now,
                             result: transport,
                             mode: TransportMode.bus,
-                            onOpen: () => onOpenTab(AppTab.transport),
+                            onOpen: () => _openTransport(ref, TransportMode.bus),
                           ),
                         ),
                       ],
@@ -180,7 +181,13 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  List<Widget> _chips(BuildContext context) {
+  /// Ulaşım sekmesini istenen türde (feribot/otobüs) açar.
+  void _openTransport(WidgetRef ref, TransportMode mode) {
+    ref.read(transportSelectionProvider.notifier).selectMode(mode);
+    onOpenTab(AppTab.transport);
+  }
+
+  List<Widget> _chips(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     return [
@@ -200,12 +207,12 @@ class HomeScreen extends ConsumerWidget {
         icon: AppIcons.ferry,
         label: l10n.actionFerryTimes,
         tone: p.aqua,
-        onTap: () => onOpenTab(AppTab.transport),
+        onTap: () => _openTransport(ref, TransportMode.ferry),
       ),
     ];
   }
 
-  List<Widget> _tiles(BuildContext context) {
+  List<Widget> _tiles(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     void directory() => onOpenTab(AppTab.directory);
@@ -226,7 +233,7 @@ class HomeScreen extends ConsumerWidget {
         icon: AppIcons.bus,
         label: l10n.actionBusTimes,
         iconColor: p.iconPurple,
-        onTap: () => onOpenTab(AppTab.transport),
+        onTap: () => _openTransport(ref, TransportMode.bus),
       ),
       QuickActionTile(
         icon: AppIcons.imsakiye,
@@ -261,7 +268,7 @@ class HomeScreen extends ConsumerWidget {
     ];
   }
 
-  void _showAllServices(BuildContext context) {
+  void _showAllServices(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     showModalBottomSheet<void>(
       context: context,
@@ -285,7 +292,7 @@ class HomeScreen extends ConsumerWidget {
                 QuickActionGrid(
                   columns: 3,
                   children: [
-                    for (final w in _chips(context).cast<QuickActionChip>())
+                    for (final w in _chips(context, ref).cast<QuickActionChip>())
                       QuickActionChip(
                         icon: w.icon,
                         label: w.label,
@@ -298,7 +305,7 @@ class HomeScreen extends ConsumerWidget {
                 QuickActionGrid(
                   columns: 4,
                   children: [
-                    for (final w in _tiles(context).cast<QuickActionTile>())
+                    for (final w in _tiles(context, ref).cast<QuickActionTile>())
                       QuickActionTile(
                         icon: w.icon,
                         label: w.label,
