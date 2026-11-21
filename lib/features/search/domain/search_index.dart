@@ -1,6 +1,7 @@
 import '../../../core/util/text_search.dart';
 import '../../announcements/domain/announcement.dart';
 import '../../contacts/domain/contacts.dart';
+import '../../explore/domain/explore.dart';
 import '../../pharmacy/domain/pharmacy.dart';
 import '../../transport/domain/transport.dart';
 
@@ -11,15 +12,21 @@ class SearchResults {
     this.contacts = const [],
     this.routes = const [],
     this.announcements = const [],
+    this.places = const [],
   });
 
   final List<Pharmacy> pharmacies;
   final List<Contact> contacts;
   final List<TransportRoute> routes;
   final List<Announcement> announcements;
+  final List<Place> places;
 
   bool get isEmpty =>
-      pharmacies.isEmpty && contacts.isEmpty && routes.isEmpty && announcements.isEmpty;
+      pharmacies.isEmpty &&
+      contacts.isEmpty &&
+      routes.isEmpty &&
+      announcements.isEmpty &&
+      places.isEmpty;
 }
 
 /// Yüklenmiş verilerde arama (cihazda, internetsiz).
@@ -30,6 +37,7 @@ SearchResults searchAll({
   ContactsData? contacts,
   TransportData? transport,
   AnnouncementsData? announcements,
+  PlacesData? places,
   int limit = 8,
 }) {
   if (query.trim().length < 2) return const SearchResults();
@@ -49,6 +57,9 @@ SearchResults searchAll({
     ].take(limit).toList(),
     announcements: [
       ...?announcements?.activeAt(now).where((a) => m([a.title, a.body])),
+    ].take(limit).toList(),
+    places: [
+      ...?places?.places.where((p) => m([p.title, p.summary])),
     ].take(limit).toList(),
   );
 }

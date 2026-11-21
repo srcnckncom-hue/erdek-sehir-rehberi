@@ -37,6 +37,15 @@ abstract final class AppIcons {
   static AppIconData get warning => _d(PhosphorIconsDuotone.warningCircle);
   static AppIconData get offline => _d(PhosphorIconsDuotone.wifiSlash);
   static AppIconData get clock => _d(PhosphorIconsDuotone.clock);
+  static AppIconData get places => _d(PhosphorIconsDuotone.mapTrifold);
+  static AppIconData get history => _d(PhosphorIconsDuotone.scroll);
+  static AppIconData get placeBeach => _d(PhosphorIconsDuotone.umbrellaSimple);
+  static AppIconData get placeHistoric => _d(PhosphorIconsDuotone.bank);
+  static AppIconData get placeNature => _d(PhosphorIconsDuotone.tree);
+  static AppIconData get placeVillage => _d(PhosphorIconsDuotone.houseLine);
+  static AppIconData get placeViewpoint => _d(PhosphorIconsDuotone.binoculars);
+  static AppIconData get placeOther => _d(PhosphorIconsDuotone.mapPin);
+  static AppIconData get lightbulb => _d(PhosphorIconsDuotone.lightbulb);
 
   // Genel (düz)
   static AppIconData get menu => _i(PhosphorIconsRegular.list);

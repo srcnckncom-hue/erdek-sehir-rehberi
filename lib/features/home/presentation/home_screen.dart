@@ -17,6 +17,9 @@ import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/data/announcements_seen.dart';
 import '../../announcements/domain/announcement.dart';
 import '../../contacts/presentation/directory_selection.dart';
+import '../../explore/data/explore_repository.dart';
+import '../../explore/presentation/history_screen.dart';
+import '../../explore/presentation/places_screen.dart';
 import '../../pharmacy/data/pharmacy_repository.dart';
 import '../../pharmacy/domain/duty_schedule.dart';
 import '../../pharmacy/domain/pharmacy.dart';
@@ -50,6 +53,8 @@ class HomeScreen extends ConsumerWidget {
     final announcements = ref.watch(announcementsProvider);
     final weather = ref.watch(currentWeatherProvider);
     final lastSeen = ref.watch(announcementsLastSeenProvider);
+    final placeCount = ref.watch(placesDataProvider).value?.data.places.length;
+    final periodCount = ref.watch(historyDataProvider).value?.data.sections.length;
 
     final unread = announcements.value?.data
             .activeAt(now)
@@ -172,6 +177,38 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.section),
+            SectionHeader(title: l10n.exploreTitle),
+            const SizedBox(height: AppSpacing.md),
+            Padding(
+              padding: AppSpacing.pagePadding,
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _ExploreCard(
+                        icon: AppIcons.places,
+                        color: context.palette.aqua.foreground,
+                        title: l10n.placesTitle,
+                        subtitle: placeCount == null ? l10n.placesSubtitle : l10n.placesCount(placeCount),
+                        onTap: () => openPlaces(context),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.gap),
+                    Expanded(
+                      child: _ExploreCard(
+                        icon: AppIcons.history,
+                        color: context.palette.iconPurple,
+                        title: l10n.historyTitle,
+                        subtitle: periodCount == null ? l10n.historySubtitle : l10n.historyCount(periodCount),
+                        onTap: () => openHistory(context),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.xxl),
@@ -572,6 +609,79 @@ class _NextDepartureCard extends StatelessWidget {
           ? null
           : HomeTexts.relativeDay(l10n, next.date, CalendarDate.fromDateTime(now)),
       onTap: onOpen,
+    );
+  }
+}
+
+/// "Keşfet" bölümündeki kart: renkli ikon kutusu + başlık + alt satır.
+class _ExploreCard extends StatelessWidget {
+  const _ExploreCard({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final AppIconData icon;
+  final Color color;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: p.surface,
+        borderRadius: AppRadius.cardAll,
+        boxShadow: AppShadows.card(p.shadow),
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadius.cardAll,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 48,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.12),
+                        borderRadius: AppRadius.tileAll,
+                      ),
+                      child: AppIcon(icon, size: 28, color: color),
+                    ),
+                    const Spacer(),
+                    AppIcon(AppIcons.arrowRight, size: 18, color: p.textSecondary),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  title,
+                  style: AppTypography.label.copyWith(
+                    color: p.textHeading,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: AppTypography.caption.copyWith(color: p.textSecondary),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

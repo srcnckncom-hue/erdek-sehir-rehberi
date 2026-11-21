@@ -1,10 +1,17 @@
 @Tags(['golden'])
 library;
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:erdek_rehberi/app/shell/app_shell.dart';
+import 'package:erdek_rehberi/features/explore/domain/explore.dart';
+import 'package:erdek_rehberi/features/explore/presentation/history_screen.dart';
+import 'package:erdek_rehberi/features/explore/presentation/place_detail_screen.dart';
+import 'package:erdek_rehberi/features/explore/presentation/places_screen.dart';
 
 import '../helpers/test_overrides.dart';
 import 'golden_helpers.dart';
@@ -14,6 +21,11 @@ import 'previews.dart';
 /// CI: `flutter test --tags golden --update-goldens` → test/goldens/screens/*.png
 /// → Actions'ta "screenshots" artifact'ı.
 void main() {
+  final firstPlace = PlacesData.fromJson(
+    (jsonDecode(File('$fixturesDir/places.json').readAsStringSync())
+        as Map<String, dynamic>)['data'] as Map<String, dynamic>,
+  ).places.first;
+
   for (final brightness in Brightness.values) {
     for (final device in GoldenDevice.all) {
       testWidgets('ana sayfa · ${themeName(brightness)} · ${device.name}', (tester) async {
@@ -67,12 +79,42 @@ void main() {
         );
       });
 
+      testWidgets('gezilecek yerler · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '08_gezilecek_yerler_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1200),
+          brightness: brightness,
+          builder: () => testScope(child: const PlacesScreen()),
+        );
+      });
+
+      testWidgets('yer ayrıntısı · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '09_yer_ayrinti_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1300),
+          brightness: brightness,
+          builder: () => testScope(child: PlaceDetailScreen(place: firstPlace, isSample: true)),
+        );
+      });
+
+      testWidgets('erdek tarihi · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '10_erdek_tarihi_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1700),
+          brightness: brightness,
+          builder: () => testScope(child: const HistoryScreen()),
+        );
+      });
+
       // Ana sayfanın tamamı (kaydırmadan, uzun ekran)
       testWidgets('ana sayfa tam boy · ${themeName(brightness)} · ${device.name}', (tester) async {
         await takeScreenshot(
           tester,
           fileName: '02_ana_sayfa_tam_boy_${themeName(brightness)}_${device.name}',
-          device: device.withHeight(1500),
+          device: device.withHeight(1800),
           brightness: brightness,
           builder: () => testScope(child: const AppShell()),
           precache: const [heroImage],

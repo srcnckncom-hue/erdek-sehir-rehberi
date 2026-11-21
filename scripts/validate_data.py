@@ -19,7 +19,7 @@ import jsonschema
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-FILES = ["pharmacy", "prayer_times", "transport", "contacts", "announcements"]
+FILES = ["pharmacy", "prayer_times", "transport", "contacts", "announcements", "places", "history"]
 
 errors: list[str] = []
 
@@ -77,12 +77,24 @@ def check_announcements(d):
         err("announcements", f"duyuru kimliği birden fazla kez tanımlı: {x}")
 
 
+def check_places(d):
+    for x in dupes([p["id"] for p in d["places"]]):
+        err("places", f"yer kimliği birden fazla kez tanımlı: {x}")
+
+
+def check_history(d):
+    for x in dupes([s["id"] for s in d["sections"]]):
+        err("history", f"dönem kimliği birden fazla kez tanımlı: {x}")
+
+
 CHECKS = {
     "pharmacy": check_pharmacy,
     "prayer_times": check_prayer,
     "transport": check_transport,
     "contacts": check_contacts,
     "announcements": check_announcements,
+    "places": check_places,
+    "history": check_history,
 }
 
 

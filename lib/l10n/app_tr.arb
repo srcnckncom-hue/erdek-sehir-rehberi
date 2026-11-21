@@ -62,7 +62,7 @@
   },
   "menu": "Menü",
   "announcementsTooltip": "Duyurular",
-  "searchHint": "Eczane, telefon, sefer veya duyuru ara...",
+  "searchHint": "Eczane, telefon, sefer veya yer ara...",
   "searchComingSoon": "Arama yakında eklenecek.",
   "quickActionsTitle": "Hızlı İşlemlerim",
   "seeAll": "Tümünü Gör",
@@ -469,7 +469,7 @@
   },
   "openDetails": "Ayrıntılar",
   "searchTitle": "Ara",
-  "searchEmptyPrompt": "Eczane, telefon, sefer veya duyuru arayın.",
+  "searchEmptyPrompt": "Eczane, telefon, sefer, duyuru veya gezilecek yer arayın.",
   "searchNoResults": "\"{query}\" için sonuç bulunamadı.",
   "@searchNoResults": {
     "placeholders": {
@@ -482,5 +482,59 @@
   "searchSectionContacts": "Telefonlar",
   "searchSectionRoutes": "Seferler",
   "searchSectionAnnouncements": "Duyurular",
-  "close": "Kapat"
+  "close": "Kapat",
+  "exploreTitle": "Keşfet",
+  "placesTitle": "Gezilecek Yerler",
+  "placesSubtitle": "Erdek ve Kapıdağ'da görülecek yerler",
+  "placesCount": "{count} yer",
+  "@placesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "historyTitle": "Erdek Tarihi",
+  "historySubtitle": "Antik çağdan bugüne",
+  "historyCount": "{count} dönem",
+  "@historyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "back": "Geri",
+  "areaName": "{area, select, erdek{Erdek} kapidag{Kapıdağ} other{Diğer}}",
+  "@areaName": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "placeCategoryName": "{category, select, plaj{Plaj} tarihi{Tarihî} doga{Doğa} koy{Köy} manzara{Manzara} other{Diğer}}",
+  "@placeCategoryName": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "placeMeta": "{area} · {category}",
+  "@placeMeta": {
+    "placeholders": {
+      "area": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "noPlacesInFilter": "Bu seçimde gösterilecek yer yok.",
+  "placeTipsTitle": "Bilmeniz gerekenler",
+  "placePhotoSoon": "Fotoğraf yakında eklenecek",
+  "placeCategoryFilter": "Yer türü",
+  "searchSectionPlaces": "Gezilecek Yerler"
 }

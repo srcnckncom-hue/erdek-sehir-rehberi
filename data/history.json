@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-21T00:00:00+03:00",
+  "source": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+  "data": {
+    "intro": "ÖRNEK giriş: Erdek tarihinin kısa bir özeti burada yer alacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+    "sections": [
+      {
+        "id": "ornek-donem-1",
+        "title": "ÖRNEK Dönem 1",
+        "period": "ÖRNEK tarih aralığı 1",
+        "paragraphs": [
+          "ÖRNEK paragraf: Dönem 1 içinde Erdek ve çevresinde yaşanan önemli olaylar burada anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf: Bu dönemden günümüze kalan izler ve yapılar. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ]
+      },
+      {
+        "id": "ornek-donem-2",
+        "title": "ÖRNEK Dönem 2",
+        "period": "ÖRNEK tarih aralığı 2",
+        "paragraphs": [
+          "ÖRNEK paragraf: Dönem 2 içinde Erdek ve çevresinde yaşanan önemli olaylar burada anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf: Bu dönemden günümüze kalan izler ve yapılar. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ]
+      },
+      {
+        "id": "ornek-donem-3",
+        "title": "ÖRNEK Dönem 3",
+        "period": "ÖRNEK tarih aralığı 3",
+        "paragraphs": [
+          "ÖRNEK paragraf: Dönem 3 içinde Erdek ve çevresinde yaşanan önemli olaylar burada anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf: Bu dönemden günümüze kalan izler ve yapılar. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ]
+      },
+      {
+        "id": "ornek-donem-4",
+        "title": "ÖRNEK Dönem 4",
+        "period": "ÖRNEK tarih aralığı 4",
+        "paragraphs": [
+          "ÖRNEK paragraf: Dönem 4 içinde Erdek ve çevresinde yaşanan önemli olaylar burada anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf: Bu dönemden günümüze kalan izler ve yapılar. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ]
+      }
+    ]
+  }
+}

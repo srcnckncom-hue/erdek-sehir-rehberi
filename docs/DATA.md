@@ -80,6 +80,26 @@ Kategoriler (`categories`) ve içindeki kişiler (`contacts`): `name`, `phone`, 
 - `endsAt` geçince duyuru listeden kendiliğinden kalkar. Kalıcı duyuruda yazma.
 - `id` her duyuruda farklı olmalı.
 
+## places.json — Gezilecek yerler
+
+```json
+{ "id": "zeytinliada", "title": "Zeytinliada", "area": "erdek", "category": "manzara",
+  "summary": "Listede görünen 1–2 cümlelik özet.",
+  "paragraphs": ["Ayrıntı sayfasındaki 1. paragraf.", "2. paragraf."],
+  "tips": ["Kısa pratik bilgi"],
+  "address": "isteğe bağlı", "latitude": 40.39, "longitude": 27.79 }
+```
+
+- `area`: `erdek` veya `kapidag`.
+- `category`: `plaj`, `tarihi`, `doga`, `koy`, `manzara` veya `diger`.
+- `tips`, `address`, `latitude`/`longitude` isteğe bağlı. Konum ya da adres varsa "Yol tarifi" düğmesi çıkar. Koordinat yazılacaksa ikisi birlikte yazılır.
+- Liste dosyadaki sırayla gösterilir.
+- Fotoğraf alanı şimdilik yok. Kullanım hakkı bize ait fotoğraflar gelince eklenecek.
+
+## history.json — Erdek tarihi
+
+`intro` (isteğe bağlı giriş metni) ve `sections`: her dönemde `id`, `title`, isteğe bağlı `period` ("MÖ 7. yüzyıl" gibi) ve `paragraphs`. Dönemler dosyadaki sırayla zaman çizelgesi olarak gösterilir.
+
 ## prayer_times.json — Namaz vakitleri
 
 **Elle düzenleme.** 6. adımda kurulacak haftalık otomatik görev bu dosyayı

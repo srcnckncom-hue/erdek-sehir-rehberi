@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-21T00:00:00+03:00",
+  "source": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+  "data": {
+    "places": [
+      {
+        "id": "ornek-yer-a",
+        "title": "ÖRNEK Yer A",
+        "area": "erdek",
+        "category": "plaj",
+        "summary": "ÖRNEK özet: Yer A hakkında bir iki cümlelik kısa tanıtım burada görünecek.",
+        "paragraphs": [
+          "ÖRNEK paragraf 1: Yer A için ayrıntılı tanıtım metni. Burada yerin ne olduğu, nerede bulunduğu ve neden görülmeye değer olduğu anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 2: Ziyaret sırasında görülebilecekler, yerin hikâyesi ve dikkat çeken özellikleri. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 3: Ulaşım, en uygun ziyaret zamanı ve çevredeki diğer yerler. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ],
+        "tips": [
+          "ÖRNEK ipucu: En uygun ziyaret saati",
+          "ÖRNEK ipucu: Yanınıza alınacaklar"
+        ]
+      },
+      {
+        "id": "ornek-yer-b",
+        "title": "ÖRNEK Yer B",
+        "area": "erdek",
+        "category": "tarihi",
+        "summary": "ÖRNEK özet: Yer B hakkında bir iki cümlelik kısa tanıtım burada görünecek.",
+        "paragraphs": [
+          "ÖRNEK paragraf 1: Yer B için ayrıntılı tanıtım metni. Burada yerin ne olduğu, nerede bulunduğu ve neden görülmeye değer olduğu anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 2: Ziyaret sırasında görülebilecekler, yerin hikâyesi ve dikkat çeken özellikleri. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 3: Ulaşım, en uygun ziyaret zamanı ve çevredeki diğer yerler. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ],
+        "tips": [
+          "ÖRNEK ipucu: En uygun ziyaret saati",
+          "ÖRNEK ipucu: Yanınıza alınacaklar"
+        ]
+      },
+      {
+        "id": "ornek-yer-c",
+        "title": "ÖRNEK Yer C",
+        "area": "erdek",
+        "category": "manzara",
+        "summary": "ÖRNEK özet: Yer C hakkında bir iki cümlelik kısa tanıtım burada görünecek.",
+        "paragraphs": [
+          "ÖRNEK paragraf 1: Yer C için ayrıntılı tanıtım metni. Burada yerin ne olduğu, nerede bulunduğu ve neden görülmeye değer olduğu anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 2: Ziyaret sırasında görülebilecekler, yerin hikâyesi ve dikkat çeken özellikleri. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 3: Ulaşım, en uygun ziyaret zamanı ve çevredeki diğer yerler. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ]
+      },
+      {
+        "id": "ornek-yer-d",
+        "title": "ÖRNEK Yer D",
+        "area": "kapidag",
+        "category": "koy",
+        "summary": "ÖRNEK özet: Yer D hakkında bir iki cümlelik kısa tanıtım burada görünecek.",
+        "paragraphs": [
+          "ÖRNEK paragraf 1: Yer D için ayrıntılı tanıtım metni. Burada yerin ne olduğu, nerede bulunduğu ve neden görülmeye değer olduğu anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 2: Ziyaret sırasında görülebilecekler, yerin hikâyesi ve dikkat çeken özellikleri. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 3: Ulaşım, en uygun ziyaret zamanı ve çevredeki diğer yerler. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ],
+        "tips": [
+          "ÖRNEK ipucu: En uygun ziyaret saati",
+          "ÖRNEK ipucu: Yanınıza alınacaklar"
+        ]
+      },
+      {
+        "id": "ornek-yer-e",
+        "title": "ÖRNEK Yer E",
+        "area": "kapidag",
+        "category": "doga",
+        "summary": "ÖRNEK özet: Yer E hakkında bir iki cümlelik kısa tanıtım burada görünecek.",
+        "paragraphs": [
+          "ÖRNEK paragraf 1: Yer E için ayrıntılı tanıtım metni. Burada yerin ne olduğu, nerede bulunduğu ve neden görülmeye değer olduğu anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 2: Ziyaret sırasında görülebilecekler, yerin hikâyesi ve dikkat çeken özellikleri. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 3: Ulaşım, en uygun ziyaret zamanı ve çevredeki diğer yerler. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ],
+        "tips": [
+          "ÖRNEK ipucu: En uygun ziyaret saati",
+          "ÖRNEK ipucu: Yanınıza alınacaklar"
+        ]
+      },
+      {
+        "id": "ornek-yer-f",
+        "title": "ÖRNEK Yer F",
+        "area": "kapidag",
+        "category": "plaj",
+        "summary": "ÖRNEK özet: Yer F hakkında bir iki cümlelik kısa tanıtım burada görünecek.",
+        "paragraphs": [
+          "ÖRNEK paragraf 1: Yer F için ayrıntılı tanıtım metni. Burada yerin ne olduğu, nerede bulunduğu ve neden görülmeye değer olduğu anlatılacak. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 2: Ziyaret sırasında görülebilecekler, yerin hikâyesi ve dikkat çeken özellikleri. ÖRNEK METİN — gerçek bilgiyle değiştirilecek.",
+          "ÖRNEK paragraf 3: Ulaşım, en uygun ziyaret zamanı ve çevredeki diğer yerler. ÖRNEK METİN — gerçek bilgiyle değiştirilecek."
+        ]
+      }
+    ]
+  }
+}

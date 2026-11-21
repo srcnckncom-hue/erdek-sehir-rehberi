@@ -1,15 +1,28 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../theme/app_icons.dart';
 import '../theme/app_theme.dart';
 
 /// Sekme sayfalarının üst başlığı (görselde karşılığı yok; ana sayfa
 /// bölüm başlığı stiline uygun: büyük Poppins Bold + ikincil alt satır).
 class PageHeader extends StatelessWidget {
-  const PageHeader({super.key, required this.title, this.subtitle, this.trailing});
+  const PageHeader({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.onBack,
+    this.backLabel,
+  });
 
   final String title;
   final String? subtitle;
   final Widget? trailing;
+
+  /// Verilirse başlığın üstünde yuvarlak "geri" düğmesi çizilir
+  /// (sekme dışında açılan sayfalar: Gezilecek Yerler, Erdek Tarihi).
+  final VoidCallback? onBack;
+  final String? backLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +42,10 @@ class PageHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (onBack != null) ...[
+                  _BackButton(onTap: onBack!, label: backLabel),
+                  const SizedBox(height: AppSpacing.md),
+                ],
                 Semantics(
                   header: true,
                   child: Text(title, style: AppTypography.pageTitle.copyWith(color: p.textHeading)),
@@ -42,6 +59,36 @@ class PageHeader extends StatelessWidget {
           ),
           ?trailing,
         ],
+      ),
+    );
+  }
+}
+
+class _BackButton extends StatelessWidget {
+  const _BackButton({required this.onTap, this.label});
+
+  final VoidCallback onTap;
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Semantics(
+      button: true,
+      label: label,
+      excludeSemantics: true,
+      child: Material(
+        color: p.surface,
+        shape: const CircleBorder(),
+        elevation: 0,
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: onTap,
+          child: SizedBox.square(
+            dimension: AppSpacing.minTouchTarget,
+            child: Center(child: AppIcon(AppIcons.caretLeft, size: 22, color: p.textHeading)),
+          ),
+        ),
       ),
     );
   }

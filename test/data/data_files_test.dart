@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:erdek_rehberi/core/data/data_envelope.dart';
 import 'package:erdek_rehberi/features/announcements/domain/announcement.dart';
 import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
+import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/prayer/domain/prayer_times.dart';
 import 'package:erdek_rehberi/features/transport/domain/transport.dart';
@@ -42,5 +43,18 @@ void main() {
   test('announcements.json', () {
     final env = _load('announcements.json', AnnouncementsData.fromJson);
     expect(env.data.items, isNotEmpty);
+  });
+
+  test('places.json', () {
+    final env = _load('places.json', PlacesData.fromJson);
+    expect(env.data.places, isNotEmpty);
+    for (final p in env.data.places) {
+      expect(p.paragraphs, isNotEmpty, reason: p.id);
+    }
+  });
+
+  test('history.json', () {
+    final env = _load('history.json', HistoryData.fromJson);
+    expect(env.data.sections, isNotEmpty);
   });
 }

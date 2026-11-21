@@ -13,6 +13,9 @@ import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/presentation/announcements_view.dart';
 import '../../contacts/data/contacts_repository.dart';
 import '../../contacts/presentation/directory_selection.dart';
+import '../../explore/data/explore_repository.dart';
+import '../../explore/presentation/place_detail_screen.dart';
+import '../../explore/presentation/place_style.dart';
 import '../../pharmacy/data/pharmacy_repository.dart';
 import '../../transport/data/transport_repository.dart';
 import '../../transport/presentation/transport_screen.dart' show modeIcon;
@@ -24,7 +27,7 @@ Future<void> openSearch(BuildContext context, ValueChanged<AppTab> onOpenTab) =>
       MaterialPageRoute<void>(builder: (_) => SearchScreen(onOpenTab: onOpenTab)),
     );
 
-/// Eczane, telefon, sefer ve duyurularda cihaz içi arama.
+/// Eczane, telefon, sefer, duyuru ve gezilecek yerlerde cihaz içi arama.
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key, required this.onOpenTab});
 
@@ -57,6 +60,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final p = context.palette;
     final now = ref.watch(clockProvider)();
 
+    final places = ref.watch(placesDataProvider).value;
     final results = searchAll(
       query: _query,
       now: now,
@@ -64,6 +68,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       contacts: ref.watch(contactsDataProvider).value?.data,
       transport: ref.watch(transportDataProvider).value?.data,
       announcements: ref.watch(announcementsProvider).value?.data,
+      places: places?.data,
     );
 
     Widget section(String title, List<Widget> rows) => Column(
@@ -119,6 +124,18 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   ..selectMode(r.mode)
                   ..selectRoute(r.id);
               }),
+            ),
+        ]));
+      }
+      if (results.places.isNotEmpty) {
+        body.add(section(l10n.searchSectionPlaces, [
+          for (final place in results.places)
+            _ResultRow(
+              icon: PlaceStyle.icon(place.category),
+              color: PlaceStyle.color(p, place.category),
+              title: place.title,
+              subtitle: PlaceStyle.meta(l10n, place),
+              onTap: () => openPlace(context, place, isSample: places?.isSample ?? false),
             ),
         ]));
       }

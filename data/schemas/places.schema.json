@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gezilecek yerler",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isSample",
+    "updatedAt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isSample": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?([+-]\\d{2}:\\d{2}|Z)$"
+    },
+    "source": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "places"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "places": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "area",
+              "category",
+              "summary",
+              "paragraphs"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "area": {
+                "enum": [
+                  "erdek",
+                  "kapidag"
+                ]
+              },
+              "category": {
+                "enum": [
+                  "plaj",
+                  "tarihi",
+                  "doga",
+                  "koy",
+                  "manzara",
+                  "diger"
+                ]
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paragraphs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "tips": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "address": {
+                "type": "string",
+                "minLength": 1
+              },
+              "latitude": {
+                "type": "number",
+                "minimum": 40.0,
+                "maximum": 41.0
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": 27.0,
+                "maximum": 28.5
+              }
+            },
+            "dependentRequired": {
+              "latitude": [
+                "longitude"
+              ],
+              "longitude": [
+                "latitude"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

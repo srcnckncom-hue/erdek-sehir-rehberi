@@ -1,4 +1,5 @@
 import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
+import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/search/domain/search_index.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,5 +39,30 @@ void main() {
     expect(r.contacts, hasLength(2));
     final r2 = searchAll(query: 'LİMAN', now: DateTime(2026), contacts: contacts);
     expect(r2.contacts.single.name, 'Liman Başkanlığı');
+  });
+
+  test('gezilecek yerlerde başlık ve özette arar', () {
+    final places = PlacesData.fromJson({
+      'places': [
+        {
+          'id': 'a',
+          'title': 'Zeytin Adası',
+          'area': 'erdek',
+          'category': 'manzara',
+          'summary': 'Kıyıya yakın küçük ada.',
+          'paragraphs': ['Metin'],
+        },
+        {
+          'id': 'b',
+          'title': 'Orman Yolu',
+          'area': 'kapidag',
+          'category': 'doga',
+          'summary': 'Çam ormanı içinde yürüyüş.',
+          'paragraphs': ['Metin'],
+        },
+      ],
+    });
+    expect(searchAll(query: 'ZEYTIN', now: DateTime(2026), places: places).places.single.id, 'a');
+    expect(searchAll(query: 'cam orman', now: DateTime(2026), places: places).places.single.id, 'b');
   });
 }
