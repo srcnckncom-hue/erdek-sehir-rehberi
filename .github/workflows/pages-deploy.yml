@@ -57,6 +57,10 @@ jobs:
           cache: true
 
       - name: Siteyi derle
+        env:
+          # Admin paneli derlemesi için (publishable anahtar; secret anahtar KULLANILMAZ)
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: bash scripts/build_pages.sh _site
 
       - uses: actions/upload-pages-artifact@v3

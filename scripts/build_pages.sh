@@ -23,12 +23,16 @@ if [ -d docs/legal ]; then
   cp -r docs/legal/. "$OUT/legal/"
 fi
 
-# 3) Admin paneli (Flutter Web) — 9. adımda eklenecek
+# 3) Admin paneli (Flutter Web) — reklam yönetimi
 if [ -f admin/pubspec.yaml ]; then
   (
     cd admin
     flutter pub get
-    flutter build web --release --base-href "/${REPO_NAME}/admin/"
+    flutter analyze
+    # Supabase adresi ve publishable anahtar GitHub Secrets'tan (pages-deploy.yml).
+    flutter build web --release --base-href "/${REPO_NAME}/admin/" \
+      --dart-define=SUPABASE_URL="${SUPABASE_URL:-}" \
+      --dart-define=SUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
   )
   mkdir -p "$OUT/admin"
   cp -r admin/build/web/. "$OUT/admin/"

@@ -1,0 +1,23 @@
+name: erdek_admin
+description: Erdek Şehir Rehberi — reklam yönetim paneli (Flutter Web).
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.14.0
+  flutter: 3.50.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  material_ui: ^1.0.0
+  http: ^1.2.0
+  web: ^1.1.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
