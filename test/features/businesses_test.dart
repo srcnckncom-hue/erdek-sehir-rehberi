@@ -72,10 +72,12 @@ void main() {
     expect(find.text('Test Oteli'), findsOneWidget);
     expect(find.text('Test Kafe'), findsOneWidget);
 
-    await tester.tap(find.text('Konaklama (1)'));
+    // Haplar yatay kayar; ekranda görünen ilk kategori seçilir.
+    await tester.tap(find.text('Yeme-İçme (1)'));
     await tester.pumpAndSettle();
-    expect(find.text('Test Oteli'), findsOneWidget);
-    expect(find.text('Test Lokantası'), findsNothing);
+    expect(find.text('Test Lokantası'), findsOneWidget);
+    expect(find.text('Test Oteli'), findsNothing);
+    expect(find.text('Test Kafe'), findsNothing);
   });
 
   testWidgets('işletme ayrıntısı: saatler ve iletişim', (tester) async {
