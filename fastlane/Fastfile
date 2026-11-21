@@ -26,4 +26,75 @@ platform :ios do
       readonly: false
     )
   end
+
+  desc "TestFlight'a derleme gönderir (ios-release workflow'u)"
+  lane :beta do
+    setup_ci
+    key = asc_api_key
+    match(
+      type: "appstore",
+      app_identifier: [APP_ID, WIDGET_ID],
+      api_key: key,
+      readonly: true
+    )
+
+    profiles = {
+      APP_ID => ENV.fetch("sigh_#{APP_ID}_appstore_profile-name"),
+      WIDGET_ID => ENV.fetch("sigh_#{WIDGET_ID}_appstore_profile-name")
+    }
+    { "Runner" => APP_ID, "ErdekWidget" => WIDGET_ID }.each do |target, id|
+      update_code_signing_settings(
+        path: File.expand_path("../ios/Runner.xcodeproj", __dir__),
+        use_automatic_signing: false,
+        team_id: ENV.fetch("APPLE_TEAM_ID"),
+        targets: [target],
+        code_sign_identity: "Apple Distribution",
+        profile_name: profiles[id],
+        bundle_identifier: id
+      )
+    end
+
+    # Her gönderimde bir öncekinden büyük derleme numarası
+    build_number = latest_testflight_build_number(
+      api_key: key,
+      app_identifier: APP_ID,
+      initial_build_number: 0
+    ) + 1
+    UI.message("Derleme numarası: #{build_number}")
+
+    root = File.expand_path("..", __dir__)
+    export_plist = File.join(root, "build", "ExportOptions.plist")
+    FileUtils.mkdir_p(File.dirname(export_plist))
+    File.write(export_plist, <<~PLIST)
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+        <key>method</key><string>app-store-connect</string>
+        <key>teamID</key><string>#{ENV.fetch("APPLE_TEAM_ID")}</string>
+        <key>signingStyle</key><string>manual</string>
+        <key>uploadSymbols</key><true/>
+        <key>provisioningProfiles</key>
+        <dict>
+          <key>#{APP_ID}</key><string>#{profiles[APP_ID]}</string>
+          <key>#{WIDGET_ID}</key><string>#{profiles[WIDGET_ID]}</string>
+        </dict>
+      </dict>
+      </plist>
+    PLIST
+
+    Dir.chdir(root) do
+      sh("flutter", "build", "ipa", "--release",
+         "--dart-define-from-file=config/env.json",
+         "--build-number=#{build_number}",
+         "--export-options-plist=#{export_plist}")
+    end
+
+    ipa = Dir[File.join(root, "build/ios/ipa/*.ipa")].first or UI.user_error!("IPA bulunamadı")
+    upload_to_testflight(
+      api_key: key,
+      ipa: ipa,
+      skip_waiting_for_build_processing: true
+    )
+  end
 end

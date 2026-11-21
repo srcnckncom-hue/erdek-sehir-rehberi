@@ -1,0 +1,70 @@
+# TestFlight'a derleme gönderir. Elle çalıştırılır:
+#   Actions > ios-release > Run workflow
+# İmzalama: fastlane match (sertifikalar erdek-certificates reposunda, salt okunur).
+name: ios-release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-release
+  cancel-in-progress: false
+
+jobs:
+  testflight:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - run: flutter pub get
+      - run: flutter gen-l10n
+
+      - name: Uygulama ayarları (config/env.json, repoya girmez)
+        env:
+          APP_ENV: prod
+          DATA_BASE_URL: https://srcnckncom-hue.github.io/erdek-sehir-rehberi
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          WEATHER_USER_AGENT: ErdekSehirRehberi/1.0 github.com/srcnckncom-hue/erdek-sehir-rehberi
+        run: bash scripts/make_env.sh config/env.json
+
+      - name: Widget hedefini ekle
+        run: ruby scripts/add_widget_target.rb
+
+      - name: Derle, imzala ve TestFlight'a gönder
+        run: bundle exec fastlane ios beta
+
+      - name: Derleme kayıtları (hata olursa)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcode-logs
+          path: |
+            ~/Library/Logs/gym
+            build/ios/archive/*.xcarchive/Info.plist
+          if-no-files-found: ignore

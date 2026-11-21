@@ -5,7 +5,7 @@ description: >-
 publish_to: none
 
 # Build numarası (+N) CI'da GITHUB_RUN_NUMBER ile ezilir.
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ^3.14.0
