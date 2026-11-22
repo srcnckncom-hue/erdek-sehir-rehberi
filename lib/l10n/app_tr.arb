@@ -1294,5 +1294,21 @@
   "serviceParking": "Otopark",
   "serviceWc": "WC",
   "serviceCharging": "Şarj",
-  "serviceFuel": "Akaryakıt"
+  "serviceFuel": "Akaryakıt",
+  "todayTitle": "Erdek'te bugün",
+  "todayWeather": "Hava",
+  "todaySea": "Deniz",
+  "todayPharmacy": "Nöbetçi eczane",
+  "todayMarket": "Pazar",
+  "todayEvent": "Etkinlik",
+  "homeLayoutTitle": "Ana sayfayı düzenle",
+  "homeLayoutSubtitle": "{count} kutucuk görünüyor · sürükleyerek sıralayın",
+  "@homeLayoutSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeLayoutReset": "Varsayılan"
 }

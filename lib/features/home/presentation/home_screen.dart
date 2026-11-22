@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -43,7 +45,13 @@ import '../../transport/presentation/transport_selection.dart';
 import '../../weather/data/weather_repository.dart';
 import '../../weather/domain/weather.dart';
 import '../../weather/presentation/weather_screen.dart';
+import '../../beaches/beaches_screen.dart';
+import '../../favorites/favorites_screen.dart';
+import '../../trips/trips_screen.dart';
+import '../home_layout.dart';
+import 'home_layout_screen.dart';
 import 'home_texts.dart';
+import 'today_card.dart';
 
 const _heroImage = AssetImage('assets/images/hero_erdek.jpg');
 
@@ -117,12 +125,14 @@ class HomeScreen extends ConsumerWidget {
               InfoBanner(icon: AppIcons.info, message: l10n.sampleDataBanner),
             ],
             const SizedBox(height: AppSpacing.section),
-            // Süren / yaklaşan kesinti (yoksa görünmez)
-            HomeOutageBanner(
-              onTap: () => openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)),
-            ),
-            HomeMarketBanner(
-              onTap: () => openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)),
+            // Erdek'te bugün: hava, deniz, nöbetçi eczane, pazar, etkinlik, kesinti (verisi olan satırlar)
+            TodayCard(
+              onWeather: () => openWeather(context),
+              onSea: () => openWeather(context, tab: WeatherTab.sea),
+              onPharmacy: () => onOpenTab(AppTab.pharmacy),
+              onMarkets: () => openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)),
+              onEvents: () => openEvents(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.event)),
+              onOutages: () => openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)),
             ),
             // Hikâyeler (panelden; yayında hikâye yoksa görünmez)
             const StoriesRow(),
@@ -135,6 +145,18 @@ class HomeScreen extends ConsumerWidget {
             QuickActionGrid(columns: 2, children: _chips(context, ref)),
             const SizedBox(height: AppSpacing.gap),
             QuickActionGrid(columns: 4, children: _tiles(context, ref)),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+                child: TextButton.icon(
+                  key: const Key('home_customize'),
+                  onPressed: () => openHomeLayout(context),
+                  icon: AppIcon(AppIcons.edit, size: 16, color: context.palette.primary),
+                  label: Text(l10n.homeLayoutTitle, style: AppTypography.caption.copyWith(color: context.palette.primary)),
+                ),
+              ),
+            ),
             const SizedBox(height: AppSpacing.section),
             const AdSlot(
               id: 'home_feed_1',
@@ -352,60 +374,55 @@ class HomeScreen extends ConsumerWidget {
     ];
   }
 
-  List<Widget> _tiles(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final p = context.palette;
-    return [
-      QuickActionTile(
-        icon: AppIcons.announcements,
-        label: l10n.actionAnnouncements,
-        iconColor: p.iconPurple,
-        onTap: () => _openAnnouncements(ref),
-      ),
-      QuickActionTile(
-        icon: AppIcons.contacts,
-        label: l10n.actionContacts,
-        iconColor: p.iconBlue,
-        onTap: () => _openContacts(ref),
-      ),
-      QuickActionTile(
-        icon: AppIcons.bus,
-        label: l10n.actionBusTimes,
-        iconColor: p.iconPurple,
-        onTap: () => _openTransport(ref, TransportMode.bus),
-      ),
-      QuickActionTile(
-        icon: AppIcons.imsakiye,
-        label: l10n.actionImsakiye,
-        iconColor: p.iconRed,
-        onTap: () => onOpenTab(AppTab.prayer),
-      ),
-      QuickActionTile(
-        icon: AppIcons.outage,
-        label: l10n.actionOutages,
-        iconColor: p.iconCrimson,
-        onTap: () => openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)),
-      ),
-      QuickActionTile(
-        icon: AppIcons.market,
-        label: l10n.actionMarketDays,
-        iconColor: p.iconPurple,
-        onTap: () => openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)),
-      ),
-      QuickActionTile(
-        icon: AppIcons.event,
-        label: l10n.actionEvents,
-        iconColor: p.iconOrange,
-        onTap: () => openEvents(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.event)),
-      ),
-      QuickActionTile(
-        icon: AppIcons.emergency,
-        label: l10n.actionEmergency,
-        iconColor: p.iconCoral,
-        onTap: () => openEmergency(context),
-      ),
-    ];
+  void _openTile(BuildContext context, WidgetRef ref, HomeTile t) {
+    switch (t) {
+      case HomeTile.announcements:
+        _openAnnouncements(ref);
+      case HomeTile.contacts:
+        _openContacts(ref);
+      case HomeTile.bus:
+        _openTransport(ref, TransportMode.bus);
+      case HomeTile.imsakiye:
+        onOpenTab(AppTab.prayer);
+      case HomeTile.outages:
+        unawaited(openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)));
+      case HomeTile.markets:
+        unawaited(openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)));
+      case HomeTile.events:
+        unawaited(openEvents(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.event)));
+      case HomeTile.emergency:
+        unawaited(openEmergency(context));
+      case HomeTile.favorites:
+        unawaited(openFavorites(context));
+      case HomeTile.beaches:
+        unawaited(openBeaches(context));
+      case HomeTile.trips:
+        unawaited(openTrips(context));
+      case HomeTile.map:
+        unawaited(openMap(context));
+      case HomeTile.nearby:
+        unawaited(openNearby(context));
+      case HomeTile.businesses:
+        unawaited(openBusinesses(context));
+      case HomeTile.weather:
+        unawaited(openWeather(context));
+      case HomeTile.places:
+        unawaited(openPlaces(context));
+    }
   }
+
+  Widget _tile(BuildContext context, WidgetRef ref, HomeTile t, {VoidCallback? onTap}) => QuickActionTile(
+        key: Key('tile_${t.name}'),
+        icon: t.icon,
+        label: t.label(AppLocalizations.of(context)),
+        iconColor: t.color(context.palette),
+        onTap: onTap ?? () => _openTile(context, ref, t),
+      );
+
+  /// Kullanıcının seçtiği kutucuklar, onun sırasıyla.
+  List<Widget> _tiles(BuildContext context, WidgetRef ref) => [
+        for (final t in ref.watch(homeTilesProvider)) _tile(context, ref, t),
+      ];
 
   void _showAllServices(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -444,14 +461,16 @@ class HomeScreen extends ConsumerWidget {
                 QuickActionGrid(
                   columns: 4,
                   children: [
-                    for (final w in _tiles(context, ref).cast<QuickActionTile>())
-                      QuickActionTile(
-                        icon: w.icon,
-                        label: w.label,
-                        iconColor: w.iconColor,
-                        onTap: () => close(w.onTap ?? () {}),
-                      ),
+                    for (final t in HomeTile.values)
+                      _tile(context, ref, t, onTap: () => close(() => _openTile(context, ref, t))),
                   ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                TextButton.icon(
+                  key: const Key('all_services_customize'),
+                  onPressed: () => close(() => unawaited(openHomeLayout(context))),
+                  icon: AppIcon(AppIcons.edit, size: 18, color: context.palette.primary),
+                  label: Text(l10n.homeLayoutTitle),
                 ),
               ],
             ),

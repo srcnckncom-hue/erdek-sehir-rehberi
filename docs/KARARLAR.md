@@ -251,3 +251,9 @@
 - Yeni içerik belgesi `services` (data/services.json, panel → Şehir Rehberi › Harita Katmanları, SQL: 0013_services.sql).
 - Türler: taksi, atm, otopark, wc, sarj, akaryakit. Alanlar: ad, enlem/boylam (zorunlu), not, saatler, telefon.
 - Uygulama: Harita ve Yakınımdakiler süzgeçleri MapLayer'a geçti (eczane/işletme/yer her zaman; hizmet türleri verisi varsa). Dokununca bilgi penceresi (ara, yol tarifi). iOS iğneleri türüne göre renk/simge, sıkışınca önce gizlenir. Arama: "atm, taksi, otopark, tuvalet, şarj, benzin" → Yakınımdakiler.
+
+## Yumuşak geçişler, Erdek'te bugün, ana sayfa düzeni, Siri (r35)
+- Sayfa geçişi: SoftPageTransitionsBuilder (sağdan hafif kayarak belirme, alttaki sayfa solar; "Hareketi azalt" açıksa yok; sol kenardan sağa kaydırınca geri). Alt menüde sekme değişince içerik 260 ms'de belirir.
+- Ana sayfa "Erdek'te bugün" kartı: kesinti (vurgulu), hava, deniz (mayıs–ekim), nöbetçi eczane, pazar, bugünkü etkinlik; ayrı kesinti/pazar şeritlerinin yerini aldı.
+- Ana sayfayı düzenle: 16 kutucuktan istenenler, sürükleyerek sıra (cihazda `home_tiles`). "Tümünü gör" hepsini gösterir.
+- Siri / Kısayollar (App Intents, AppDelegate.swift): nöbetçi eczane, sıradaki feribot (yoksa otobüs), sıradaki namaz vakti — widget App Group kaydından, uygulamayı açmadan. Proje developmentRegion = tr.

@@ -498,5 +498,14 @@
   "serviceParking": "Parking",
   "serviceWc": "WC",
   "serviceCharging": "EV charging",
-  "serviceFuel": "Fuel"
+  "serviceFuel": "Fuel",
+  "todayTitle": "Today in Erdek",
+  "todayWeather": "Weather",
+  "todaySea": "Sea",
+  "todayPharmacy": "Pharmacy on duty",
+  "todayMarket": "Market",
+  "todayEvent": "Event",
+  "homeLayoutTitle": "Customise home",
+  "homeLayoutSubtitle": "{count} tiles shown · drag to reorder",
+  "homeLayoutReset": "Default"
 }

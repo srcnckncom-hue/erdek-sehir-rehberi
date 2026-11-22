@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
+import 'soft_page_transition.dart';
 
 export 'app_colors.dart';
 export 'app_spacing.dart';
@@ -32,6 +33,16 @@ abstract final class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.iOS: SoftPageTransitionsBuilder(),
+          TargetPlatform.android: SoftPageTransitionsBuilder(),
+          TargetPlatform.macOS: SoftPageTransitionsBuilder(),
+          TargetPlatform.windows: SoftPageTransitionsBuilder(),
+          TargetPlatform.linux: SoftPageTransitionsBuilder(),
+          TargetPlatform.fuchsia: SoftPageTransitionsBuilder(),
+        },
+      ),
       colorScheme: scheme,
       fontFamily: AppTypography.fontFamily,
       scaffoldBackgroundColor: p.background,

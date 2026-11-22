@@ -36,11 +36,19 @@ class AppShell extends ConsumerStatefulWidget {
   ConsumerState<AppShell> createState() => _AppShellState();
 }
 
-class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver {
+class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late AppTab _tab = widget.initialTab;
 
-  void _select(AppTab tab) => setState(() => _tab = tab);
+  /// Sekme değişince içerik hafifçe belirir (0 → 1).
+  late final _tabFade = AnimationController(vsync: this, duration: const Duration(milliseconds: 260), value: 1);
+  late final _tabCurve = CurvedAnimation(parent: _tabFade, curve: Curves.easeOutCubic);
+
+  void _select(AppTab tab) {
+    if (tab == _tab) return;
+    setState(() => _tab = tab);
+    if (!MediaQuery.disableAnimationsOf(context)) unawaited(_tabFade.forward(from: 0));
+  }
 
   @override
   void initState() {
@@ -78,6 +86,7 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _tabFade.dispose();
     super.dispose();
   }
 
@@ -148,7 +157,11 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
         currentIndex: _tab.index,
         onSelected: (i) => _select(AppTab.values[i]),
       ),
-      body: IndexedStack(
+      body: FadeTransition(
+        opacity: Tween<double>(begin: 0.35, end: 1).animate(_tabCurve),
+        child: SlideTransition(
+          position: Tween<Offset>(begin: const Offset(0, 0.012), end: Offset.zero).animate(_tabCurve),
+          child: IndexedStack(
         index: _tab.index,
         children: [
           HomeScreen(
@@ -160,6 +173,8 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
           const TransportScreen(),
           DirectoryScreen(isActive: _tab == AppTab.directory),
         ],
+          ),
+        ),
       ),
     );
   }

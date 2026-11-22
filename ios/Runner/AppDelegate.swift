@@ -1,3 +1,4 @@
+import AppIntents
 import CoreLocation
 import EventKit
 import EventKitUI
@@ -440,3 +441,131 @@ final class CalendarPresenter: NSObject, EKEventEditViewDelegate {
     pending = nil
   }
 }
+
+// MARK: - Siri ve Kısayollar
+
+// "Hey Siri, Erdek Rehberi nöbetçi eczane" gibi; uygulamayı açmadan cevap verir.
+// Veri, widget'larla aynı App Group kaydından okunur (lib/features/home_widget_sync).
+// Kısayollar uygulamasında ve Spotlight'ta da görünür.
+
+private struct SiriSnapshot: Decodable {
+  struct Prayer: Decodable { let name: String; let at: String }
+  struct Duty: Decodable { let from: String; let to: String; let names: [String] }
+  struct Trip: Decodable { let mode: String; let route: String; let at: String }
+
+  let prayers: [Prayer]
+  let duties: [Duty]
+  let departures: [Trip]?
+
+  static func load() -> SiriSnapshot? {
+    guard let json = UserDefaults(suiteName: "group.com.erdek.sehirrehberi.erdekrehberi")?.string(forKey: "widget_data"),
+          let data = json.data(using: .utf8)
+    else { return nil }
+    return try? JSONDecoder().decode(SiriSnapshot.self, from: data)
+  }
+
+  static func date(_ iso: String) -> Date? {
+    let f = ISO8601DateFormatter()
+    f.formatOptions = [.withInternetDateTime]
+    return f.date(from: iso)
+  }
+
+  static func time(_ date: Date) -> String {
+    let f = DateFormatter()
+    f.locale = Locale(identifier: "tr_TR")
+    f.timeZone = TimeZone(identifier: "Europe/Istanbul")
+    f.dateFormat = "HH:mm"
+    return f.string(from: date)
+  }
+
+  static let noData = "Henüz bilgi yok. Erdek Rehberi uygulamasını bir kez açın, sonra tekrar sorun."
+}
+
+struct PharmacyOnDutyIntent: AppIntent {
+  static var title: LocalizedStringResource = "Nöbetçi eczane"
+  static var description = IntentDescription("Erdek'te bugünün nöbetçi eczanesini söyler.")
+  static var openAppWhenRun: Bool = false
+
+  func perform() async throws -> some IntentResult & ProvidesDialog {
+    guard let snap = SiriSnapshot.load() else { return .result(dialog: IntentDialog(stringLiteral: SiriSnapshot.noData)) }
+    let now = Date()
+    let duty = snap.duties.first { d in
+      guard let from = SiriSnapshot.date(d.from), let to = SiriSnapshot.date(d.to) else { return false }
+      return from <= now && now < to
+    }
+    guard let names = duty?.names, !names.isEmpty else {
+      return .result(dialog: "Bugünün nöbetçi eczanesi bilgisi yok. Uygulamadan kontrol edin.")
+    }
+    let text = names.count == 1
+      ? "Bugün nöbetçi eczane: \(names[0])."
+      : "Bugün nöbetçi eczaneler: \(names.joined(separator: ", "))."
+    return .result(dialog: IntentDialog(stringLiteral: text))
+  }
+}
+
+struct NextFerryIntent: AppIntent {
+  static var title: LocalizedStringResource = "Sıradaki feribot"
+  static var description = IntentDescription("Erdek'ten kalkan sıradaki feribotu söyler (yoksa otobüs).")
+  static var openAppWhenRun: Bool = false
+
+  func perform() async throws -> some IntentResult & ProvidesDialog {
+    guard let snap = SiriSnapshot.load() else { return .result(dialog: IntentDialog(stringLiteral: SiriSnapshot.noData)) }
+    let now = Date()
+    let upcoming = (snap.departures ?? [])
+      .compactMap { t in SiriSnapshot.date(t.at).map { (t, $0) } }
+      .filter { $0.1 > now }
+      .sorted { $0.1 < $1.1 }
+    if case let (trip, at)? = upcoming.first(where: { $0.0.mode == "ferry" }) {
+      return .result(dialog: IntentDialog(stringLiteral: "Sıradaki feribot saat \(SiriSnapshot.time(at)), \(trip.route)."))
+    }
+    if case let (trip, at)? = upcoming.first {
+      return .result(dialog: IntentDialog(stringLiteral: "Yakında feribot yok. Sıradaki otobüs saat \(SiriSnapshot.time(at)), \(trip.route)."))
+    }
+    return .result(dialog: "Yakın zamanda sefer görünmüyor. Uygulamadan sefer saatlerine bakın.")
+  }
+}
+
+struct NextPrayerIntent: AppIntent {
+  static var title: LocalizedStringResource = "Sıradaki namaz vakti"
+  static var description = IntentDescription("Erdek için sıradaki namaz vaktini söyler.")
+  static var openAppWhenRun: Bool = false
+
+  func perform() async throws -> some IntentResult & ProvidesDialog {
+    guard let snap = SiriSnapshot.load() else { return .result(dialog: IntentDialog(stringLiteral: SiriSnapshot.noData)) }
+    let now = Date()
+    let next = snap.prayers
+      .compactMap { p in SiriSnapshot.date(p.at).map { (p.name, $0) } }
+      .filter { $0.1 > now }
+      .min { $0.1 < $1.1 }
+    guard case let (name, at)? = next else { return .result(dialog: IntentDialog(stringLiteral: SiriSnapshot.noData)) }
+    return .result(dialog: IntentDialog(stringLiteral: "Sıradaki vakit \(name), saat \(SiriSnapshot.time(at))."))
+  }
+}
+
+struct ErdekShortcuts: AppShortcutsProvider {
+  static var appShortcuts: [AppShortcut] {
+    AppShortcut(
+      intent: PharmacyOnDutyIntent(),
+      phrases: [
+        "\(.applicationName) nöbetçi eczane",
+        "\(.applicationName) nöbetçi eczane hangisi",
+        "\(.applicationName) ile nöbetçi eczaneyi söyle",
+      ]
+    )
+    AppShortcut(
+      intent: NextFerryIntent(),
+      phrases: [
+        "\(.applicationName) sıradaki feribot",
+        "\(.applicationName) feribot ne zaman",
+      ]
+    )
+    AppShortcut(
+      intent: NextPrayerIntent(),
+      phrases: [
+        "\(.applicationName) sıradaki vakit",
+        "\(.applicationName) namaz vakti",
+      ]
+    )
+  }
+}
+
