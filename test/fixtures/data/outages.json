@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "isSample": false,
+  "updatedAt": "2026-11-21T12:00:00+03:00",
+  "source": "test",
+  "data": {
+    "areas": [
+      "Cumhuriyet Mahallesi",
+      "Yalı Mahallesi",
+      "Ocaklar"
+    ],
+    "outages": [
+      {
+        "id": "su-1",
+        "type": "su",
+        "areas": [
+          "Cumhuriyet Mahallesi"
+        ],
+        "startsAt": "2026-11-21T17:00",
+        "endsAt": "2026-11-21T20:00",
+        "reason": "Ana boru arızası",
+        "source": "BASKİ"
+      },
+      {
+        "id": "elk-1",
+        "type": "elektrik",
+        "areas": [
+          "Yalı Mah.",
+          "Ocaklar"
+        ],
+        "startsAt": "2026-11-22T09:00",
+        "endsAt": "2026-11-22T15:00",
+        "reason": "Planlı bakım",
+        "source": "UEDAŞ"
+      },
+      {
+        "id": "eski",
+        "type": "su",
+        "areas": [],
+        "startsAt": "2026-11-15T09:00",
+        "endsAt": "2026-11-15T12:00"
+      }
+    ]
+  }
+}
