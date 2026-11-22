@@ -8,6 +8,8 @@ import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../explore/presentation/place_photos.dart';
 import '../../settings/presentation/report_issue.dart';
+import '../../favorites/favorites.dart';
+import '../../favorites/favorites_screen.dart';
 import '../domain/business.dart';
 import 'business_style.dart';
 
@@ -100,6 +102,7 @@ class BusinessDetailScreen extends StatelessWidget {
           PageHeader(
             title: b.name,
             subtitle: category?.title,
+            trailing: FavoriteButton(favoriteKey: FavoriteKeys.business(b)),
             onBack: () => Navigator.of(context).maybePop(),
             backLabel: l10n.back,
           ),

@@ -350,5 +350,14 @@
   "helpLineElectricity": "Electricity faults",
   "helpLineGas": "Natural gas emergency",
   "copy": "Copy",
-  "copied": "Copied"
+  "copied": "Copied",
+  "favoritesTitle": "My favourites",
+  "favoritesCount": "{count} saved places",
+  "favoritesEmptyTitle": "No favourites yet",
+  "favoritesEmptyMessage": "Tap the ☆ star on a business, place or pharmacy page; they'll be collected here.",
+  "favoriteAdd": "Add to favourites",
+  "favoriteRemove": "Remove from favourites",
+  "favoriteAdded": "Added to favourites",
+  "favoriteRemoved": "Removed from favourites",
+  "favoritePharmacyOnDuty": "On duty today"
 }

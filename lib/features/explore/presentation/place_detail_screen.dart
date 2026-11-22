@@ -7,6 +7,8 @@ import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/explore.dart';
+import '../../favorites/favorites.dart';
+import '../../favorites/favorites_screen.dart';
 import '../../settings/presentation/report_issue.dart';
 import 'place_photos.dart';
 import 'place_style.dart';
@@ -36,6 +38,7 @@ class PlaceDetailScreen extends StatelessWidget {
           PageHeader(
             title: place.title,
             subtitle: PlaceStyle.meta(l10n, place),
+            trailing: FavoriteButton(favoriteKey: FavoriteKeys.place(place)),
             onBack: () => Navigator.of(context).maybePop(),
             backLabel: l10n.back,
           ),

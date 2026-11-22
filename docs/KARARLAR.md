@@ -200,3 +200,9 @@
 - "Erdek'teki numaralar": Rehberin `acil` ve `kamu` kategorileri (panelden düzenlenir).
 - "Konumumu bul": koordinat (112'ye okunur), WhatsApp / paylaş / kopyala. Harita bağlantısı Google Haritalar (karşı taraf Android de olabilir). Konum kaydedilmez; gizlilik metni güncellendi.
 - e-Devlet AFAD toplanma alanı sorgulama bağlantısı.
+
+## Favoriler (r24)
+- İşletme, gezilecek yer ve eczane sayfalarında ☆ düğmesi; "Favorilerim" sayfası menüde.
+- Cihazda saklanır (Hive, anahtar `favorites`), en yeni başta, en fazla 100. Sunucuya gönderilmez.
+- Eczane favorisi bugün nöbetçiyse "Bugün nöbetçi" yazar; değilse adres.
+- Panelden silinen yer listede görünmez (kayıt cihazda kalır, geri gelirse görünür).

@@ -3,6 +3,8 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../favorites/favorites.dart';
+import '../../favorites/favorites_screen.dart';
 import '../../share/share_actions.dart';
 import '../domain/pharmacy.dart';
 
@@ -80,6 +82,8 @@ class PharmacyCard extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(width: AppSpacing.sm),
+              FavoriteButton(favoriteKey: FavoriteKeys.pharmacy(pharmacy), size: 40),
             ],
           ),
           if (note case final text?) ...[

@@ -990,5 +990,21 @@
   "helpLineElectricity": "Elektrik arıza",
   "helpLineGas": "Doğal gaz acil",
   "copy": "Kopyala",
-  "copied": "Kopyalandı"
+  "copied": "Kopyalandı",
+  "favoritesTitle": "Favorilerim",
+  "favoritesCount": "{count} kayıtlı yer",
+  "@favoritesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "favoritesEmptyTitle": "Henüz favori yok",
+  "favoritesEmptyMessage": "İşletme, gezilecek yer ya da eczane sayfasındaki ☆ yıldıza dokunun; burada toplanır.",
+  "favoriteAdd": "Favorilere ekle",
+  "favoriteRemove": "Favorilerden çıkar",
+  "favoriteAdded": "Favorilere eklendi",
+  "favoriteRemoved": "Favorilerden çıkarıldı",
+  "favoritePharmacyOnDuty": "Bugün nöbetçi"
 }

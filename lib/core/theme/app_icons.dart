@@ -102,6 +102,8 @@ abstract final class AppIcons {
   static AppIconData get share => _d(PhosphorIconsDuotone.shareNetwork);
   static AppIconData get report => _d(PhosphorIconsDuotone.flag);
   static AppIconData get star => _d(PhosphorIconsDuotone.star);
+  static AppIconData get favoriteOn => _d(PhosphorIconsDuotone.star);
+  static AppIconData get favoriteOff => _i(PhosphorIconsRegular.star);
   static AppIconData get shield => _d(PhosphorIconsDuotone.shieldCheck);
   static AppIconData get document => _d(PhosphorIconsDuotone.fileText);
   static AppIconData get dutyNote => _d(PhosphorIconsDuotone.clockCountdown);
