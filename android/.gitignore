@@ -1,0 +1,22 @@
+# scripts/setup_android.sh ile üretilenler (repoya girmez)
+gradle-wrapper.jar
+/.gradle
+/captures/
+/gradlew
+/gradlew.bat
+/gradle/
+/local.properties
+GeneratedPluginRegistrant.java
+.cxx/
+/build.gradle.kts
+/settings.gradle.kts
+/gradle.properties
+/app/build.gradle.kts
+/app/src/debug/
+/app/src/profile/
+/app/src/main/java/
+key.properties
+**/*.keystore
+**/*.jks
+/build/
+/app/build/

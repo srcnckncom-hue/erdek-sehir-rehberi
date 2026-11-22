@@ -70,11 +70,20 @@ class LocalReminderScheduler implements ReminderScheduler {
   final FlutterLocalNotificationsPlugin plugin;
 
   static const _details = NotificationDetails(
+    android: AndroidNotificationDetails(
+      'hatirlatmalar',
+      'Hatırlatmalar',
+      channelDescription: 'Sefer, iftar, etkinlik ve kesinti hatırlatmaları',
+      importance: Importance.high,
+      priority: Priority.high,
+    ),
     iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
   );
 
   @override
   Future<bool> requestPermission() async {
+    final android = plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    if (android != null) return await android.requestNotificationsPermission() ?? false;
     final ios = plugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
     final granted = await ios?.requestPermissions(alert: true, badge: false, sound: true);
     return granted ?? false;

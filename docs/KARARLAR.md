@@ -274,3 +274,9 @@
 - Şehir içi hat seçimi kaydırmalı satır yerine iki sütunlu, alt alta büyük kartlar ("A ›" / "B").
 - Ana sayfada hikâyeler kaldırıldı (StoriesRow kodda duruyor, kullanılmıyor).
 - Hızlı işlemler: Otobüs Saatleri tek geniş satır (şehir içi açılır), altında Nöbetçi Eczane ve Feribot Saatleri yan yana.
+
+## r39 — Android
+
+- Android sürümü: ortak Dart kodu + Kotlin yerel parçalar (docs/ANDROID.md). Harita OpenStreetMap (osmdroid), widget'lar AppWidget, konum LocationManager.
+- Android'e özel dallar `isAndroidDevice` (dart:io Platform) ile; testler ana makinede çalıştığı için etkilenmez.
+- Gradle dosyaları repoda değil; `scripts/setup_android.sh` derlemede üretir, `android/app/erdek.gradle` ekler.

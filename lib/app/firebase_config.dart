@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 
+import '../core/platform/device.dart';
+
 /// Firebase (yalnızca Cloud Messaging) iOS ayarı.
 ///
 /// Değerler Firebase konsolundaki GoogleService-Info.plist dosyasından
@@ -13,7 +15,24 @@ abstract final class FirebaseConfig {
   static const _projectId = 'erdek-sehir-rehberi';
   static const _bundleId = 'com.erdek.sehirrehberi.erdekrehberi';
 
-  static FirebaseOptions? get options => _apiKey.isEmpty
+  /// Android: Firebase konsolu → Proje ayarları → Android uygulaması
+  /// (paket adı com.erdek.sehirrehberi.erdekrehberi) → "Uygulama kimliği" ve
+  /// google-services.json içindeki "current_key". Boşken Android'de anlık bildirim kapalı.
+  static const _androidAppId = '';
+  static const _androidApiKey = '';
+
+  static FirebaseOptions? get options => isAndroidDevice ? _android : _ios;
+
+  static FirebaseOptions? get _android => _androidAppId.isEmpty || _androidApiKey.isEmpty
+      ? null
+      : const FirebaseOptions(
+          apiKey: _androidApiKey,
+          appId: _androidAppId,
+          messagingSenderId: _senderId,
+          projectId: _projectId,
+        );
+
+  static FirebaseOptions? get _ios => _apiKey.isEmpty
       ? null
       : const FirebaseOptions(
           apiKey: _apiKey,

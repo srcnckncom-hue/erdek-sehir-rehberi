@@ -1,5 +1,7 @@
 import 'package:url_launcher/url_launcher.dart';
 
+import '../platform/device.dart';
+
 /// Telefon ve harita bağlantıları. iOS'ta tel: doğrudan arama ekranını,
 /// maps.apple.com bağlantısı Apple Haritalar'ı açar.
 abstract final class Launchers {
@@ -16,6 +18,14 @@ abstract final class Launchers {
     double? latitude,
     double? longitude,
   }) {
+    if (isAndroidDevice) {
+      // Android: Google Haritalar yol tarifi.
+      final destination = latitude != null && longitude != null ? '$latitude,$longitude' : (address ?? name);
+      return launchUrl(
+        Uri.https('www.google.com', '/maps/dir/', {'api': '1', 'destination': destination}),
+        mode: LaunchMode.externalApplication,
+      );
+    }
     final params = <String, String>{
       if (latitude != null && longitude != null) 'daddr': '$latitude,$longitude',
       if (latitude == null || longitude == null) 'daddr': address ?? name,

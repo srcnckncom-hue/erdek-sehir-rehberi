@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../core/platform/device.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
@@ -30,7 +31,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   MethodChannel? _channel;
   List<PointOfInterest> _shown = const [];
 
-  bool get _nativeMap => !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+  bool get _nativeMap => hasNativeMap;
 
   List<PointOfInterest> _visible(List<PointOfInterest> all) => [
         for (final p in all)
@@ -106,15 +107,13 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               child: ClipRRect(
                 borderRadius: AppRadius.cardAll,
                 child: _nativeMap
-                    ? UiKitView(
-                        viewType: 'erdek/map',
-                        creationParams: {
+                    ? nativeMapView(
+                        params: {
                           'centerLat': erdekCenter.latitude,
                           'centerLng': erdekCenter.longitude,
                           'pins': [for (final s in shown) s.toPin()],
                         },
-                        creationParamsCodec: const StandardMessageCodec(),
-                        onPlatformViewCreated: _onCreated,
+                        onCreated: _onCreated,
                       )
                     : Material(
                         key: const Key('map_fallback'),

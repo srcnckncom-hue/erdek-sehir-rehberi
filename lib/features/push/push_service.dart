@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
+import '../../core/platform/device.dart';
 import '../../app/firebase_config.dart';
 
 /// Panelden gönderilen bildirimlerin konuları (FCM topic). Kullanıcı her birini
@@ -69,7 +70,7 @@ class FirebasePushService implements PushService {
       if (!allowed) return false;
       await _messaging.setAutoInitEnabled(true);
       // iOS: konuya abone olmadan önce APNs anahtarı gelmiş olmalı.
-      for (var i = 0; i < 10 && await _messaging.getAPNSToken() == null; i++) {
+      for (var i = 0; i < 10 && !isAndroidDevice && await _messaging.getAPNSToken() == null; i++) {
         await Future<void>.delayed(const Duration(milliseconds: 500));
       }
       await _messaging.subscribeToTopic(topic.topic);

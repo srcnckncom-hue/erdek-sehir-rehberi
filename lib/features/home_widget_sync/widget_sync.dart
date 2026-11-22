@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/platform/device.dart';
 import '../../core/time/calendar_date.dart';
 import '../../core/time/clock_time.dart';
 import '../pharmacy/domain/duty_schedule.dart';
@@ -96,9 +97,9 @@ abstract final class HomeWidgetSync {
     };
   }
 
-  /// Yalnızca iOS'ta; hata olursa sessizce geçer (widget eski veriyle kalır).
+  /// iOS ve Android'de; hata olursa sessizce geçer (widget eski veriyle kalır).
   static Future<void> push(Map<String, dynamic> snapshot) async {
-    if (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS) return;
+    if (!isAndroidDevice && (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS)) return;
     try {
       await _channel.invokeMethod<void>('update', jsonEncode(snapshot));
     } on MissingPluginException {

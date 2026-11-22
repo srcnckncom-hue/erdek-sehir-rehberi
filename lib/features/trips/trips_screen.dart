@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../core/platform/device.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/util/launch_or_notify.dart';
@@ -212,7 +211,7 @@ class TripMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS) return const SizedBox.shrink();
+    if (!hasNativeMap) return const SizedBox.shrink();
     final stops = trip.stops;
     return Padding(
       padding: AppSpacing.pagePadding,
@@ -220,9 +219,8 @@ class TripMap extends StatelessWidget {
         borderRadius: AppRadius.cardAll,
         child: SizedBox(
           height: 260,
-          child: UiKitView(
-            viewType: 'erdek/map',
-            creationParams: {
+          child: nativeMapView(
+            params: {
               'pins': [
                 for (var i = 0; i < stops.length; i++)
                   if (stops[i].location case final loc?)
@@ -238,7 +236,6 @@ class TripMap extends StatelessWidget {
               'path': [for (final pt in trip.line) [pt.latitude, pt.longitude]],
               'fit': true,
             },
-            creationParamsCodec: const StandardMessageCodec(),
           ),
         ),
       ),

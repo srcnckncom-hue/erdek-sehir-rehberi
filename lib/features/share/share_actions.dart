@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../core/platform/device.dart';
 import '../../core/system/system_bridge.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
@@ -12,6 +13,11 @@ import '../pharmacy/domain/pharmacy.dart';
 abstract final class ShareTexts {
   /// Apple Haritalar bağlantısı (koordinat varsa iğneli, yoksa adres araması).
   static String mapsUrl({required String name, String? address, double? latitude, double? longitude}) {
+    if (isAndroidDevice) {
+      // Android: Google Haritalar (her telefonda açılır).
+      final query = latitude != null && longitude != null ? '$latitude,$longitude' : [name, ?address].join(', ');
+      return Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': query}).toString();
+    }
     final params = <String, String>{
       'q': name,
       if (latitude != null && longitude != null) 'll': '$latitude,$longitude',

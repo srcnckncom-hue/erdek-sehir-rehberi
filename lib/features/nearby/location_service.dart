@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/platform/device.dart';
+
 /// Enlem/boylam.
 @immutable
 class GeoPoint {
@@ -40,12 +42,13 @@ abstract interface class LocationService {
 }
 
 /// iOS: AppDelegate'teki 'erdek/location' kanalı (CoreLocation).
+/// Android: MainActivity'deki aynı kanal (LocationManager).
 class ChannelLocationService implements LocationService {
   static const _channel = MethodChannel('erdek/location');
 
   @override
   Future<GeoPoint> current() async {
-    if (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS) {
+    if (!isAndroidDevice && (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS)) {
       throw const LocationException(LocationFailure.unavailable);
     }
     try {

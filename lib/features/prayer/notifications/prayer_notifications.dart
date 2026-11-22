@@ -79,6 +79,7 @@ class LocalPrayerNotificationScheduler implements PrayerNotificationScheduler {
     final plugin = FlutterLocalNotificationsPlugin();
     await plugin.initialize(
       settings: const InitializationSettings(
+        android: AndroidInitializationSettings('@drawable/ic_notification'),
         iOS: DarwinInitializationSettings(
           requestAlertPermission: false,
           requestBadgePermission: false,
@@ -91,6 +92,8 @@ class LocalPrayerNotificationScheduler implements PrayerNotificationScheduler {
 
   @override
   Future<bool> requestPermission() async {
+    final android = plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    if (android != null) return await android.requestNotificationsPermission() ?? false;
     final ios = plugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
     final granted = await ios?.requestPermissions(alert: true, badge: false, sound: true);
     return granted ?? false;
@@ -104,6 +107,13 @@ class LocalPrayerNotificationScheduler implements PrayerNotificationScheduler {
       if (request.id < NotificationIds.prayerMax) await plugin.cancel(id: request.id);
     }
     const details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        'vakitler',
+        'Namaz vakitleri',
+        channelDescription: 'Vakit girişi ve vakitten önce hatırlatma',
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
       iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
     );
     for (final n in plan) {

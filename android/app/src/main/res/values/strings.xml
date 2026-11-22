@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Erdek Rehberi</string>
+    <string name="widget_prayer_desc">Sıradaki namaz vakti</string>
+    <string name="widget_pharmacy_desc">Bugünün nöbetçi eczanesi</string>
+    <string name="widget_trip_desc">Erdek\'ten sıradaki feribot ya da otobüs</string>
+    <string name="widget_prayer_label">Namaz Vakti</string>
+    <string name="widget_pharmacy_label">Nöbetçi Eczane</string>
+    <string name="widget_trip_label">Sıradaki Sefer</string>
+</resources>

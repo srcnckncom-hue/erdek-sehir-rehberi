@@ -299,7 +299,7 @@
     }
   },
   "notificationPrayersTitle": "Hangi vakitler?",
-  "notificationPermissionDenied": "Bildirim izni verilmedi. iPhone Ayarlar › Erdek Rehberi › Bildirimler'den açabilirsiniz.",
+  "notificationPermissionDenied": "Bildirim izni verilmedi. Telefonun Ayarlar › Erdek Rehberi (Android'de Ayarlar › Uygulamalar › Erdek Rehberi) › Bildirimler bölümünden açabilirsiniz.",
   "notificationHint": "Bildirimler telefonunuzda kurulur; internet gerekmez. Uygulamayı ara sıra açtığınızda sonraki günler için yenilenir.",
   "notifTitleBefore": "{prayer} vakti yaklaşıyor",
   "@notifTitleBefore": {
@@ -865,7 +865,7 @@
   "nearbyTitle": "Yakınımdakiler",
   "nearbySubtitle": "En yakından uzağa",
   "nearbyDeniedTitle": "Konum izni kapalı",
-  "nearbyDeniedMessage": "iPhone Ayarlar → Erdek Rehberi → Konum → \"Uygulamayı Kullanırken\" seçip tekrar deneyin.",
+  "nearbyDeniedMessage": "Telefonun Ayarlar › Erdek Rehberi (Android'de Ayarlar › Uygulamalar › Erdek Rehberi) › Konum bölümünden \"Uygulamayı kullanırken\" seçip tekrar deneyin.",
   "nearbyUnavailableTitle": "Konum alınamadı",
   "nearbyUnavailableMessage": "Konum servislerinin açık olduğundan emin olup tekrar deneyin.",
   "nearbyPrivacyNote": "Konumunuz yalnızca bu telefonda, mesafe hesaplamak için kullanılır; kaydedilmez ve paylaşılmaz.",
@@ -1062,7 +1062,7 @@
   "eventReminderOn": "Hatırlatılacak",
   "eventMoreInfo": "Ayrıntılar ve bilet",
   "eventCalendarSaved": "Takviminize eklendi.",
-  "eventCalendarDenied": "Takvim izni verilmedi. iPhone Ayarlar › Erdek Rehberi › Takvimler'den açabilirsiniz.",
+  "eventCalendarDenied": "Takvim izni verilmedi. Telefonun Ayarlar › Erdek Rehberi › Takvimler bölümünden açabilirsiniz.",
   "eventReminderAdded": "Başlamadan 2 saat önce hatırlatılacak.",
   "eventReminderAddedAllDay": "O gün sabah 09:00'da hatırlatılacak.",
   "eventReminderTooLate": "Hatırlatma zamanı geçti.",

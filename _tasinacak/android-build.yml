@@ -1,0 +1,84 @@
+# Android APK (telefona doğrudan kurmak için) ve AAB (Google Play'e yüklemek için) üretir.
+# Elle çalıştırılır: Actions > android-build > Run workflow
+# İmza: ANDROID_KEYSTORE_BASE64 vb. sırlar varsa yükleme anahtarıyla, yoksa deneme
+# anahtarıyla imzalanır (deneme APK'sı telefona kurulur ama Play'e yüklenemez).
+name: android-build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - 'scripts/setup_android.sh'
+      - '.github/workflows/android-build.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter gen-l10n
+
+      - name: Uygulama ayarları (config/env.json, repoya girmez)
+        env:
+          APP_ENV: prod
+          DATA_BASE_URL: https://srcnckncom-hue.github.io/erdek-sehir-rehberi
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          WEATHER_USER_AGENT: ErdekSehirRehberi/1.0 github.com/srcnckncom-hue/erdek-sehir-rehberi
+        run: bash scripts/make_env.sh config/env.json
+
+      - name: Android projesini hazırla
+        run: bash scripts/setup_android.sh
+
+      - name: Yükleme anahtarı (varsa)
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+            echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+          else
+            echo "::notice::Yükleme anahtarı yok; deneme anahtarıyla imzalanacak."
+          fi
+
+      - name: Derle (APK + AAB)
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          BUILD_NUMBER=$((GITHUB_RUN_NUMBER + 100))
+          flutter build apk --release --dart-define-from-file=config/env.json --build-number=$BUILD_NUMBER
+          flutter build appbundle --release --dart-define-from-file=config/env.json --build-number=$BUILD_NUMBER
+          mkdir -p out
+          cp build/app/outputs/flutter-apk/app-release.apk out/ErdekRehberi.apk
+          cp build/app/outputs/bundle/release/app-release.aab out/ErdekRehberi.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: erdek-android
+          path: out/
+          retention-days: 30
