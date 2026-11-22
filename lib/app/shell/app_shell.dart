@@ -13,6 +13,8 @@ import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../features/prayer/data/prayer_repository.dart';
 import '../../features/prayer/notifications/prayer_notifications.dart';
 import '../../features/prayer/presentation/prayer_screen.dart';
+import '../../features/ramadan/ramadan.dart';
+import '../../features/reminders/reminder_scheduler.dart';
 import '../../features/transport/presentation/transport_screen.dart';
 import '../providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -85,6 +87,17 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
         data: ref.read(prayerTimesProvider).value?.data,
         settings: ref.read(prayerNotificationSettingsProvider),
         erdekNow: ref.read(clockProvider)(),
+      ),
+    );
+    final l10n = lookupAppLocalizations(ref.read(localeProvider));
+    unawaited(
+      syncIftarNotifications(
+        scheduler: ref.read(reminderSchedulerProvider),
+        data: ref.read(prayerTimesProvider).value?.data,
+        enabled: ref.read(iftarNotificationsProvider),
+        erdekNow: ref.read(clockProvider)(),
+        title: l10n.iftarNotifTitle,
+        body: l10n.iftarNotifBody,
       ),
     );
   }

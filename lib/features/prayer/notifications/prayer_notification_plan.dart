@@ -99,8 +99,9 @@ class PlannedPrayerNotification {
   final int minutesBefore;
 }
 
-/// iOS en fazla 64 bekleyen yerel bildirime izin verir; pay bırakıyoruz.
-const maxPendingPrayerNotifications = 60;
+/// iOS en fazla 64 bekleyen yerel bildirime izin verir; iftar (7) ve sefer
+/// hatırlatıcıları için pay bırakıyoruz.
+const maxPendingPrayerNotifications = 48;
 
 /// [erdekNow]'dan sonraki bildirimleri, en fazla [max] adet, sırayla planlar.
 /// Uygulama her açıldığında ve veri/ayar değiştiğinde yeniden hesaplanır.

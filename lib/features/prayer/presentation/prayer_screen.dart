@@ -12,6 +12,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ads/presentation/ad_slot.dart';
 import '../../home/presentation/home_texts.dart';
+import '../../ramadan/ramadan_screen.dart';
 import '../data/prayer_repository.dart';
 import '../domain/prayer_times.dart';
 import '../notifications/prayer_notification_plan.dart';
@@ -108,6 +109,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
 
       children.addAll([
         const SizedBox(height: AppSpacing.section),
+        const RamadanEntryCard(),
         _NotificationTile(settings: settings),
         const SizedBox(height: AppSpacing.section),
         ..._imsakiye(context, value.data, today),

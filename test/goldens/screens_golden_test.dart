@@ -15,6 +15,7 @@ import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/explore/presentation/history_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/place_detail_screen.dart';
 import 'package:erdek_rehberi/features/explore/presentation/places_screen.dart';
+import 'package:erdek_rehberi/features/ramadan/ramadan_screen.dart';
 import 'package:erdek_rehberi/features/settings/presentation/settings_screen.dart';
 import 'package:erdek_rehberi/features/weather/presentation/weather_screen.dart';
 
@@ -176,6 +177,16 @@ void main() {
           device: device,
           brightness: brightness,
           builder: () => testScope(child: const WeatherScreen()),
+        );
+      });
+
+      testWidgets('ramazan · ${themeName(brightness)} · ${device.name}', (tester) async {
+        await takeScreenshot(
+          tester,
+          fileName: '16_ramazan_${themeName(brightness)}_${device.name}',
+          device: device.withHeight(1400),
+          brightness: brightness,
+          builder: () => testScope(child: const RamadanScreen()),
         );
       });
 

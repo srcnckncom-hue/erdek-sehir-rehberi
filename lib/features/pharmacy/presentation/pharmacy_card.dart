@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../share/share_actions.dart';
 import '../domain/pharmacy.dart';
 
 /// Eczane listesindeki kart: ad, adres, telefon + Ara / Yol tarifi.
@@ -13,6 +14,7 @@ class PharmacyCard extends StatelessWidget {
     required this.onCall,
     required this.onDirections,
     this.note,
+    this.shareText,
   });
 
   final Pharmacy pharmacy;
@@ -21,6 +23,9 @@ class PharmacyCard extends StatelessWidget {
   final String? note;
   final VoidCallback onCall;
   final VoidCallback onDirections;
+
+  /// Verilirse yanında WhatsApp'ta paylaş düğmesi çıkar.
+  final String? shareText;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +124,10 @@ class PharmacyCard extends StatelessWidget {
                   onTap: onDirections,
                 ),
               ),
+              if (shareText case final text?) ...[
+                const SizedBox(width: AppSpacing.sm),
+                WhatsAppShareButton(key: const Key('pharmacy_share'), text: text),
+              ],
             ],
           ),
         ],

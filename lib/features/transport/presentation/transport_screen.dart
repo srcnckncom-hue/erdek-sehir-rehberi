@@ -10,10 +10,13 @@ import '../../../core/time/erdek_time.dart';
 import '../../../core/util/date_texts.dart';
 import '../../../core/util/launch_or_notify.dart';
 import '../../../core/util/launchers.dart';
+import '../../../core/system/system_bridge.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ads/presentation/ad_slot.dart';
+import '../../reminders/departure_reminders.dart';
 import '../../settings/presentation/report_issue.dart';
+import '../../share/share_actions.dart';
 import '../../home/presentation/home_texts.dart';
 import '../data/transport_repository.dart';
 import '../domain/transport.dart';
@@ -318,7 +321,17 @@ class _DepartureList extends StatelessWidget {
       }
       final isNext = next != null && next!.date == date && next!.departure.time == d.time;
       final isPast = date == today && d.time.minutesOfDay <= nowMinutes;
-      rows.add(_DepartureRow(departure: d, isNext: isNext, isPast: isPast, nextLabel: l10n.nextBadge));
+      rows.add(
+        _DepartureRow(
+          route: route,
+          date: date,
+          today: today,
+          departure: d,
+          isNext: isNext,
+          isPast: isPast,
+          nextLabel: l10n.nextBadge,
+        ),
+      );
     }
 
     return Container(
@@ -334,68 +347,187 @@ class _DepartureList extends StatelessWidget {
   }
 }
 
-class _DepartureRow extends StatelessWidget {
+class _DepartureRow extends ConsumerWidget {
   const _DepartureRow({
+    required this.route,
+    required this.date,
+    required this.today,
     required this.departure,
     required this.isNext,
     required this.isPast,
     required this.nextLabel,
   });
 
+  final TransportRoute route;
+  final CalendarDate date;
+  final CalendarDate today;
   final Departure departure;
   final bool isNext;
   final bool isPast;
   final String nextLabel;
 
+  String _shareText(AppLocalizations l10n) => ShareTexts.departure(
+        l10n,
+        routeTitle: l10n.fromTo(route.from, route.to),
+        dayLabel: date == today || date == today.addDays(1)
+            ? HomeTexts.relativeDay(l10n, date, today)
+            : DateTexts.weekdayDayMonth(l10n, date),
+        time: departure.time.toString(),
+        arrival: departure.arrival?.toString(),
+        note: departure.note,
+      );
+
+  Future<void> _toggleReminder(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final result = await ref.read(departureRemindersProvider.notifier).toggle(
+          routeId: route.id,
+          date: date,
+          time: departure.time,
+          title: l10n.fromTo(route.from, route.to),
+          body: l10n.reminderNotifBody(departure.time.toString(), DepartureReminder.minutesBefore),
+        );
+    final message = switch (result) {
+      ReminderResult.added => l10n.reminderAdded(DepartureReminder.minutesBefore),
+      ReminderResult.removed => l10n.reminderRemoved,
+      ReminderResult.tooLate => l10n.reminderTooLate(DepartureReminder.minutesBefore),
+      ReminderResult.denied => l10n.notificationPermissionDenied,
+    };
+    messenger
+      ?..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  void _openActions(BuildContext context, WidgetRef ref, {required bool reminderSet}) {
+    final l10n = AppLocalizations.of(context);
+    final p = context.palette;
+    final text = _shareText(l10n);
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      backgroundColor: p.background,
+      builder: (sheetContext) {
+        void run(Future<void> Function() action) {
+          Navigator.of(sheetContext).pop();
+          action();
+        }
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.md),
+                child: Text(
+                  '${l10n.fromTo(route.from, route.to)} · ${departure.time}',
+                  style: AppTypography.label.copyWith(color: p.textHeading, fontWeight: FontWeight.w600),
+                ),
+              ),
+              if (!isPast)
+                ListTile(
+                  key: const Key('departure_reminder_action'),
+                  leading: AppIcon(reminderSet ? AppIcons.bellFilled : AppIcons.bell, size: 24, color: p.iconOrange),
+                  title: Text(
+                    reminderSet
+                        ? l10n.reminderRemoveAction
+                        : l10n.reminderAction(DepartureReminder.minutesBefore),
+                  ),
+                  onTap: () => run(() => _toggleReminder(context, ref)),
+                ),
+              ListTile(
+                key: const Key('departure_whatsapp_action'),
+                leading: AppIcon(AppIcons.whatsapp, size: 24, color: const Color(0xFF128C4B)),
+                title: Text(l10n.shareWhatsApp),
+                onTap: () => run(() => shareToWhatsApp(ref, text)),
+              ),
+              ListTile(
+                leading: AppIcon(AppIcons.share, size: 24, color: p.iconBlue),
+                title: Text(l10n.shareOther),
+                onTap: () => run(() => ref.read(systemBridgeProvider).share(text)),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     final color = isNext ? p.primary : (isPast ? p.textSecondary : p.textBody);
-    return Container(
-      color: isNext ? p.primarySoft : null,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 64,
-            child: Text(
-              departure.time.toString(),
-              style: AppTypography.label.copyWith(
-                color: color,
-                fontWeight: isNext ? FontWeight.w700 : FontWeight.w600,
-                decoration: isPast ? TextDecoration.lineThrough : null,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (departure.arrival != null)
-                  Text(
-                    l10n.arrivalAt(departure.arrival.toString()),
-                    style: AppTypography.tileLabel.copyWith(color: isPast ? p.textSecondary : p.textBody),
+    final reminderSet = ref
+        .watch(departureRemindersProvider)
+        .any((r) => r.matches(route.id, date, departure.time));
+
+    return Material(
+      color: isNext ? p.primarySoft : Colors.transparent,
+      child: InkWell(
+        onTap: () => _openActions(context, ref, reminderSet: reminderSet),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xs, AppSpacing.xs, AppSpacing.xs),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 64,
+                child: Text(
+                  departure.time.toString(),
+                  style: AppTypography.label.copyWith(
+                    color: color,
+                    fontWeight: isNext ? FontWeight.w700 : FontWeight.w600,
+                    decoration: isPast ? TextDecoration.lineThrough : null,
+                    fontFeatures: const [FontFeature.tabularFigures()],
                   ),
-                if (departure.note != null)
-                  Text(
-                    departure.note!,
-                    style: AppTypography.caption.copyWith(color: p.textSecondary),
-                  ),
-              ],
-            ),
-          ),
-          if (isNext)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
-              decoration: BoxDecoration(color: p.primary, borderRadius: AppRadius.pillAll),
-              child: Text(
-                nextLabel,
-                style: AppTypography.tabLabel.copyWith(color: p.onPrimary, fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-        ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (departure.arrival != null)
+                      Text(
+                        l10n.arrivalAt(departure.arrival.toString()),
+                        style: AppTypography.tileLabel.copyWith(color: isPast ? p.textSecondary : p.textBody),
+                      ),
+                    if (departure.note != null)
+                      Text(
+                        departure.note!,
+                        style: AppTypography.caption.copyWith(color: p.textSecondary),
+                      ),
+                  ],
+                ),
+              ),
+              if (isNext)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+                  decoration: BoxDecoration(color: p.primary, borderRadius: AppRadius.pillAll),
+                  child: Text(
+                    nextLabel,
+                    style: AppTypography.tabLabel.copyWith(color: p.onPrimary, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              if (isPast)
+                const SizedBox(width: AppSpacing.minTouchTarget, height: AppSpacing.minTouchTarget)
+              else
+                IconButton(
+                  key: Key('departure_bell_${departure.time}'),
+                  tooltip: reminderSet
+                      ? l10n.reminderRemoveAction
+                      : l10n.reminderAction(DepartureReminder.minutesBefore),
+                  onPressed: () => _toggleReminder(context, ref),
+                  icon: AppIcon(
+                    reminderSet ? AppIcons.bellFilled : AppIcons.bell,
+                    size: 22,
+                    color: reminderSet ? p.iconOrange : p.textSecondary,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

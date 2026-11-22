@@ -10,6 +10,9 @@ import '../../features/explore/presentation/history_screen.dart';
 import '../../features/explore/presentation/places_screen.dart';
 import '../../features/businesses/presentation/businesses_screen.dart';
 import '../../features/social/social_links.dart';
+import '../../features/ramadan/ramadan.dart';
+import '../../features/ramadan/ramadan_screen.dart';
+import '../../core/time/calendar_date.dart';
 import '../../features/weather/presentation/weather_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../core/system/system_bridge.dart';
@@ -75,6 +78,16 @@ class AppDrawer extends ConsumerWidget {
               onTap: () => _push(context, const BusinessesScreen()),
             ),
             const SizedBox(height: AppSpacing.sm),
+            if (showRamadanEntry(CalendarDate.fromDateTime(ref.watch(clockProvider)()))) ...[
+              _NavRow(
+                key: const Key('drawer_ramadan'),
+                icon: AppIcons.ramadan,
+                color: p.iconPurple,
+                title: l10n.ramadanTitle,
+                onTap: () => _push(context, const RamadanScreen()),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
             _NavRow(
               icon: AppIcons.forecast,
               color: p.iconBlue,

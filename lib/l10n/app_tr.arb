@@ -697,5 +697,156 @@
         "type": "String"
       }
     }
+  },
+  "shareWhatsApp": "WhatsApp'ta paylaş",
+  "shareOther": "Diğer uygulamalarla paylaş",
+  "sharePharmacyTitle": "{day} nöbetçi eczane: {name}",
+  "@sharePharmacyTitle": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "sharePhoneLine": "Tel: {phone}",
+  "@sharePhoneLine": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "shareMapLine": "Harita: {url}",
+  "@shareMapLine": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "shareDepartureLine": "{day}, saat {time}",
+  "@shareDepartureLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderNotifBody": "{time} seferine {minutes} dakika kaldı.",
+  "@reminderNotifBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderAdded": "Hatırlatıcı kuruldu: kalkıştan {minutes} dakika önce bildirim gelecek.",
+  "@reminderAdded": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderRemoved": "Hatırlatıcı kaldırıldı.",
+  "reminderTooLate": "Kalkışa {minutes} dakikadan az kaldı; hatırlatıcı kurulamadı.",
+  "@reminderTooLate": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderAction": "Kalkıştan {minutes} dk önce hatırlat",
+  "@reminderAction": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderRemoveAction": "Hatırlatıcıyı kaldır",
+  "ramadanTitle": "Ramazan",
+  "ramadanSubtitle": "Hicri {year} · Erdek",
+  "@ramadanSubtitle": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "ramadanOver": "Ramazan sona erdi. Hayırlı bayramlar!",
+  "ramadanDaysLeft": "Ramazan'a {days} gün kaldı",
+  "@ramadanDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "ramadanFirstSahur": "İlk sahur: {date} gecesi",
+  "@ramadanFirstSahur": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ramadanDayN": "Ramazan'ın {day}. günü",
+  "@ramadanDayN": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "ramadanImsak": "İmsak",
+  "ramadanIftar": "İftar",
+  "ramadanToSahur": "Sahurun bitmesine",
+  "ramadanToIftar": "İftara",
+  "ramadanEid": "Ramazan Bayramı: {date}",
+  "@ramadanEid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ramadanTimesPending": "İmsak ve iftar saatleri, Ramazan yaklaştıkça otomatik eklenir.",
+  "ramadanDatesTitle": "Önemli günler",
+  "ramadanFirstSahurLabel": "İlk sahur",
+  "ramadanNightOf": "{date} gecesi",
+  "@ramadanNightOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ramadanFirstFastLabel": "İlk oruç",
+  "ramadanKadirLabel": "Kadir Gecesi",
+  "ramadanLastFastLabel": "Son oruç (arife)",
+  "ramadanEidLabel": "Ramazan Bayramı",
+  "ramadanIftarNotif": "İftar bildirimi",
+  "ramadanIftarNotifSubtitle": "Ramazan boyunca her gün akşam ezanında",
+  "ramadanCalendarTitle": "Ramazan imsakiyesi",
+  "ramadanDateColumn": "Tarih",
+  "iftarNotifTitle": "İftar vakti",
+  "iftarNotifBody": "Hayırlı iftarlar! Akşam ezanı {time}.",
+  "@iftarNotifBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   }
 }

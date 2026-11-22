@@ -69,7 +69,7 @@ void main() {
     expect(plan.single.fireTime, const ClockTime(23, 35));
   });
 
-  test('iOS sınırı: en fazla 60 bildirim, kimlikler tekil', () {
+  test('iOS sınırı: en fazla maxPendingPrayerNotifications bildirim, kimlikler tekil', () {
     final plan = planPrayerNotifications(
       data: data,
       settings: const PrayerNotificationSettings(enabled: true),

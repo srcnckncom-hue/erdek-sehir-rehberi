@@ -17,6 +17,7 @@ import 'core/system/system_bridge.dart';
 import 'core/time/erdek_time.dart';
 import 'features/prayer/notifications/prayer_notifications.dart';
 import 'features/push/push_service.dart';
+import 'features/reminders/reminder_scheduler.dart';
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
@@ -62,6 +63,9 @@ Future<void> main() async {
         prayerNotificationSchedulerProvider.overrideWithValue(
           LocalPrayerNotificationScheduler(notifications, l10n),
         ),
+        // Sefer hatırlatıcıları ve iftar bildirimleri (aynı bildirim eklentisi).
+        reminderSchedulerProvider.overrideWithValue(LocalReminderScheduler(notifications)),
+        reminderStoreProvider.overrideWithValue(HiveReminderStore(settingsBox)),
       ],
       child: const ErdekApp(),
     ),

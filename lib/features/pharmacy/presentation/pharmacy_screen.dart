@@ -12,6 +12,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../ads/presentation/ad_slot.dart';
 import '../../settings/presentation/report_issue.dart';
+import '../../share/share_actions.dart';
 import '../data/pharmacy_repository.dart';
 import '../domain/duty_schedule.dart';
 import '../domain/pharmacy.dart';
@@ -93,7 +94,14 @@ class PharmacyScreen extends ConsumerWidget {
       } else {
         for (var i = 0; i < onDuty.length; i++) {
           if (i > 0) children.add(const SizedBox(height: AppSpacing.gap));
-          children.add(_card(context, onDuty[i], data.noteFor(dutyDate, onDuty[i].id)));
+          children.add(
+            _card(
+              context,
+              onDuty[i],
+              data.noteFor(dutyDate, onDuty[i].id),
+              dayLabel: DateTexts.weekdayDayMonth(l10n, dutyDate),
+            ),
+          );
         }
       }
 
@@ -157,9 +165,15 @@ class PharmacyScreen extends ConsumerWidget {
     );
   }
 
-  Widget _card(BuildContext context, Pharmacy pharmacy, String? note) => PharmacyCard(
+  Widget _card(BuildContext context, Pharmacy pharmacy, String? note, {required String dayLabel}) => PharmacyCard(
         pharmacy: pharmacy,
         note: note,
+        shareText: ShareTexts.pharmacy(
+          AppLocalizations.of(context),
+          pharmacy: pharmacy,
+          dayLabel: dayLabel,
+          note: note,
+        ),
         onCall: () => launchOrNotify(context, () => Launchers.call(pharmacy.phone)),
         onDirections: () => launchOrNotify(
           context,

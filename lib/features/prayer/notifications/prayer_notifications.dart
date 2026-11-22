@@ -5,6 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/time/erdek_time.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../reminders/reminder_scheduler.dart';
 import '../domain/prayer_times.dart';
 import 'prayer_notification_plan.dart';
 
@@ -97,7 +98,11 @@ class LocalPrayerNotificationScheduler implements PrayerNotificationScheduler {
 
   @override
   Future<void> reschedule(List<PlannedPrayerNotification> plan) async {
-    await plugin.cancelAll();
+    // Yalnızca vakit bildirimlerini sil (iftar ve sefer hatırlatıcıları kalsın).
+    final pending = await plugin.pendingNotificationRequests();
+    for (final request in pending) {
+      if (request.id < NotificationIds.prayerMax) await plugin.cancel(id: request.id);
+    }
     const details = NotificationDetails(
       iOS: DarwinNotificationDetails(presentAlert: true, presentSound: true),
     );
