@@ -7,6 +7,7 @@ import 'content/businesses_editor.dart';
 import 'content/contacts_editor.dart';
 import 'content/events_editor.dart';
 import 'content/history_editor.dart';
+import 'content/markets_editor.dart';
 import 'content/outages_editor.dart';
 import 'content/pharmacy_editor.dart';
 import 'content/places_editor.dart';
@@ -48,6 +49,7 @@ final _groups = <_Group>[
   _Group('Şehir Rehberi', [
     _Section(Icons.local_pharmacy_outlined, 'Nöbetçi Eczane', (api) => PharmacyEditor(api: api)),
     _Section(Icons.bolt_outlined, 'Kesintiler', (api) => OutagesEditor(api: api)),
+    _Section(Icons.storefront_outlined, 'Semt Pazarları', (api) => MarketsEditor(api: api)),
     _Section(Icons.phone_outlined, 'Telefonlar', (api) => ContactsEditor(api: api)),
     _Section(Icons.directions_boat_outlined, 'Ulaşım', (api) => TransportEditor(api: api)),
   ]),

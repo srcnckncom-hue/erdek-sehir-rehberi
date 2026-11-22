@@ -23,6 +23,7 @@ import '../../emergency/emergency.dart';
 import '../../emergency/emergency_screen.dart';
 import '../../events/events.dart';
 import '../../events/events_screen.dart';
+import '../../markets/markets_screen.dart';
 import '../../outages/outages_screen.dart';
 import '../../explore/presentation/history_screen.dart';
 import '../../explore/presentation/places_screen.dart';
@@ -107,6 +108,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.nearby: l10n.nearbyTitle,
         SearchPage.favorites: l10n.favoritesTitle,
         SearchPage.outages: l10n.outagesTitle,
+        SearchPage.markets: l10n.marketsTitle,
         SearchPage.events: l10n.eventsTitle,
         SearchPage.ramadan: l10n.ramadanTitle,
         SearchPage.businesses: l10n.businessesTitle,
@@ -129,6 +131,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.nearby => AppIcons.nearby,
         SearchPage.favorites => AppIcons.favoriteOn,
         SearchPage.outages => AppIcons.outage,
+        SearchPage.markets => AppIcons.market,
         SearchPage.events => AppIcons.event,
         SearchPage.ramadan => AppIcons.ramadan,
         SearchPage.businesses => AppIcons.businesses,
@@ -164,6 +167,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         _push(openFavorites);
       case SearchPage.outages:
         _push(openOutages);
+      case SearchPage.markets:
+        _push(openMarkets);
       case SearchPage.events:
         _push(openEvents);
       case SearchPage.ramadan:

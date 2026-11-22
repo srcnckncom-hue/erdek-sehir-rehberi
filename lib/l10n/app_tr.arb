@@ -1208,5 +1208,27 @@
   "swimFactorRain": "Yağış var",
   "swimFactorStorm": "Gök gürültülü",
   "swimNote": "Hava, deniz suyu, dalga ve rüzgâra göre kabaca hesaplanır; plajdaki uyarı bayraklarına ve cankurtarana uyun.",
-  "swimNoteNoSea": "Deniz suyu bilgisi henüz yok; puan hava ve rüzgâra göre. Plajdaki uyarılara uyun."
+  "swimNoteNoSea": "Deniz suyu bilgisi henüz yok; puan hava ve rüzgâra göre. Plajdaki uyarılara uyun.",
+  "marketsTitle": "Semt Pazarları",
+  "marketsSubtitle": "Hangi gün nerede pazar kuruluyor",
+  "marketsToday": "Bugün pazar var: {names}",
+  "@marketsToday": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "marketsNoneToday": "Bugün kurulan pazar yok.",
+  "marketsEmptyTitle": "Pazar bilgisi henüz eklenmedi",
+  "marketsEmptyMessage": "Semt pazarları eklendikçe burada gün gün görünür.",
+  "marketsSeasonal": "Yalnızca {months}",
+  "@marketsSeasonal": {
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "marketsAnnouncementsLink": "Pazar duyurularına bak"
 }

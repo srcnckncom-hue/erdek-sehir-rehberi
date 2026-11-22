@@ -19,6 +19,7 @@ import '../../features/nearby/nearby_screen.dart';
 import '../../features/emergency/emergency_screen.dart';
 import '../../features/beaches/beaches_screen.dart';
 import '../../features/events/events_screen.dart';
+import '../../features/markets/markets_screen.dart';
 import '../../features/outages/outages_screen.dart';
 import '../../features/favorites/favorites_screen.dart';
 import '../../l10n/app_localizations.dart';
@@ -77,6 +78,14 @@ class AppDrawer extends ConsumerWidget {
               color: p.iconCrimson,
               title: l10n.outagesTitle,
               onTap: () => _push(context, const OutagesScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_markets'),
+              icon: AppIcons.market,
+              color: p.iconPurple,
+              title: l10n.marketsTitle,
+              onTap: () => _push(context, const MarketsScreen()),
             ),
             const SizedBox(height: AppSpacing.sm),
             _NavRow(

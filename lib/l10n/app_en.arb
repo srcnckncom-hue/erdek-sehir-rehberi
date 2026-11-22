@@ -464,5 +464,13 @@
   "swimFactorRain": "Rain",
   "swimFactorStorm": "Thunderstorms",
   "swimNote": "A rough estimate from air, water, waves and wind; always follow beach flags and lifeguards.",
-  "swimNoteNoSea": "No sea data yet; based on air and wind only. Follow beach warnings."
+  "swimNoteNoSea": "No sea data yet; based on air and wind only. Follow beach warnings.",
+  "marketsTitle": "Street markets",
+  "marketsSubtitle": "Which day, where",
+  "marketsToday": "Market today: {names}",
+  "marketsNoneToday": "No market today.",
+  "marketsEmptyTitle": "No market info yet",
+  "marketsEmptyMessage": "Street markets will appear here day by day once added.",
+  "marketsSeasonal": "Only {months}",
+  "marketsAnnouncementsLink": "See market announcements"
 }

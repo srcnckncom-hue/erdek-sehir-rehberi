@@ -236,3 +236,8 @@
 - Plajlar = gezilecek yerlerde türü "plaj" olanlar. Yeni alan `amenities` (mavi_bayrak, cankurtaran, dus, wc, sezlong, otopark, engelli, sig, kum, cakil, restoran); panel → Gezilecek Yerler formunda çoklu seçim (form_kit: FieldKind.multiChoice).
 - "Bugün denize girilir mi?" puanı (0–100): su sıcaklığı, hava (anlık/bugünkü en yüksek), dalga (Copernicus), rüzgâr, yağış/fırtına. ≥75 Harika, ≥55 Girilir, ≥35 İdare eder, altı Uygun değil. Kabaca; plaj uyarılarına uyulması notu.
 - Görünür: Plajlar sayfası (menü, arama "plaj/yüzme/mavi bayrak", Hava › Deniz sekmesi), plaj ayrıntı sayfası.
+
+## Semt pazarları (r32)
+- Yeni içerik belgesi `markets` (data/markets.json, panel → Şehir Rehberi › Semt Pazarları, SQL: 0011_markets.sql).
+- Alanlar: ad, gün (1 Pzt … 7 Paz), başlangıç/bitiş saati (bitiş yoksa 14:00), yer, konum, aylar (mevsimlik pazar; boşsa bütün yıl), not.
+- Uygulama: Semt Pazarları sayfası (ana sayfadaki Pazar kutucuğu, menü, arama), bugünden başlayarak gün gün; kurulduğu gün ana sayfada "Bugün pazar var". Pazar duyuruları sayfanın altından.

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "isSample": false,
+  "updatedAt": "2026-11-21T12:00:00+03:00",
+  "source": "test",
+  "data": {
+    "markets": [
+      {
+        "id": "merkez",
+        "name": "Merkez Pazarı",
+        "weekday": 6,
+        "startTime": "08:00",
+        "endTime": "20:00",
+        "place": "Belediye Pazar Yeri",
+        "latitude": 40.3978,
+        "longitude": 27.7921
+      },
+      {
+        "id": "ocaklar",
+        "name": "Ocaklar Pazarı",
+        "weekday": 2,
+        "startTime": "08:00",
+        "endTime": "13:00",
+        "place": "Ocaklar"
+      },
+      {
+        "id": "yaz",
+        "name": "Yaz Pazarı",
+        "weekday": 3,
+        "months": [
+          6,
+          7,
+          8
+        ],
+        "place": "Sahil"
+      }
+    ]
+  }
+}

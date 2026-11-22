@@ -20,6 +20,7 @@ import '../../announcements/domain/announcement.dart';
 import '../../appearance/appearance.dart';
 import '../../emergency/emergency_screen.dart';
 import '../../events/events_screen.dart';
+import '../../markets/markets_screen.dart';
 import '../../outages/outages_screen.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
@@ -119,6 +120,9 @@ class HomeScreen extends ConsumerWidget {
             // Süren / yaklaşan kesinti (yoksa görünmez)
             HomeOutageBanner(
               onTap: () => openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)),
+            ),
+            HomeMarketBanner(
+              onTap: () => openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)),
             ),
             // Hikâyeler (panelden; yayında hikâye yoksa görünmez)
             const StoriesRow(),
@@ -386,7 +390,7 @@ class HomeScreen extends ConsumerWidget {
         icon: AppIcons.market,
         label: l10n.actionMarketDays,
         iconColor: p.iconPurple,
-        onTap: () => _openAnnouncements(ref, AnnouncementCategory.market),
+        onTap: () => openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)),
       ),
       QuickActionTile(
         icon: AppIcons.event,

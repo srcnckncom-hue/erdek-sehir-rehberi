@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Semt pazarları",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isSample",
+    "updatedAt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isSample": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?([+-]\\d{2}:\\d{2}|Z)$"
+    },
+    "source": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "markets"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "markets": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "weekday"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "weekday": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 7
+              },
+              "startTime": {
+                "type": "string",
+                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+              },
+              "endTime": {
+                "type": "string",
+                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+              },
+              "place": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "latitude": {
+                "type": "number",
+                "minimum": 40,
+                "maximum": 41
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": 27,
+                "maximum": 28.5
+              },
+              "months": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                }
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 200
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
