@@ -74,11 +74,8 @@ class _HomeLayoutScreenState extends ConsumerState<HomeLayoutScreen> {
               ),
               buildDefaultDragHandles: false,
               itemCount: _order.length,
-              onReorder: (from, to) {
-                setState(() {
-                  final t = _order.removeAt(from);
-                  _order.insert(to > from ? to - 1 : to, t);
-                });
+              onReorderItem: (from, to) {
+                setState(() => _order.insert(to, _order.removeAt(from)));
                 _save();
               },
               itemBuilder: (context, i) {
