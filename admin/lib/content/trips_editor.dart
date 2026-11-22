@@ -17,23 +17,44 @@ const _types = {
 
 const _difficulties = {'': '—', 'kolay': 'Kolay', 'orta': 'Orta', 'zor': 'Zor'};
 
-/// "Ad | 40.39, 27.79 | not" satırını durağa çevirir. Koordinat ve not isteğe bağlı.
-/// Hatalıysa hata metni döner.
-(Map<String, dynamic>?, String?) parseStopLine(String line) {
-  final parts = line.split('|').map((p) => p.trim()).toList();
-  final name = parts.first;
-  if (name.isEmpty) return (null, '"$line": durak adı boş');
-  final stop = <String, dynamic>{'name': name};
-  if (parts.length > 1 && parts[1].isNotEmpty) {
-    final ll = parts[1].split(',').map((x) => double.tryParse(x.trim())).toList();
-    if (ll.length != 2 || ll.contains(null) || ll[0]! < 40 || ll[0]! > 41 || ll[1]! < 27 || ll[1]! > 28.5) {
-      return (null, '"$name": koordinat "enlem, boylam" olmalı (ör. 40.3897, 27.8902)');
-    }
-    stop['latitude'] = ll[0];
-    stop['longitude'] = ll[1];
+/// Bir metindeki "enlem, boylam" çiftini bulur. Esnek: "40.39, 27.79",
+/// "40,39 27,79" (virgüllü ondalık), "40.39 27.79", Google Haritalar bağlantısı
+/// (…@40.39,27.79… ya da ?q=40.39,27.79). Ters yazılmışsa (27.., 40..) düzeltir.
+/// Bulunamazsa ya da Erdek çevresi dışındaysa null.
+({double lat, double lng, Match match})? findLatLng(String text) {
+  final re = RegExp(r'(\d{1,2}[.,]\d+)\s*[,;/\s]\s*(\d{1,2}[.,]\d+)');
+  for (final m in re.allMatches(text)) {
+    double? n(String x) => double.tryParse(x.replaceAll(',', '.'));
+    var lat = n(m.group(1)!), lng = n(m.group(2)!);
+    if (lat == null || lng == null) continue;
+    if (lat < 30 && lng > 30) (lat, lng) = (lng, lat);
+    if (lat >= 39.5 && lat <= 41.5 && lng >= 26.5 && lng <= 29.5) return (lat: lat, lng: lng, match: m);
   }
-  if (parts.length > 2 && parts.sublist(2).join(' | ').isNotEmpty) stop['note'] = parts.sublist(2).join(' | ');
-  return (stop, null);
+  return null;
+}
+
+/// "Ad | 40.39, 27.79 | not" satırını durağa çevirir. Koordinat ve not isteğe bağlı;
+/// koordinat satırın herhangi bir yerinde, "|" olmadan da yazılabilir.
+/// İkinci değer: koordinat gibi görünen ama okunamayan bir şey varsa uyarı.
+(Map<String, dynamic>?, String?) parseStopLine(String line) {
+  final ll = findLatLng(line);
+  final rest = ll == null ? line : line.replaceRange(ll.match.start, ll.match.end, ' | ');
+  final parts = rest
+      .split('|')
+      .map((p) => p.trim().replaceAll(RegExp(r'^[,;:\-–\s]+|[,;:\-–\s]+$'), ''))
+      .where((p) => p.isNotEmpty && !p.contains('http') && !p.contains('google.'))
+      .toList();
+  if (parts.isEmpty) return (null, '"$line": durak adı boş');
+  final stop = <String, dynamic>{'name': parts.first};
+  if (ll != null) {
+    stop['latitude'] = double.parse(ll.lat.toStringAsFixed(6));
+    stop['longitude'] = double.parse(ll.lng.toStringAsFixed(6));
+  }
+  if (parts.length > 1) stop['note'] = parts.sublist(1).join(' | ');
+  final warning = ll == null && RegExp(r'\d+[.,]\d{3,}').hasMatch(line)
+      ? '"${parts.first}": koordinat okunamadı (ör. 40.3897, 27.8902). Durak koordinatsız kaydedildi.'
+      : null;
+  return (stop, warning);
 }
 
 String _stopLine(Map<String, dynamic> s) => [
@@ -109,7 +130,8 @@ class _BodyState extends State<_Body> {
         FieldSpec('stops', 'Duraklar (her satıra bir durak, sırayla)', kind: FieldKind.multiline,
             initial: (t?['stops'] as List<dynamic>?)?.cast<Map<String, dynamic>>().map(_stopLine).join('\n'),
             hint: 'Biçim: Ad | enlem, boylam | not   — koordinat ve not isteğe bağlı.\n'
-                'Ör: Kyzikos Antik Kenti | 40.3897, 27.8902 | Hadrian Tapınağı kalıntıları'),
+                'Ör: Kyzikos Antik Kenti | 40.3897, 27.8902 | Hadrian Tapınağı kalıntıları\n'
+                'Koordinatı Google Haritalar\'dan kopyalayıp adın yanına yapıştırmanız yeterli.'),
         FieldSpec('path', 'Rota çizgisi (isteğe bağlı, her satıra "enlem, boylam")', kind: FieldKind.multiline,
             initial: (t?['path'] as List<dynamic>?)?.map((p) => (p as List<dynamic>).join(', ')).join('\n'),
             hint: 'Boşsa duraklar sırayla birleştirilir. Patika gerçek izini çizmek için noktaları buraya yapıştırın.'),
@@ -118,23 +140,21 @@ class _BodyState extends State<_Body> {
       ],
     );
     if (v == null || !mounted) return;
+    final warnings = <String>[];
     final stops = <Map<String, dynamic>>[];
     for (final line in splitLines(v['stops']!)) {
-      final (stop, error) = parseStopLine(line);
-      if (error != null) {
-        _toast(error);
-        return;
-      }
-      stops.add(stop!);
+      final (stop, warning) = parseStopLine(line);
+      if (warning != null) warnings.add(warning);
+      if (stop != null) stops.add(stop);
     }
     final path = <List<double>>[];
     for (final line in splitLines(v['path']!)) {
-      final ll = line.split(',').map((x) => double.tryParse(x.trim())).toList();
-      if (ll.length != 2 || ll.contains(null)) {
-        _toast('Rota çizgisinde hatalı satır: "$line" (enlem, boylam olmalı)');
-        return;
+      final ll = findLatLng(line);
+      if (ll == null) {
+        warnings.add('Rota çizgisinde okunamayan satır atlandı: "$line"');
+      } else {
+        path.add([ll.lat, ll.lng]);
       }
-      path.add([ll[0]!, ll[1]!]);
     }
     String? opt(String key) => v[key]!.isEmpty ? null : v[key];
     final paragraphs = splitParagraphs(v['paragraphs']!);
@@ -156,6 +176,7 @@ class _BodyState extends State<_Body> {
       if (path.length > 1) 'path': path,
       if ((t?['photos'] as List<dynamic>?)?.isNotEmpty ?? false) 'photos': t!['photos'],
     };
+    if (warnings.isNotEmpty) _toast(warnings.join('\n'));
     _apply(() {
       if (t == null) {
         _trips.add(item);
