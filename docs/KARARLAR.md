@@ -268,3 +268,9 @@
 
 - Hatlara isteğe bağlı `stops` (durak adları, sırasıyla) eklendi. Ulaşım ekranında durak listesi (harita düğmesi kullanıcı isteğiyle kaldırıldı). Koordinat tutulmaz; durak kodları (ERD5 vb.) yazılmaz.
 - Şehir içi Otogar ⇄ Kamplar (Ay Kamping) hattı gerçek tarifeyle eklendi; örnek şehir içi hatlar kaldırıldı.
+
+## r38 — Yaşlı dostu düzen
+
+- Şehir içi hat seçimi kaydırmalı satır yerine iki sütunlu, alt alta büyük kartlar ("A ›" / "B").
+- Ana sayfada hikâyeler kaldırıldı (StoriesRow kodda duruyor, kullanılmıyor).
+- Hızlı işlemler: Otobüs Saatleri tek geniş satır (şehir içi açılır), altında Nöbetçi Eczane ve Feribot Saatleri yan yana.

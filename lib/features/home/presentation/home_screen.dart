@@ -27,7 +27,6 @@ import '../../outages/outages_screen.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
 import '../../map/map_screen.dart';
-import '../../stories/stories_row.dart';
 import '../../nearby/nearby_screen.dart';
 import '../../contacts/presentation/directory_selection.dart';
 import '../../explore/data/explore_repository.dart';
@@ -137,14 +136,15 @@ class HomeScreen extends ConsumerWidget {
               onOutages: () => openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)),
               onAtaturk: () => openAtaturk(context),
             ),
-            // Hikâyeler (panelden; yayında hikâye yoksa görünmez)
-            const StoriesRow(),
             SectionHeader(
               title: l10n.quickActionsTitle,
               actionLabel: l10n.seeAll,
               onAction: () => _showAllServices(context, ref),
             ),
             const SizedBox(height: AppSpacing.md),
+            // Otobüs saatleri tek geniş satır; altında eczane ve feribot yan yana.
+            QuickActionGrid(columns: 1, children: [_busChip(context, ref)]),
+            const SizedBox(height: AppSpacing.gap),
             QuickActionGrid(columns: 2, children: _chips(context, ref)),
             const SizedBox(height: AppSpacing.gap),
             QuickActionGrid(columns: 4, children: _tiles(context, ref)),
@@ -358,6 +358,14 @@ class HomeScreen extends ConsumerWidget {
     onOpenTab(AppTab.directory);
   }
 
+  QuickActionChip _busChip(BuildContext context, WidgetRef ref) => QuickActionChip(
+        key: const Key('quick_bus'),
+        icon: AppIcons.cityBus,
+        label: AppLocalizations.of(context).actionBusTimes,
+        tone: context.palette.mint,
+        onTap: () => _openTransport(ref, TransportMode.city),
+      );
+
   List<Widget> _chips(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
@@ -452,6 +460,14 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 SectionHeader(title: l10n.allServicesTitle),
                 const SizedBox(height: AppSpacing.md),
+                QuickActionGrid(
+                  columns: 1,
+                  children: [
+                    for (final w in [_busChip(context, ref)])
+                      QuickActionChip(icon: w.icon, label: w.label, tone: w.tone, onTap: () => close(w.onTap ?? () {})),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.gap),
                 QuickActionGrid(
                   columns: 2,
                   children: [

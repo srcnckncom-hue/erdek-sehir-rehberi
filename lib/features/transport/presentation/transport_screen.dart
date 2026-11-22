@@ -80,13 +80,17 @@ class TransportScreen extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.md),
-        PillChoiceRow(
-          semanticsLabel: l10n.selectRoute,
-          items: [
-            for (final r in routes)
-              PillChoice(label: r.title, selected: r.id == route?.id, onTap: () => notifier.selectRoute(r.id)),
-          ],
-        ),
+        // Şehir içi hatlar çok: kaydırmalı satır yerine alt alta iki sütun (büyük, okunaklı).
+        if (selection.mode == TransportMode.city)
+          _RouteGrid(routes: routes, selectedId: route?.id, onSelect: notifier.selectRoute)
+        else
+          PillChoiceRow(
+            semanticsLabel: l10n.selectRoute,
+            items: [
+              for (final r in routes)
+                PillChoice(label: r.title, selected: r.id == route?.id, onTap: () => notifier.selectRoute(r.id)),
+            ],
+          ),
         const SizedBox(height: AppSpacing.lg),
       ]);
 
@@ -268,6 +272,71 @@ class _NextDepartureCard extends StatelessWidget {
           ),
       ],
       footnote: route.operatorName,
+    );
+  }
+}
+
+// ─── Şehir içi hat seçimi ────────────────────────────────────────────────
+
+class _RouteGrid extends StatelessWidget {
+  const _RouteGrid({required this.routes, required this.selectedId, required this.onSelect});
+
+  final List<TransportRoute> routes;
+  final String? selectedId;
+  final void Function(String id) onSelect;
+
+  /// "A → B" başlığını iki satıra böler: ("A ›", "B"). Ok yoksa başlık tek satır.
+  static (String, String?) lines(String title) {
+    final i = title.indexOf('→');
+    if (i < 0) return (title, null);
+    return ('${title.substring(0, i).trim()} ›', title.substring(i + 1).trim());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return QuickActionGrid(
+      columns: 2,
+      children: [
+        for (final r in routes)
+          Builder(builder: (context) {
+            final selected = r.id == selectedId;
+            final (first, second) = lines(r.title);
+            final fg = selected ? p.onPrimary : p.textHeading;
+            return Semantics(
+              button: true,
+              selected: selected,
+              label: r.title,
+              excludeSemantics: true,
+              child: Material(
+                key: Key('route_${r.id}'),
+                color: selected ? p.primary : p.surface,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadius.cardAll,
+                  side: BorderSide(color: selected ? p.primary : p.divider),
+                ),
+                child: InkWell(
+                  borderRadius: AppRadius.cardAll,
+                  onTap: () => onSelect(r.id),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.md),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(first, style: AppTypography.label.copyWith(color: fg, fontSize: 16, fontWeight: FontWeight.w700)),
+                        if (second != null) ...[
+                          const SizedBox(height: 2),
+                          Text(second, style: AppTypography.label.copyWith(color: fg, fontSize: 16)),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+      ],
     );
   }
 }
