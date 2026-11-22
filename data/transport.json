@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "isSample": false,
   "updatedAt": "2026-11-22T20:15:00+03:00",
-  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar ve Kurbağalıdere–Havuzlu Meydan, Havuzlu Meydan–Kızarandere, Havuzlu Meydan–Çeltikçi–Hamamlı: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar ve Kurbağalıdere–Havuzlu Meydan, Havuzlu Meydan–Kızarandere, Havuzlu Meydan–Çeltikçi–Hamamlı, Balıklı ring: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
@@ -2584,6 +2584,103 @@
                 "time": "15:00",
                 "days": [
                   1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-balikli-ring",
+        "mode": "city",
+        "direction": "outbound",
+        "title": "Balıklı – Paşalimanı – Harmanlı – Poyrazlı – Tuzla (Ring)",
+        "from": "Balıklı Adası",
+        "to": "Balıklı Adası",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Ring hattı: aynı duraktan kalkıp aynı durağa döner. Saatler her gün geçerlidir.",
+        "stops": [
+          "Balıklı Adası 10",
+          "Harmanlı",
+          "Balıklı Adası 12",
+          "Balıklı Adası 13"
+        ],
+        "timetables": [
+          {
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "07:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "13:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "17:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "20:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               }
             ]
