@@ -368,5 +368,16 @@
   "searchRecent": "Recent searches",
   "searchClearRecent": "Clear",
   "searchSuggestions": "Suggestions",
-  "searchSuggestionList": "pharmacy|ferry|wind|iftar|cafe|beach|earthquake|bus"
+  "searchSuggestionList": "pharmacy|ferry|wind|iftar|cafe|beach|earthquake|bus",
+  "pushTopicsTitle": "Notification topics",
+  "pushTopicsSubtitle": "Choose what you want to hear about",
+  "pushTopicsOnCount": "{count} on",
+  "pushTopicOutages": "Water and power outages",
+  "pushTopicTransport": "Transport",
+  "pushTopicEvents": "Events",
+  "pushTopicGeneralSubtitle": "Emergencies and important news",
+  "pushTopicOutagesSubtitle": "Planned and unplanned outages",
+  "pushTopicTransportSubtitle": "Ferry and bus cancellations, timetable changes",
+  "pushTopicEventsSubtitle": "Concerts, festivals and market announcements",
+  "pushTopicsNote": "You only get notifications for the topics you choose. Subscribing creates an anonymous notification key on your phone; your name, number or location are not used."
 }

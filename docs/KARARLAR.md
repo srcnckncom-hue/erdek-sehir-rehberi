@@ -212,3 +212,8 @@
 - Boş arama ekranında **Son aramalar** (cihazda, en fazla 8, Temizle) ve **Öneriler**.
 - Bir sonuca dokununca ya da klavyede Ara'ya basınca sorgu son aramalara eklenir.
 - Sayfa anahtar kelimeleri `SearchPage` (lib/features/search/domain/search_index.dart) içinde; yeni kelime eklemek için oraya yazılır.
+
+## Bildirim konuları (r26)
+- 4 FCM konusu: `duyurular` (Önemli duyurular, eski aboneler korunur), `kesintiler`, `ulasim`, `etkinlikler`.
+- Uygulama: Ayarlar › Bildirim konuları (her biri ayrı anahtar). Eski sürümde "Önemli duyurular" açık olanlarda yeni konular da açık başlar; açılışta açık konulara abonelik tazelenir.
+- Panel: Bildirim Gönder'de konu seçimi; Duyurular ✈ türüne göre konu seçer. send-push yalnızca bu 4 konuyu kabul eder, push_log.topic'e yazar. Günlük sınır tüm konular için toplam 10.

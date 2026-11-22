@@ -1015,5 +1015,23 @@
   "searchRecent": "Son aramalar",
   "searchClearRecent": "Temizle",
   "searchSuggestions": "Öneriler",
-  "searchSuggestionList": "nöbetçi eczane|feribot|rüzgâr|iftar|kafe|plaj|deprem|otobüs"
+  "searchSuggestionList": "nöbetçi eczane|feribot|rüzgâr|iftar|kafe|plaj|deprem|otobüs",
+  "pushTopicsTitle": "Bildirim konuları",
+  "pushTopicsSubtitle": "Hangi konularda haber almak istediğinizi seçin",
+  "pushTopicsOnCount": "{count} konu açık",
+  "@pushTopicsOnCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pushTopicOutages": "Su ve elektrik kesintileri",
+  "pushTopicTransport": "Ulaşım",
+  "pushTopicEvents": "Etkinlikler",
+  "pushTopicGeneralSubtitle": "Acil durumlar ve önemli haberler",
+  "pushTopicOutagesSubtitle": "Planlı ve arıza kaynaklı kesintiler",
+  "pushTopicTransportSubtitle": "Feribot ve otobüs iptalleri, sefer değişiklikleri",
+  "pushTopicEventsSubtitle": "Konser, festival, şenlik ve pazar duyuruları",
+  "pushTopicsNote": "Bildirimler yalnızca seçtiğiniz konularda gelir. Konu aboneliği için telefonunuza anonim bir bildirim anahtarı oluşturulur; adınız, numaranız veya konumunuz kullanılmaz."
 }

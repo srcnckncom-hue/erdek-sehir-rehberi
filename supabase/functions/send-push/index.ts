@@ -1,13 +1,13 @@
 // Erdek Şehir Rehberi — panelden "Bildirim gönder" (Supabase Edge Function).
 //
 // Yalnızca public.admins tablosundaki kullanıcılar çağırabilir. Bildirim,
-// uygulamada "Önemli duyurular" anahtarını açan herkese gider (FCM konusu
-// "duyurular"). Firebase servis hesabı anahtarı FIREBASE_SERVICE_ACCOUNT
+// uygulamada seçilen konuyu (Ayarlar › Bildirim konuları) açan herkese gider.
+// Konu adları uygulamadaki PushTopic ve paneldeki pushTopics ile AYNI. Firebase servis hesabı anahtarı FIREBASE_SERVICE_ACCOUNT
 // adlı Supabase secret'ında durur; koda ya da depoya ASLA yazılmaz.
 //
 // Kurulum: docs/BILDIRIM_GONDER.md
 
-const TOPIC = "duyurular";
+const TOPICS = ["duyurular", "kesintiler", "ulasim", "etkinlikler"];
 const DAILY_LIMIT = 10;
 
 const cors = {
@@ -155,6 +155,8 @@ Deno.serve(async (req) => {
     const body = String(input.body ?? "").trim();
     if (title.length < 1 || title.length > 80) return json(400, { error: "Başlık 1–80 karakter olmalı." });
     if (body.length < 1 || body.length > 240) return json(400, { error: "Metin 1–240 karakter olmalı." });
+    const topic = String(input.topic ?? "duyurular");
+    if (!TOPICS.includes(topic)) return json(400, { error: `Bilinmeyen konu: ${topic}` });
 
     if ((await sentToday()) >= DAILY_LIMIT) {
       return json(429, { error: `Son 24 saatte en fazla ${DAILY_LIMIT} bildirim gönderilebilir.` });
@@ -167,7 +169,7 @@ Deno.serve(async (req) => {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         message: {
-          topic: TOPIC,
+          topic,
           notification: { title, body },
           apns: { payload: { aps: { sound: "default" } } },
         },
@@ -178,7 +180,7 @@ Deno.serve(async (req) => {
     await log({
       title,
       body,
-      topic: TOPIC,
+      topic,
       sent_by: who.id ?? null,
       sent_by_email: who.email ?? null,
       ok: fcm.ok,

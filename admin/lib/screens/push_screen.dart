@@ -3,6 +3,22 @@ import 'package:material_ui/material_ui.dart';
 import '../api.dart';
 import '../theme.dart';
 
+/// Bildirim konuları (FCM topic) → paneldeki adı. Uygulamadaki PushTopic ve
+/// supabase/functions/send-push içindeki TOPICS ile AYNI olmalı.
+const pushTopics = {
+  'duyurular': 'Önemli duyurular',
+  'kesintiler': 'Su ve elektrik kesintileri',
+  'ulasim': 'Ulaşım (feribot/otobüs)',
+  'etkinlikler': 'Etkinlikler',
+};
+
+/// Duyuru türüne uygun bildirim konusu.
+String pushTopicForCategory(String? category) => switch (category) {
+      'kesinti' => 'kesintiler',
+      'etkinlik' || 'pazar' => 'etkinlikler',
+      _ => 'duyurular',
+    };
+
 /// Önizleme + onay penceresi; onaylanırsa gönderir. Gönderildiyse true.
 /// Duyurular sayfasından da (hazır başlık/metinle) çağrılır.
 Future<bool> confirmAndSendPush(
@@ -10,6 +26,7 @@ Future<bool> confirmAndSendPush(
   Api api, {
   required String title,
   required String body,
+  String topic = 'duyurular',
 }) async {
   final ok = await showDialog<bool>(
     context: context,
@@ -21,8 +38,8 @@ Future<bool> confirmAndSendPush(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Uygulamada "Önemli duyurular"ı açan HERKESİN telefonuna şimdi gidecek. '
+            Text(
+              'Uygulamada "${pushTopics[topic] ?? topic}" konusunu açan HERKESİN telefonuna şimdi gidecek. '
               'Gönderildikten sonra geri alınamaz.',
             ),
             const SizedBox(height: 16),
@@ -44,7 +61,7 @@ Future<bool> confirmAndSendPush(
 
   final messenger = ScaffoldMessenger.of(context);
   try {
-    await api.sendPush(title: title, body: body);
+    await api.sendPush(title: title, body: body, topic: topic);
     messenger.showSnackBar(const SnackBar(content: Text('Bildirim gönderildi.')));
     return true;
   } catch (e) {
@@ -130,6 +147,7 @@ class _PushScreenState extends State<PushScreen> {
   final _title = TextEditingController();
   final _body = TextEditingController();
   bool _sending = false;
+  String _topic = 'duyurular';
   late Future<List<Map<String, dynamic>>> _log = widget.api.pushLog();
 
   @override
@@ -147,7 +165,7 @@ class _PushScreenState extends State<PushScreen> {
       return;
     }
     setState(() => _sending = true);
-    final sent = await confirmAndSendPush(context, widget.api, title: title, body: body);
+    final sent = await confirmAndSendPush(context, widget.api, title: title, body: body, topic: _topic);
     if (!mounted) return;
     setState(() {
       _sending = false;
@@ -183,6 +201,26 @@ class _PushScreenState extends State<PushScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          const Text('Konu', style: TextStyle(fontWeight: FontWeight.w600, color: AdminColors.muted)),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              for (final e in pushTopics.entries)
+                                ChoiceChip(
+                                  label: Text(e.value),
+                                  selected: _topic == e.key,
+                                  onSelected: (_) => setState(() => _topic = e.key),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          const Text(
+                            'Bildirim yalnızca uygulamada bu konuyu açanlara gider.',
+                            style: TextStyle(fontSize: 12, color: AdminColors.muted),
+                          ),
+                          const SizedBox(height: 16),
                           TextField(
                             controller: _title,
                             maxLength: _titleMax,
@@ -278,7 +316,8 @@ class _PushScreenState extends State<PushScreen> {
                                 ),
                                 title: Text(rows[i]['title'] as String),
                                 subtitle: Text(
-                                  '${rows[i]['body']}\n${_when(rows[i]['sent_at'] as String?)}'
+                                  '${rows[i]['body']}\n${pushTopics[rows[i]['topic']] ?? rows[i]['topic'] ?? ''} · '
+                                  '${_when(rows[i]['sent_at'] as String?)}'
                                   '${rows[i]['sent_by_email'] == null ? '' : ' · ${rows[i]['sent_by_email']}'}',
                                 ),
                                 isThreeLine: true,

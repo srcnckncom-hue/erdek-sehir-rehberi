@@ -125,6 +125,7 @@ class _BodyState extends State<_Body> {
                       widget.api,
                       title: _clip(a['title'] as String, 80),
                       body: _clip(a['body'] as String, 240),
+                      topic: pushTopicForCategory(a['category'] as String?),
                     ),
                   ),
                   RowActions(

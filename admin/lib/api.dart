@@ -229,11 +229,11 @@ class Api {
 
   // ─── Bildirim (send-push Edge Function) ──────────────────────────────
   /// "Önemli duyurular"ı açan herkese anlık bildirim gönderir.
-  Future<void> sendPush({required String title, required String body}) async {
+  Future<void> sendPush({required String title, required String body, String topic = 'duyurular'}) async {
     final res = await http.post(
       Uri.parse('$base/functions/v1/send-push'),
       headers: await _headers(),
-      body: jsonEncode({'title': title, 'body': body}),
+      body: jsonEncode({'title': title, 'body': body, 'topic': topic}),
     );
     if (res.statusCode == 404) {
       throw ApiException('send-push fonksiyonu kurulmamış (docs/BILDIRIM_GONDER.md).');
