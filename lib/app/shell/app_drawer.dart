@@ -14,6 +14,8 @@ import '../../features/ramadan/ramadan.dart';
 import '../../features/ramadan/ramadan_screen.dart';
 import '../../core/time/calendar_date.dart';
 import '../../features/weather/presentation/weather_screen.dart';
+import '../../features/map/map_screen.dart';
+import '../../features/nearby/nearby_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../core/system/system_bridge.dart';
 import '../../features/settings/presentation/report_issue.dart';
@@ -93,6 +95,21 @@ class AppDrawer extends ConsumerWidget {
               color: p.iconBlue,
               title: l10n.weatherTitle,
               onTap: () => _push(context, const WeatherScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_map'),
+              icon: AppIcons.map,
+              color: p.mint.foreground,
+              title: l10n.mapTitle,
+              onTap: () => _push(context, const MapScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              icon: AppIcons.nearby,
+              color: p.iconCoral,
+              title: l10n.nearbyTitle,
+              onTap: () => _push(context, const NearbyScreen()),
             ),
             const SizedBox(height: AppSpacing.xxl),
             Text(

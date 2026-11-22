@@ -1,4 +1,6 @@
+import CoreLocation
 import Flutter
+import MapKit
 import StoreKit
 import UIKit
 import UserNotifications
@@ -8,6 +10,9 @@ import WidgetKit
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
   /// Ana ekran widget'ı ile paylaşılan alan (ios/ErdekWidget).
   private static let appGroup = "group.com.erdek.sehirrehberi.erdekrehberi"
+
+  /// "Yakınımdakiler" için konum (lib/features/nearby/location_service.dart).
+  private let locationProvider = LocationProvider()
 
   override func application(
     _ application: UIApplication,
@@ -77,6 +82,22 @@ import WidgetKit
         }
       }
     }
+    // Flutter → konum (yalnızca istenince; telefonda kalır).
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "ErdekLocationChannel") {
+      let channel = FlutterMethodChannel(name: "erdek/location", binaryMessenger: registrar.messenger())
+      channel.setMethodCallHandler { [weak self] call, result in
+        guard call.method == "current", let self else {
+          result(FlutterMethodNotImplemented)
+          return
+        }
+        self.locationProvider.request(result)
+      }
+    }
+
+    // Erdek haritası (Apple Haritalar; lib/features/map/map_screen.dart).
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "ErdekMapView") {
+      registrar.register(ErdekMapFactory(messenger: registrar.messenger()), withId: "erdek/map")
+    }
   }
 
   private static func activeScene() -> UIWindowScene? {
@@ -101,5 +122,187 @@ import WidgetKit
       popover.permittedArrowDirections = []
     }
     top.present(sheet, animated: true)
+  }
+}
+
+// MARK: - Konum
+
+/// Tek seferlik konum isteği. İzin yoksa önce iOS izin penceresi.
+final class LocationProvider: NSObject, CLLocationManagerDelegate {
+  private let manager = CLLocationManager()
+  private var pending: [FlutterResult] = []
+
+  override init() {
+    super.init()
+    manager.delegate = self
+    manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+  }
+
+  func request(_ result: @escaping FlutterResult) {
+    pending.append(result)
+    switch manager.authorizationStatus {
+    case .notDetermined:
+      manager.requestWhenInUseAuthorization()
+    case .denied, .restricted:
+      finish(error: "denied")
+    default:
+      manager.requestLocation()
+    }
+  }
+
+  func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    guard !pending.isEmpty else { return }
+    switch manager.authorizationStatus {
+    case .notDetermined:
+      return
+    case .denied, .restricted:
+      finish(error: "denied")
+    default:
+      manager.requestLocation()
+    }
+  }
+
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    guard let last = locations.last else { return }
+    let value: [String: Double] = [
+      "lat": last.coordinate.latitude,
+      "lng": last.coordinate.longitude,
+      "accuracy": last.horizontalAccuracy,
+    ]
+    let callbacks = pending
+    pending.removeAll()
+    callbacks.forEach { $0(value) }
+  }
+
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    finish(error: "unavailable")
+  }
+
+  private func finish(error code: String) {
+    let callbacks = pending
+    pending.removeAll()
+    callbacks.forEach { $0(FlutterError(code: code, message: nil, details: nil)) }
+  }
+}
+
+// MARK: - Harita (MapKit)
+
+final class ErdekMapFactory: NSObject, FlutterPlatformViewFactory {
+  private let messenger: FlutterBinaryMessenger
+
+  init(messenger: FlutterBinaryMessenger) {
+    self.messenger = messenger
+    super.init()
+  }
+
+  func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
+    ErdekMapView(frame: frame, viewId: viewId, args: args, messenger: messenger)
+  }
+
+  func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
+    FlutterStandardMessageCodec.sharedInstance()
+  }
+}
+
+final class ErdekPin: NSObject, MKAnnotation {
+  let id: String
+  let kind: String
+  let coordinate: CLLocationCoordinate2D
+  let title: String?
+  let subtitle: String?
+
+  init(id: String, kind: String, coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?) {
+    self.id = id
+    self.kind = kind
+    self.coordinate = coordinate
+    self.title = title
+    self.subtitle = subtitle
+  }
+}
+
+/// Flutter'dan gelen iğneleri gösterir; balondaki (i) düğmesine dokununca
+/// "select" ile kimliği Flutter'a bildirir.
+final class ErdekMapView: NSObject, FlutterPlatformView, MKMapViewDelegate {
+  private let map: MKMapView
+  private let channel: FlutterMethodChannel
+
+  init(frame: CGRect, viewId: Int64, args: Any?, messenger: FlutterBinaryMessenger) {
+    map = MKMapView(frame: frame)
+    channel = FlutterMethodChannel(name: "erdek/map_\(viewId)", binaryMessenger: messenger)
+    super.init()
+    map.delegate = self
+    map.pointOfInterestFilter = .excludingAll
+    let params = args as? [String: Any]
+    let lat = params?["centerLat"] as? Double ?? 40.3955
+    let lng = params?["centerLng"] as? Double ?? 27.7930
+    map.setRegion(
+      MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: lat, longitude: lng),
+        span: MKCoordinateSpan(latitudeDelta: 0.12, longitudeDelta: 0.12)
+      ),
+      animated: false
+    )
+    let status = CLLocationManager().authorizationStatus
+    map.showsUserLocation = status == .authorizedWhenInUse || status == .authorizedAlways
+    setPins(params?["pins"] as? [[String: Any]] ?? [])
+    channel.setMethodCallHandler { [weak self] call, result in
+      guard let self else { return }
+      if call.method == "setPins" {
+        self.setPins(call.arguments as? [[String: Any]] ?? [])
+        result(nil)
+      } else {
+        result(FlutterMethodNotImplemented)
+      }
+    }
+  }
+
+  func view() -> UIView { map }
+
+  private func setPins(_ items: [[String: Any]]) {
+    map.removeAnnotations(map.annotations.filter { $0 is ErdekPin })
+    let pins: [ErdekPin] = items.compactMap { item in
+      guard let id = item["id"] as? String,
+            let lat = item["lat"] as? Double,
+            let lng = item["lng"] as? Double
+      else { return nil }
+      return ErdekPin(
+        id: id,
+        kind: item["kind"] as? String ?? "place",
+        coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng),
+        title: item["title"] as? String,
+        subtitle: item["subtitle"] as? String
+      )
+    }
+    map.addAnnotations(pins)
+  }
+
+  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    guard let pin = annotation as? ErdekPin else { return nil }
+    let reuse = "erdek-pin"
+    let view = (mapView.dequeueReusableAnnotationView(withIdentifier: reuse) as? MKMarkerAnnotationView)
+      ?? MKMarkerAnnotationView(annotation: pin, reuseIdentifier: reuse)
+    view.annotation = pin
+    view.canShowCallout = true
+    view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+    switch pin.kind {
+    case "pharmacy":
+      view.markerTintColor = UIColor(red: 0.78, green: 0.11, blue: 0.09, alpha: 1)
+      view.glyphImage = UIImage(systemName: "cross.case.fill")
+      view.displayPriority = .required
+    case "business":
+      view.markerTintColor = UIColor(red: 0.93, green: 0.41, blue: 0.11, alpha: 1)
+      view.glyphImage = UIImage(systemName: "storefront.fill")
+      view.displayPriority = .defaultHigh
+    default:
+      view.markerTintColor = UIColor(red: 0.15, green: 0.56, blue: 0.77, alpha: 1)
+      view.glyphImage = UIImage(systemName: "mappin.and.ellipse")
+      view.displayPriority = .defaultHigh
+    }
+    return view
+  }
+
+  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    guard let pin = view.annotation as? ErdekPin else { return }
+    channel.invokeMethod("select", arguments: pin.id)
   }
 }

@@ -1,0 +1,59 @@
+# Her gün Erdek açıklarının deniz suyu sıcaklığını ve dalga yüksekliğini
+# Copernicus Marine'den çeker → data/sea.json → değiştiyse commit + Pages.
+# Uygulama Copernicus'a doğrudan istek ATMAZ; yalnızca Pages'teki JSON'u okur.
+#
+# Gerekli secrets (Settings → Secrets and variables → Actions):
+#   COPERNICUSMARINE_SERVICE_USERNAME  — Copernicus Marine kullanıcı adı
+#   COPERNICUSMARINE_SERVICE_PASSWORD  — Copernicus Marine şifresi
+name: sea-sync
+
+on:
+  schedule:
+    - cron: '23 4 * * *' # Her gün 07:23 (TSİ)
+  workflow_dispatch:
+
+permissions:
+  contents: write # data/sea.json commit'i
+  actions: write # pages-deploy'u tetiklemek için
+
+concurrency:
+  group: sea-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install copernicusmarine jsonschema
+
+      - name: Deniz verisini çek
+        env:
+          COPERNICUSMARINE_SERVICE_USERNAME: ${{ secrets.COPERNICUSMARINE_SERVICE_USERNAME }}
+          COPERNICUSMARINE_SERVICE_PASSWORD: ${{ secrets.COPERNICUSMARINE_SERVICE_PASSWORD }}
+        run: python3 scripts/fetch_sea.py
+
+      - name: Veri doğrulama
+        run: python3 scripts/validate_data.py
+
+      - name: Değiştiyse commit + Pages yayını
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/sea.json; then
+            echo "Değişiklik yok."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/sea.json
+          git commit -m "data: deniz bilgisi güncellendi"
+          git push
+          gh workflow run pages-deploy.yml --ref "${GITHUB_REF_NAME}"
+          echo "::notice::Deniz bilgisi güncellendi, pages-deploy başlatıldı."

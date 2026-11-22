@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-22T10:00:00+03:00",
+  "source": "E.U. Copernicus Marine Service Information",
+  "data": {
+    "location": "Erdek Körfezi",
+    "days": [
+      {
+        "date": "2026-11-21",
+        "waterTempC": 16.4,
+        "waveHeightM": 0.4,
+        "waveMaxM": 0.6
+      },
+      {
+        "date": "2026-11-22",
+        "waterTempC": 15.2,
+        "waveHeightM": 0.9,
+        "waveMaxM": 1.3
+      },
+      {
+        "date": "2026-11-23",
+        "waterTempC": 14.8
+      }
+    ]
+  }
+}

@@ -848,5 +848,53 @@
         "type": "String"
       }
     }
-  }
+  },
+  "mapTitle": "Erdek Haritası",
+  "mapSubtitle": "{count} yer · nöbetçi eczane, işletme, gezilecek yer",
+  "@mapSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapPharmacyLabel": "Bugünün nöbetçi eczanesi",
+  "mapFilterPharmacy": "Nöbetçi eczane",
+  "mapFilterBusinesses": "İşletmeler",
+  "mapFilterPlaces": "Gezilecek yerler",
+  "nearbyTitle": "Yakınımdakiler",
+  "nearbySubtitle": "En yakından uzağa",
+  "nearbyDeniedTitle": "Konum izni kapalı",
+  "nearbyDeniedMessage": "iPhone Ayarlar → Erdek Rehberi → Konum → \"Uygulamayı Kullanırken\" seçip tekrar deneyin.",
+  "nearbyUnavailableTitle": "Konum alınamadı",
+  "nearbyUnavailableMessage": "Konum servislerinin açık olduğundan emin olup tekrar deneyin.",
+  "nearbyPrivacyNote": "Konumunuz yalnızca bu telefonda, mesafe hesaplamak için kullanılır; kaydedilmez ve paylaşılmaz.",
+  "nearbyEmpty": "Bu türde yer yok.",
+  "nearbyNoLocation": "konum yok",
+  "seaTitle": "Deniz",
+  "seaCalm": "Deniz sakin",
+  "seaSlight": "Hafif dalgalı",
+  "seaRough": "Dalgalı",
+  "seaWave": "Dalga {avg} m (en çok {max} m)",
+  "@seaWave": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "seaWaterUnknown": "Su sıcaklığı yok",
+  "seaWaterTemp": "Deniz suyu {temp}°",
+  "@seaWaterTemp": {
+    "placeholders": {
+      "temp": {
+        "type": "int"
+      }
+    }
+  },
+  "seaAttribution": "Deniz verisi: E.U. Copernicus Marine Service Information (model tahmini)",
+  "mapShortSubtitle": "Eczane, işletme, gezilecek yer"
 }

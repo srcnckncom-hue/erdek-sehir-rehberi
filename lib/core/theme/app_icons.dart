@@ -47,6 +47,9 @@ abstract final class AppIcons {
   static AppIconData get placeOther => _d(PhosphorIconsDuotone.mapPin);
   static AppIconData get lightbulb => _d(PhosphorIconsDuotone.lightbulb);
   static AppIconData get ramadan => _d(PhosphorIconsDuotone.moon);
+  static AppIconData get sea => _d(PhosphorIconsDuotone.waves);
+  static AppIconData get map => _d(PhosphorIconsDuotone.mapPinLine);
+  static AppIconData get nearby => _d(PhosphorIconsDuotone.navigationArrow);
   static AppIconData get businesses => _d(PhosphorIconsDuotone.buildings);
   static AppIconData get forecast => _d(PhosphorIconsDuotone.cloudSun);
 
@@ -74,6 +77,7 @@ abstract final class AppIcons {
   static AppIconData get humidity => _i(PhosphorIconsRegular.drop);
   static AppIconData get wind => _i(PhosphorIconsRegular.wind);
   static AppIconData get thermometer => _i(PhosphorIconsRegular.thermometer);
+  static AppIconData get locationArrow => _i(PhosphorIconsRegular.navigationArrow);
   static AppIconData get bellFilled => _i(PhosphorIconsFill.bell);
   static AppIconData get globe => _i(PhosphorIconsRegular.globe);
   static AppIconData get whatsapp => _i(PhosphorIconsRegular.whatsappLogo);

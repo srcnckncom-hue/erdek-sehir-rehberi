@@ -19,6 +19,8 @@ import '../../announcements/data/announcements_seen.dart';
 import '../../announcements/domain/announcement.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
+import '../../map/map_screen.dart';
+import '../../nearby/nearby_screen.dart';
 import '../../contacts/presentation/directory_selection.dart';
 import '../../explore/data/explore_repository.dart';
 import '../../explore/presentation/history_screen.dart';
@@ -249,6 +251,38 @@ class HomeScreen extends ConsumerWidget {
                             ? l10n.weatherShortSubtitle
                             : l10n.weatherSubtitle(forecastDays),
                         onTap: () => openWeather(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.gap),
+            Padding(
+              padding: AppSpacing.pagePadding,
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _ExploreCard(
+                        key: const Key('home_map'),
+                        icon: AppIcons.map,
+                        color: context.palette.mint.foreground,
+                        title: l10n.mapTitle,
+                        subtitle: l10n.mapShortSubtitle,
+                        onTap: () => openMap(context),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.gap),
+                    Expanded(
+                      child: _ExploreCard(
+                        key: const Key('home_nearby'),
+                        icon: AppIcons.nearby,
+                        color: context.palette.iconCoral,
+                        title: l10n.nearbyTitle,
+                        subtitle: l10n.nearbySubtitle,
+                        onTap: () => openNearby(context),
                       ),
                     ),
                   ],

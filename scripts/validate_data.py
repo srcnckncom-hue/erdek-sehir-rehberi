@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 FILES = [
     "pharmacy", "prayer_times", "transport", "contacts", "announcements", "places", "history",
-    "businesses", "social",
+    "businesses", "social", "sea",
 ]
 
 errors: list[str] = []
@@ -108,6 +108,14 @@ def check_social(d):
     pass
 
 
+def check_sea(d):
+    dates = [x["date"] for x in d["days"]]
+    if dates != sorted(dates):
+        err("sea", "günler tarihe göre sıralı olmalı")
+    for x in dupes(dates):
+        err("sea", f"aynı gün iki kez: {x}")
+
+
 CHECKS = {
     "pharmacy": check_pharmacy,
     "prayer_times": check_prayer,
@@ -118,6 +126,7 @@ CHECKS = {
     "history": check_history,
     "businesses": check_businesses,
     "social": check_social,
+    "sea": check_sea,
 }
 
 

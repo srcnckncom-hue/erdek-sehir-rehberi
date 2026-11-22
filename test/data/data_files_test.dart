@@ -8,6 +8,7 @@ import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/prayer/domain/prayer_times.dart';
+import 'package:erdek_rehberi/features/sea/sea.dart';
 import 'package:erdek_rehberi/features/social/social_links.dart';
 import 'package:erdek_rehberi/features/transport/domain/transport.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -71,5 +72,10 @@ void main() {
 
   test('social.json', () {
     _load('social.json', SocialLinks.fromJson);
+  });
+
+  test('sea.json', () {
+    final env = _load('sea.json', SeaData.fromJson);
+    expect(env.data.location, isNotEmpty);
   });
 }

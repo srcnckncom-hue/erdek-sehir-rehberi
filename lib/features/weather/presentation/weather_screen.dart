@@ -4,9 +4,12 @@ import 'package:material_ui/material_ui.dart';
 import '../../../app/providers.dart';
 import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/time/calendar_date.dart';
 import '../../../core/time/erdek_time.dart';
+import '../../../core/util/date_texts.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../sea/sea.dart';
 import '../data/weather_repository.dart';
 import '../domain/weather.dart';
 
@@ -90,6 +93,8 @@ class WeatherScreen extends ConsumerWidget {
           );
       }
     }
+
+    children.add(const _SeaSection());
 
     children
       ..add(const SizedBox(height: AppSpacing.xl))
@@ -321,4 +326,115 @@ class _DayRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Deniz: bugün su sıcaklığı + dalga, sonraki günler (Copernicus Marine).
+class _SeaSection extends ConsumerWidget {
+  const _SeaSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final p = context.palette;
+    final now = ref.watch(nowProvider).value ?? ref.watch(clockProvider)();
+    final today = CalendarDate.fromDateTime(now);
+    final sea = ref.watch(seaDataProvider).value;
+    final days = sea?.data.from(today) ?? const <SeaDay>[];
+    if (days.isEmpty) return const SizedBox.shrink();
+    final first = days.first;
+
+    String state(SeaDay d) => switch (d.seaState) {
+          0 => l10n.seaCalm,
+          1 => l10n.seaSlight,
+          2 => l10n.seaRough,
+          _ => '',
+        };
+    String wave(SeaDay d) => d.waveMaxM == null && d.waveHeightM == null
+        ? '—'
+        : l10n.seaWave(_m(d.waveHeightM ?? d.waveMaxM!), _m(d.waveMaxM ?? d.waveHeightM!));
+
+    return Column(
+      key: const Key('sea_section'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: AppSpacing.section),
+        SectionHeader(title: l10n.seaTitle),
+        const SizedBox(height: AppSpacing.md),
+        Container(
+          margin: AppSpacing.pagePadding,
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(color: p.aqua.background, borderRadius: AppRadius.cardAll),
+          child: Row(
+            children: [
+              AppIcon(AppIcons.sea, size: 40, color: p.aqua.foreground),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      first.waterTempC == null ? l10n.seaWaterUnknown : l10n.seaWaterTemp(first.waterTempC!.round()),
+                      style: AppTypography.cardTitle.copyWith(color: p.textHeading),
+                    ),
+                    Text(
+                      [wave(first), state(first)].where((t) => t.isNotEmpty && t != '—').join(' · '),
+                      style: AppTypography.caption.copyWith(color: p.textBody),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (days.length > 1) ...[
+          const SizedBox(height: AppSpacing.md),
+          GroupedCard(
+            children: [
+              for (final d in days.skip(1))
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          DateTexts.weekdayDayMonth(l10n, d.date),
+                          style: AppTypography.caption.copyWith(color: p.textHeading),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 56,
+                        child: Text(
+                          d.waterTempC == null ? '—' : '${d.waterTempC!.round()}°',
+                          textAlign: TextAlign.right,
+                          style: AppTypography.caption.copyWith(color: p.aqua.foreground, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 92,
+                        child: Text(
+                          wave(d),
+                          textAlign: TextAlign.right,
+                          style: AppTypography.caption.copyWith(color: p.textSecondary),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ],
+        const SizedBox(height: AppSpacing.sm),
+        Padding(
+          padding: AppSpacing.pagePadding,
+          child: Text(
+            l10n.seaAttribution,
+            style: AppTypography.tabLabel.copyWith(color: p.textSecondary),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// 0.4 → "0,4"
+  static String _m(double v) => v.toStringAsFixed(1).replaceAll('.', ',');
 }

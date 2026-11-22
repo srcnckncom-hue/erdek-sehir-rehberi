@@ -70,6 +70,8 @@
 	<array>
 		<string>tr</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Yakınınızdaki nöbetçi eczane, işletme ve gezilecek yerleri mesafeye göre sıralamak ve haritada göstermek için. Konumunuz yalnızca telefonunuzda kullanılır; kaydedilmez ve kimseyle paylaşılmaz.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<!-- Firebase: kullanıcı "Önemli duyurular"ı açana kadar FCM kimliği üretilmez. -->
