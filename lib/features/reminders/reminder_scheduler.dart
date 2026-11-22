@@ -17,6 +17,8 @@ abstract final class NotificationIds {
   static const departureEnd = 2000000000;
   static const eventBase = 2000000000;
   static const eventEnd = 2100000000;
+  static const outageBase = 2100000000;
+  static const outageEnd = 2100001000;
 }
 
 /// Tek seferlik yerel bildirimler (sefer hatırlatıcısı, iftar).

@@ -30,6 +30,10 @@ abstract final class AppIcons {
   static AppIconData get announcements => _d(PhosphorIconsDuotone.megaphone);
   static AppIconData get contacts => _d(PhosphorIconsDuotone.phone);
   static AppIconData get outage => _d(PhosphorIconsDuotone.lightning);
+  static AppIconData get water => _d(PhosphorIconsDuotone.drop);
+  static AppIconData get flame => _d(PhosphorIconsDuotone.flame);
+  static AppIconData get road => _d(PhosphorIconsDuotone.signpost);
+  static AppIconData get check => _d(PhosphorIconsDuotone.checkCircle);
   static AppIconData get market => _d(PhosphorIconsDuotone.storefront);
   static AppIconData get event => _d(PhosphorIconsDuotone.confetti);
   static AppIconData get eventConcert => _d(PhosphorIconsDuotone.musicNotes);

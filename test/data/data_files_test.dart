@@ -8,6 +8,7 @@ import 'package:erdek_rehberi/features/businesses/domain/business.dart';
 import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
 import 'package:erdek_rehberi/features/events/events.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
+import 'package:erdek_rehberi/features/outages/outages.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/prayer/domain/prayer_times.dart';
 import 'package:erdek_rehberi/features/sea/sea.dart';
@@ -92,5 +93,9 @@ void main() {
 
   test('events.json', () {
     _load('events.json', EventsData.fromJson);
+  });
+
+  test('outages.json', () {
+    _load('outages.json', OutagesData.fromJson);
   });
 }

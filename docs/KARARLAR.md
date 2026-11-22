@@ -224,3 +224,10 @@
 - Uygulama: Etkinlikler sayfası (ana sayfadaki Etkinlik kutucuğu, menü, arama). Güne göre gruplu; süren çok günlü etkinlik "bugün" altında, "Şimdi sürüyor". Bitenler kendiliğinden kalkar.
 - Ayrıntı: Takvime ekle (iOS EKEventEditViewController; iOS 17+ izin istemez, eskide bir kez takvim izni — Info.plist NSCalendars…), Hatırlat (2 saat önce; tüm gün ise 09:00; bildirim kimlikleri 2.000.000.000–2.099.999.999), Yol tarifi, WhatsApp'ta paylaş, bilet/ayrıntı bağlantısı.
 - Etkinlik duyuruları (Duyurular › Etkinlik) yerinde kalır; Etkinlikler sayfasının altından ulaşılır.
+
+## Kesintiler (r30)
+- Yeni içerik belgesi `outages` (data/outages.json, panel → Şehir Rehberi › Kesintiler, SQL: 0010_outages.sql).
+- Panel: mahalle listesi (her satıra bir) + kesintiler: tür (su/elektrik/dogalgaz/yol/diger), mahalleler (virgülle; boş = tüm Erdek), başlangıç, bitiş (boş = "giderilene kadar", uygulama 12 saat sonra kaldırır), sebep, kaynak, not. ✈ → "Kesintiler" konusuna bildirim.
+- Uygulama: Kesintiler sayfası (Şu an süren / Planlı), ana sayfada uyarı şeridi (süren ya da 24 saat içinde başlayacak; Mahallem öncelikli), menü, arama ("su", "elektrik", "arıza"…). Ana sayfa "Kesinti" kutucuğu bu sayfayı açar; kesinti duyuruları sayfanın altından.
+- Mahallem: cihazda (`my_area`). Mahalle eşleştirmesi "Mah./Mahallesi", büyük-küçük ve Türkçe harf farkına bakmaz.
+- "Mahallemdeki kesintileri hatırlat": başlamadan 1 saat önce yerel bildirim (en fazla 10; kimlikler 2.100.000.000–2.100.000.999). Veri, mahalle ya da ayar değişince ve uygulama öne gelince yeniden kurulur.

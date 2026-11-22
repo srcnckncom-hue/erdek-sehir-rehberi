@@ -1085,5 +1085,73 @@
       }
     }
   },
-  "searchSectionEvents": "Etkinlikler"
+  "searchSectionEvents": "Etkinlikler",
+  "outagesTitle": "Kesintiler",
+  "outagesSubtitle": "Su, elektrik ve doğal gaz kesintileri",
+  "outageWater": "Su kesintisi",
+  "outageElectricity": "Elektrik kesintisi",
+  "outageGas": "Doğal gaz kesintisi",
+  "outageRoad": "Yol kapanması",
+  "outageOther": "Kesinti",
+  "outageCitywide": "Tüm Erdek",
+  "outageUntilFixed": "giderilene kadar",
+  "outageSource": "Kaynak: {source}",
+  "@outageSource": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "outageMyArea": "Mahallem",
+  "outageMyAreaNone": "Seçilmedi · mahallenizdeki kesintiler öne çıkar",
+  "outageMyAreaPick": "Mahallenizi seçin",
+  "outageMyAreaClear": "Seçimi kaldır",
+  "outageNoAreas": "Mahalle listesi henüz eklenmedi.",
+  "outageRemind": "Mahallemdeki kesintileri hatırlat",
+  "outageRemindSubtitle": "Başlamadan 1 saat önce bildirim",
+  "outagesActive": "Şu an süren",
+  "outagesPlanned": "Planlı kesintiler",
+  "outagesEmptyTitle": "Bilinen kesinti yok",
+  "outagesEmptyMessage": "Planlı su, elektrik ve doğal gaz kesintileri duyuruldukça burada görünür.",
+  "outagesSourceNote": "Bilgiler BASKİ, UEDAŞ ve belediye duyurularından derlenir; saatler değişebilir.",
+  "outagesAnnouncementsLink": "Kesinti duyurularına bak",
+  "outageNow": "Şu an",
+  "outageMine": "Mahallende",
+  "outageBannerNow": "{title} sürüyor",
+  "@outageBannerNow": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "outageBannerSoon": "Yaklaşan: {title}",
+  "@outageBannerSoon": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "outageReminderTitle": "{title} 1 saat sonra",
+  "@outageReminderTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "outageReminderBody": "{areas} · {when}",
+  "@outageReminderBody": {
+    "placeholders": {
+      "areas": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "searchSectionOutages": "Kesintiler"
 }

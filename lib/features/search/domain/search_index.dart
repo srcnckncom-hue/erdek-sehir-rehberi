@@ -21,6 +21,7 @@ enum SearchPage {
   map(['harita', 'konum']),
   nearby(['yakın', 'yakınımda', 'en yakın', 'çevre']),
   favorites(['favori', 'yıldız', 'kaydettiklerim']),
+  outages(['kesinti', 'su kesintisi', 'elektrik kesintisi', 'elektrik', 'su', 'doğalgaz', 'arıza', 'baski', 'uedaş']),
   events(['etkinlik', 'konser', 'festival', 'şenlik', 'tiyatro', 'sergi', 'fuar']),
   ramadan(['ramazan', 'iftar', 'sahur', 'oruç', 'kadir', 'bayram']),
   businesses(['işletme', 'restoran', 'lokanta', 'kafe', 'otel', 'pansiyon', 'market', 'alışveriş', 'esnaf']),

@@ -8,6 +8,8 @@ import '../../core/widgets/widgets.dart';
 import '../../features/contacts/presentation/directory_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/home_widget_sync/widget_sync.dart';
+import '../../features/outages/outages.dart';
+import '../../features/outages/outages_screen.dart';
 import '../../features/pharmacy/data/pharmacy_repository.dart';
 import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../features/prayer/data/prayer_repository.dart';
@@ -51,6 +53,26 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
     ref.listenManual(prayerTimesProvider, (_, _) => _syncWidget(), fireImmediately: true);
     ref.listenManual(pharmacyDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
     ref.listenManual(transportDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
+    // Mahallemdeki kesintiler: veri, mahalle ya da ayar değişince hatırlatmaları yeniden kur.
+    ref.listenManual(outagesDataProvider, (_, _) => _syncOutages(), fireImmediately: true);
+    ref.listenManual(myAreaProvider, (_, _) => _syncOutages());
+    ref.listenManual(outageRemindersProvider, (_, _) => _syncOutages());
+  }
+
+  void _syncOutages() {
+    final l10n = lookupAppLocalizations(ref.read(localeProvider));
+    final now = ref.read(clockProvider)();
+    unawaited(
+      syncOutageReminders(
+        scheduler: ref.read(reminderSchedulerProvider),
+        data: ref.read(outagesDataProvider).value?.data,
+        myArea: ref.read(myAreaProvider),
+        enabled: ref.read(outageRemindersProvider),
+        erdekNow: now,
+        title: (o) => l10n.outageReminderTitle(OutageStyle.title(l10n, o.type)),
+        body: (o) => l10n.outageReminderBody(OutageStyle.areas(l10n, o), OutageStyle.when(l10n, o, now)),
+      ),
+    );
   }
 
   @override
@@ -65,6 +87,7 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
     if (state == AppLifecycleState.resumed) {
       _syncNotifications();
       _syncWidget();
+      _syncOutages();
     }
   }
 
