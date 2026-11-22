@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "isSample": false,
-  "updatedAt": "2026-11-21T09:30:00+03:00",
-  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Otobüs ve şehir içi: ÖRNEK VERİ.",
+  "updatedAt": "2026-11-22T20:15:00+03:00",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü ve şehir içi: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
@@ -449,16 +449,30 @@
       {
         "id": "erdek-bandirma",
         "mode": "bus",
-        "title": "Erdek – Bandırma",
-        "from": "Erdek Otogarı",
+        "direction": "outbound",
+        "title": "Erdek → Bandırma",
+        "from": "Erdek",
         "to": "Bandırma",
-        "note": "ÖRNEK VERİ — gerçek bilgiyle değiştirilecek",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Balıkesir Büyükşehir Belediyesi (BTT). Hafta içi ve hafta sonu aynı tarife; Balkart geçerli. Ücretsiz seferler işaretlidir.",
         "timetables": [
           {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
             "validTo": "2027-12-31",
             "departures": [
+              {
+                "time": "06:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
               {
                 "time": "07:00",
                 "days": [
@@ -467,7 +481,21 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ],
+                "note": "Ücretsiz sefer"
+              },
+              {
+                "time": "07:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -478,7 +506,20 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "08:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -489,7 +530,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -500,7 +542,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -511,7 +554,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -522,7 +566,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -533,7 +578,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -544,7 +590,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -555,8 +602,10 @@
                   3,
                   4,
                   5,
-                  6
-                ]
+                  6,
+                  7
+                ],
+                "note": "Ücretsiz sefer"
               },
               {
                 "time": "16:00",
@@ -566,7 +615,8 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
               },
               {
@@ -577,7 +627,20 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "17:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -588,7 +651,20 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -599,7 +675,20 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "19:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -610,50 +699,346 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
                 ]
+              },
+              {
+                "time": "20:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "21:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "22:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bandirma-erdek",
+        "mode": "bus",
+        "direction": "inbound",
+        "title": "Bandırma → Erdek",
+        "from": "Bandırma",
+        "to": "Erdek",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Balıkesir Büyükşehir Belediyesi (BTT). Hafta içi ve hafta sonu aynı tarife; Balkart geçerli. Ücretsiz seferler işaretlidir.",
+        "timetables": [
+          {
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "07:05",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "07:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "08:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ],
+                "note": "Ücretsiz sefer"
               },
               {
                 "time": "08:30",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               },
               {
-                "time": "10:30",
+                "time": "09:00",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               },
               {
-                "time": "12:30",
+                "time": "10:00",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               },
               {
-                "time": "14:30",
+                "time": "11:00",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               },
               {
-                "time": "16:30",
+                "time": "12:00",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "13:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "14:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "16:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "17:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ],
+                "note": "Ücretsiz sefer"
+              },
+              {
+                "time": "17:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               },
               {
                 "time": "18:30",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "19:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "19:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "20:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "20:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "21:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "22:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "23:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               }
             ]
           }
-        ],
-        "isSample": true,
-        "direction": "outbound"
+        ]
       },
       {
         "id": "erdek-balikesir",
