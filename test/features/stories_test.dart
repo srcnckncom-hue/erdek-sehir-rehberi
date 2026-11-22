@@ -59,8 +59,11 @@ void main() {
     expect(find.text('Hafta sonu indirim'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('story_close')));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
+    // Kapanış geçişi bitene kadar bekle (ilerleme çubuğu süresi dolmadan).
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.byKey(const Key('story_close')), findsNothing);
+    expect(find.byKey(const Key('stories_row')), findsOneWidget);
   });
 }
