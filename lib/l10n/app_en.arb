@@ -17,7 +17,7 @@
   "temperatureRange": "{min}°/{max}°",
   "menu": "Menu",
   "announcementsTooltip": "Announcements",
-  "searchHint": "Search pharmacies, phones, trips or places...",
+  "searchHint": "Search pharmacies, businesses, trips, places or pages...",
   "searchComingSoon": "Search is coming soon.",
   "quickActionsTitle": "Quick Actions",
   "seeAll": "See All",
@@ -155,7 +155,7 @@
   "callNamed": "Call {name}",
   "openDetails": "Details",
   "searchTitle": "Search",
-  "searchEmptyPrompt": "Search for pharmacies, phones, trips, announcements or places to visit.",
+  "searchEmptyPrompt": "Search pharmacies, businesses, phones, trips, places, announcements or a page such as \"wind\", \"iftar\" or \"emergency\".",
   "searchNoResults": "No results for \"{query}\".",
   "searchSectionPharmacies": "Pharmacies",
   "searchSectionContacts": "Phones",
@@ -359,5 +359,14 @@
   "favoriteRemove": "Remove from favourites",
   "favoriteAdded": "Added to favourites",
   "favoriteRemoved": "Removed from favourites",
-  "favoritePharmacyOnDuty": "On duty today"
+  "favoritePharmacyOnDuty": "On duty today",
+  "searchPageWind": "Wind",
+  "searchPageSea": "Sea conditions",
+  "searchSectionPages": "Pages",
+  "searchSectionHelpLines": "Emergency and helplines",
+  "searchSectionBusinesses": "Businesses",
+  "searchRecent": "Recent searches",
+  "searchClearRecent": "Clear",
+  "searchSuggestions": "Suggestions",
+  "searchSuggestionList": "pharmacy|ferry|wind|iftar|cafe|beach|earthquake|bus"
 }

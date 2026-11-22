@@ -206,3 +206,9 @@
 - Cihazda saklanır (Hive, anahtar `favorites`), en yeni başta, en fazla 100. Sunucuya gönderilmez.
 - Eczane favorisi bugün nöbetçiyse "Bugün nöbetçi" yazar; değilse adres.
 - Panelden silinen yer listede görünmez (kayıt cihazda kalır, geri gelirse görünür).
+
+## Arama genişletildi (r25)
+- Yeni bölümler: **Sayfalar** (anahtar kelimeyle: "poyraz" → Rüzgâr, "iftar" → Ramazan, "avşa" → Feribot, "deprem" → Acil Durum…), **Acil ve önemli hatlar** (112 + ulusal hatlar, internetsiz), **İşletmeler** (ad, kategori, özet, açıklama, adres).
+- Boş arama ekranında **Son aramalar** (cihazda, en fazla 8, Temizle) ve **Öneriler**.
+- Bir sonuca dokununca ya da klavyede Ara'ya basınca sorgu son aramalara eklenir.
+- Sayfa anahtar kelimeleri `SearchPage` (lib/features/search/domain/search_index.dart) içinde; yeni kelime eklemek için oraya yazılır.

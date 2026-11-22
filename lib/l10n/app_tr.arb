@@ -62,7 +62,7 @@
   },
   "menu": "Menü",
   "announcementsTooltip": "Duyurular",
-  "searchHint": "Eczane, telefon, sefer veya yer ara...",
+  "searchHint": "Eczane, işletme, sefer, yer veya sayfa ara...",
   "searchComingSoon": "Arama yakında eklenecek.",
   "quickActionsTitle": "Hızlı İşlemlerim",
   "seeAll": "Tümünü Gör",
@@ -469,7 +469,7 @@
   },
   "openDetails": "Ayrıntılar",
   "searchTitle": "Ara",
-  "searchEmptyPrompt": "Eczane, telefon, sefer, duyuru veya gezilecek yer arayın.",
+  "searchEmptyPrompt": "Eczane, işletme, telefon, sefer, gezilecek yer, duyuru ya da \"rüzgâr\", \"iftar\", \"acil\" gibi bir sayfa arayın.",
   "searchNoResults": "\"{query}\" için sonuç bulunamadı.",
   "@searchNoResults": {
     "placeholders": {
@@ -1006,5 +1006,14 @@
   "favoriteRemove": "Favorilerden çıkar",
   "favoriteAdded": "Favorilere eklendi",
   "favoriteRemoved": "Favorilerden çıkarıldı",
-  "favoritePharmacyOnDuty": "Bugün nöbetçi"
+  "favoritePharmacyOnDuty": "Bugün nöbetçi",
+  "searchPageWind": "Rüzgâr durumu",
+  "searchPageSea": "Deniz durumu",
+  "searchSectionPages": "Sayfalar",
+  "searchSectionHelpLines": "Acil ve önemli hatlar",
+  "searchSectionBusinesses": "İşletmeler",
+  "searchRecent": "Son aramalar",
+  "searchClearRecent": "Temizle",
+  "searchSuggestions": "Öneriler",
+  "searchSuggestionList": "nöbetçi eczane|feribot|rüzgâr|iftar|kafe|plaj|deprem|otobüs"
 }
