@@ -29,6 +29,7 @@ class ContentJsonFetcher implements JsonFetcher {
     'businesses.json': 'businesses',
     'social.json': 'social',
     'stories.json': 'stories',
+    'appearance.json': 'appearance',
   };
 
   final Dio dio;

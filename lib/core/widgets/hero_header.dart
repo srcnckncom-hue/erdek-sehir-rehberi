@@ -37,6 +37,7 @@ class HeroHeader extends StatelessWidget {
   const HeroHeader({
     super.key,
     required this.image,
+    this.imageUrl,
     required this.greeting,
     required this.dayLabel,
     required this.locationLabel,
@@ -50,6 +51,10 @@ class HeroHeader extends StatelessWidget {
   });
 
   final ImageProvider image;
+
+  /// Panelden yüklenen arka plan (varsa [image]'ın üstünde belirir; inemezse
+  /// uygulamayla gelen [image] görünür kalır).
+  final String? imageUrl;
   final String greeting;
 
   /// ör. "Cumartesi, Erdek"
@@ -87,6 +92,22 @@ class HeroHeader extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Image(image: image, fit: BoxFit.cover, excludeFromSemantics: true),
+            if (imageUrl case final url?)
+              Image.network(
+                url,
+                key: ValueKey(url),
+                fit: BoxFit.cover,
+                excludeFromSemantics: true,
+                gaplessPlayback: true,
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) => wasSynchronouslyLoaded
+                    ? child
+                    : AnimatedOpacity(
+                        opacity: frame == null ? 0 : 1,
+                        duration: const Duration(milliseconds: 400),
+                        child: child,
+                      ),
+                errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+              ),
             // Okunabilirlik için üst ve alt koyulaştırma
             const DecoratedBox(
               decoration: BoxDecoration(

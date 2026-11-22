@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 FILES = [
     "pharmacy", "prayer_times", "transport", "contacts", "announcements", "places", "history",
-    "businesses", "social", "sea", "stories",
+    "businesses", "social", "sea", "stories", "appearance",
 ]
 
 errors: list[str] = []
@@ -136,6 +136,7 @@ CHECKS = {
     "social": check_social,
     "sea": check_sea,
     "stories": check_stories,
+    "appearance": lambda d: None,
 }
 
 

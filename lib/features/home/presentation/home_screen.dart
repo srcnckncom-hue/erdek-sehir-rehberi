@@ -17,6 +17,7 @@ import '../../ads/presentation/ad_slot.dart';
 import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/data/announcements_seen.dart';
 import '../../announcements/domain/announcement.dart';
+import '../../appearance/appearance.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
 import '../../map/map_screen.dart';
@@ -105,6 +106,7 @@ class HomeScreen extends ConsumerWidget {
               onBell: () => _openAnnouncements(ref),
               onSearch: () => openSearch(context, onOpenTab),
               onWeather: () => openWeather(context),
+              heroUrl: ref.watch(heroImageUrlProvider),
             ),
             if (showSampleBanner) ...[
               const SizedBox(height: AppSpacing.md),
@@ -459,9 +461,13 @@ class _Hero extends StatelessWidget {
     required this.onBell,
     required this.onSearch,
     required this.onWeather,
+    this.heroUrl,
   });
 
   final DateTime now;
+
+  /// Panelden yüklenen arka plan (yoksa uygulamayla gelen fotoğraf).
+  final String? heroUrl;
   final AsyncValue<DataResult<CurrentWeather>> weather;
   final List<AsyncValue<DataResult<Object>>> others;
   final int unread;
@@ -514,6 +520,7 @@ class _Hero extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: AppSpacing.searchHeight / 2),
           child: HeroHeader(
             image: _heroImage,
+            imageUrl: heroUrl,
             greeting: HomeTexts.greeting(l10n, now.hour),
             dayLabel: l10n.heroDayLabel(l10n.weekdayName('${today.weekday}')),
             locationLabel: l10n.locationLabel,

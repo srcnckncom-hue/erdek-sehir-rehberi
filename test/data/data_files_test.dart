@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:erdek_rehberi/core/data/data_envelope.dart';
 import 'package:erdek_rehberi/features/announcements/domain/announcement.dart';
+import 'package:erdek_rehberi/features/appearance/appearance.dart';
 import 'package:erdek_rehberi/features/businesses/domain/business.dart';
 import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
@@ -82,5 +83,9 @@ void main() {
 
   test('stories.json', () {
     _load('stories.json', StoriesData.fromJson);
+  });
+
+  test('appearance.json', () {
+    _load('appearance.json', AppearanceData.fromJson);
   });
 }

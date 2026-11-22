@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'api.dart';
 import 'content/announcements_editor.dart';
+import 'content/appearance_editor.dart';
 import 'content/businesses_editor.dart';
 import 'content/contacts_editor.dart';
 import 'content/history_editor.dart';
@@ -39,6 +40,7 @@ final _groups = <_Group>[
     _Section(Icons.amp_stories_outlined, 'Hikâyeler', (api) => StoriesEditor(api: api)),
     _Section(Icons.send_outlined, 'Bildirim Gönder', (api) => PushScreen(api: api)),
     _Section(Icons.share_outlined, 'Sosyal Medya', (api) => SocialEditor(api: api)),
+    _Section(Icons.wallpaper_outlined, 'Görünüm', (api) => AppearanceEditor(api: api)),
   ]),
   _Group('Şehir Rehberi', [
     _Section(Icons.local_pharmacy_outlined, 'Nöbetçi Eczane', (api) => PharmacyEditor(api: api)),
