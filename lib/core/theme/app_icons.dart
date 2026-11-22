@@ -33,7 +33,7 @@ abstract final class AppIcons {
   static AppIconData get market => _d(PhosphorIconsDuotone.storefront);
   static AppIconData get event => _d(PhosphorIconsDuotone.confetti);
   static AppIconData get eventConcert => _d(PhosphorIconsDuotone.musicNotes);
-  static AppIconData get eventCulture => _d(PhosphorIconsDuotone.masksTheater);
+  static AppIconData get eventCulture => _d(PhosphorIconsDuotone.palette);
   static AppIconData get eventSport => _d(PhosphorIconsDuotone.soccerBall);
   static AppIconData get eventKids => _d(PhosphorIconsDuotone.smiley);
   static AppIconData get eventOther => _d(PhosphorIconsDuotone.calendarCheck);

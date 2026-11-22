@@ -63,8 +63,7 @@ class CityEvent {
       longitude: (json['longitude'] as num?)?.toDouble(),
       summary: _text(json['summary']),
       paragraphs: [
-        for (final p in json['paragraphs'] as List<dynamic>? ?? const [])
-          if (_text(p) case final t?) t,
+        for (final p in json['paragraphs'] as List<dynamic>? ?? const []) ?_text(p),
       ],
       organizer: _text(json['organizer']),
       link: switch (_text(json['link'])) {
