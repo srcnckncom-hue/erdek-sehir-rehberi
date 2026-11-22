@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gezi rotaları",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isSample",
+    "updatedAt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isSample": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?([+-]\\d{2}:\\d{2}|Z)$"
+    },
+    "source": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "trips"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "trips": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "type",
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "type": {
+                "enum": [
+                  "yuruyus",
+                  "bisiklet",
+                  "tekne",
+                  "arac",
+                  "tarih"
+                ]
+              },
+              "difficulty": {
+                "enum": [
+                  "kolay",
+                  "orta",
+                  "zor"
+                ]
+              },
+              "distanceKm": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "durationMin": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "season": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paragraphs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tips": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "stops": {
+                "type": "array",
+                "maxItems": 40,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "latitude": {
+                      "type": "number",
+                      "minimum": 40,
+                      "maximum": 41
+                    },
+                    "longitude": {
+                      "type": "number",
+                      "minimum": 27,
+                      "maximum": 28.5
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "path": {
+                "type": "array",
+                "maxItems": 2000,
+                "items": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "photos": {
+                "type": "array",
+                "maxItems": 10,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "pattern": "^https://"
+                    },
+                    "credit": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1230,5 +1230,63 @@
       }
     }
   },
-  "marketsAnnouncementsLink": "Pazar duyurularına bak"
+  "marketsAnnouncementsLink": "Pazar duyurularına bak",
+  "tripsTitle": "Gezi Rotaları",
+  "tripsSubtitle": "Yürüyüş, bisiklet, tekne ve tarih turları",
+  "tripsEmptyTitle": "Henüz rota eklenmedi",
+  "tripsEmptyMessage": "Kapıdağ yürüyüşleri, Kyzikos ve ada turları eklendikçe burada görünür.",
+  "tripWalk": "Yürüyüş",
+  "tripBike": "Bisiklet",
+  "tripBoat": "Tekne turu",
+  "tripCar": "Araçla gezi",
+  "tripCulture": "Tarih turu",
+  "tripEasy": "Kolay",
+  "tripMedium": "Orta",
+  "tripHard": "Zor",
+  "tripMinutes": "{m} dk",
+  "@tripMinutes": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "tripHoursMinutes": "{h} sa {m} dk",
+  "@tripHoursMinutes": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      },
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "tripOpenInMaps": "Rotayı haritada aç",
+  "tripStops": "Duraklar ({count})",
+  "@tripStops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripStopsLine": "Duraklar: {stops}",
+  "@tripStopsLine": {
+    "placeholders": {
+      "stops": {
+        "type": "String"
+      }
+    }
+  },
+  "tripTips": "İpuçları",
+  "tripSeason": "En uygun dönem: {season}",
+  "@tripSeason": {
+    "placeholders": {
+      "season": {
+        "type": "String"
+      }
+    }
+  },
+  "tripSafetyNote": "Yürüyüşe çıkmadan önce hava durumuna bakın, yanınıza su alın ve rotanızı bir yakınınıza bildirin. Acil durumda 112."
 }

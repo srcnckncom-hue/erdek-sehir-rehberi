@@ -18,6 +18,7 @@ import '../../features/map/map_screen.dart';
 import '../../features/nearby/nearby_screen.dart';
 import '../../features/emergency/emergency_screen.dart';
 import '../../features/beaches/beaches_screen.dart';
+import '../../features/trips/trips_screen.dart';
 import '../../features/events/events_screen.dart';
 import '../../features/markets/markets_screen.dart';
 import '../../features/outages/outages_screen.dart';
@@ -94,6 +95,14 @@ class AppDrawer extends ConsumerWidget {
               color: p.iconOrange,
               title: l10n.eventsTitle,
               onTap: () => _push(context, const EventsScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_trips'),
+              icon: AppIcons.trips,
+              color: p.mint.foreground,
+              title: l10n.tripsTitle,
+              onTap: () => _push(context, const TripsScreen()),
             ),
             const SizedBox(height: AppSpacing.sm),
             _NavRow(

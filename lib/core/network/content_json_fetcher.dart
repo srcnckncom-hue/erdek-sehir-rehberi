@@ -33,6 +33,7 @@ class ContentJsonFetcher implements JsonFetcher {
     'events.json': 'events',
     'outages.json': 'outages',
     'markets.json': 'markets',
+    'trips.json': 'trips',
   };
 
   final Dio dio;

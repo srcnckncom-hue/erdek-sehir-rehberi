@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "isSample": false,
+  "updatedAt": "2026-11-21T12:00:00+03:00",
+  "source": "test",
+  "data": {
+    "trips": [
+      {
+        "id": "kyzikos",
+        "title": "Kyzikos Tarih Yürüyüşü",
+        "type": "tarih",
+        "difficulty": "kolay",
+        "distanceKm": 4.5,
+        "durationMin": 150,
+        "summary": "Antik kentin kalıntıları arasında.",
+        "paragraphs": [
+          "Metin."
+        ],
+        "tips": [
+          "Su alın."
+        ],
+        "stops": [
+          {
+            "name": "Hadrian Tapınağı",
+            "latitude": 40.3897,
+            "longitude": 27.8902,
+            "note": "Dev sütunlar"
+          },
+          {
+            "name": "Amfitiyatro",
+            "latitude": 40.3925,
+            "longitude": 27.8855
+          },
+          {
+            "name": "Köy kahvesi"
+          }
+        ]
+      },
+      {
+        "id": "tekne",
+        "title": "Ada Turu",
+        "type": "tekne",
+        "summary": "Paşalimanı ve Avşa.",
+        "stops": []
+      }
+    ]
+  }
+}

@@ -15,6 +15,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/presentation/announcements_view.dart';
 import '../../beaches/beaches_screen.dart';
+import '../../trips/trips_screen.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/business_detail_screen.dart';
 import '../../businesses/presentation/businesses_screen.dart';
@@ -112,6 +113,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.events: l10n.eventsTitle,
         SearchPage.ramadan: l10n.ramadanTitle,
         SearchPage.businesses: l10n.businessesTitle,
+        SearchPage.trips: l10n.tripsTitle,
         SearchPage.beaches: l10n.beachesTitle,
         SearchPage.places: l10n.placesTitle,
         SearchPage.history: l10n.historyTitle,
@@ -135,6 +137,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.events => AppIcons.event,
         SearchPage.ramadan => AppIcons.ramadan,
         SearchPage.businesses => AppIcons.businesses,
+        SearchPage.trips => AppIcons.trips,
         SearchPage.beaches => AppIcons.placeBeach,
         SearchPage.places => AppIcons.places,
         SearchPage.history => AppIcons.history,
@@ -175,6 +178,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         _push(openRamadan);
       case SearchPage.businesses:
         _push(openBusinesses);
+      case SearchPage.trips:
+        _push(openTrips);
       case SearchPage.beaches:
         _push(openBeaches);
       case SearchPage.places:

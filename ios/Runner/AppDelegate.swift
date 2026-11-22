@@ -264,6 +264,12 @@ final class ErdekMapView: NSObject, FlutterPlatformView, MKMapViewDelegate {
     let status = CLLocationManager().authorizationStatus
     map.showsUserLocation = status == .authorizedWhenInUse || status == .authorizedAlways
     setPins(params?["pins"] as? [[String: Any]] ?? [])
+    // Gezi rotası: çizgi (enlem, boylam çiftleri) + tümünü sığdır.
+    if let path = params?["path"] as? [[Double]] {
+      let coords = path.compactMap { $0.count == 2 ? CLLocationCoordinate2D(latitude: $0[0], longitude: $0[1]) : nil }
+      if coords.count > 1 { map.addOverlay(MKPolyline(coordinates: coords, count: coords.count)) }
+    }
+    if params?["fit"] as? Bool == true { fitAll() }
     channel.setMethodCallHandler { [weak self] call, result in
       guard let self else { return }
       if call.method == "setPins" {
@@ -276,6 +282,26 @@ final class ErdekMapView: NSObject, FlutterPlatformView, MKMapViewDelegate {
   }
 
   func view() -> UIView { map }
+
+  /// İğneler ve rota çizgisi ekrana sığsın.
+  private func fitAll() {
+    var rect = MKMapRect.null
+    for annotation in map.annotations where annotation is ErdekPin {
+      let point = MKMapPoint(annotation.coordinate)
+      rect = rect.union(MKMapRect(x: point.x, y: point.y, width: 1, height: 1))
+    }
+    for overlay in map.overlays { rect = rect.union(overlay.boundingMapRect) }
+    guard !rect.isNull else { return }
+    map.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 48, left: 48, bottom: 48, right: 48), animated: false)
+  }
+
+  func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    guard let line = overlay as? MKPolyline else { return MKOverlayRenderer(overlay: overlay) }
+    let renderer = MKPolylineRenderer(polyline: line)
+    renderer.strokeColor = UIColor(red: 0.15, green: 0.56, blue: 0.77, alpha: 0.9)
+    renderer.lineWidth = 4
+    return renderer
+  }
 
   private func setPins(_ items: [[String: Any]]) {
     map.removeAnnotations(map.annotations.filter { $0 is ErdekPin })
@@ -303,7 +329,15 @@ final class ErdekMapView: NSObject, FlutterPlatformView, MKMapViewDelegate {
     view.annotation = pin
     view.canShowCallout = true
     view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+    view.glyphText = nil
     switch pin.kind {
+    case "stop":
+      // Rota durağı: numaralı yeşil iğne ("stop:3" → 3), balonda düğme yok.
+      view.markerTintColor = UIColor(red: 0.13, green: 0.55, blue: 0.35, alpha: 1)
+      view.glyphImage = nil
+      view.glyphText = pin.id.split(separator: ":").last.map(String.init)
+      view.rightCalloutAccessoryView = nil
+      view.displayPriority = .required
     case "pharmacy":
       view.markerTintColor = UIColor(red: 0.78, green: 0.11, blue: 0.09, alpha: 1)
       view.glyphImage = UIImage(systemName: "cross.case.fill")

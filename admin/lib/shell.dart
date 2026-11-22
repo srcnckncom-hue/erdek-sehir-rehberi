@@ -13,6 +13,7 @@ import 'content/pharmacy_editor.dart';
 import 'content/places_editor.dart';
 import 'content/social_editor.dart';
 import 'content/stories_editor.dart';
+import 'content/trips_editor.dart';
 import 'content/transport_editor.dart';
 import 'screens/ads_screen.dart';
 import 'screens/login_screen.dart';
@@ -56,6 +57,7 @@ final _groups = <_Group>[
   _Group('Keşfet', [
     _Section(Icons.storefront_outlined, 'İşletmeler', (api) => BusinessesEditor(api: api)),
     _Section(Icons.map_outlined, 'Gezilecek Yerler', (api) => PlacesEditor(api: api)),
+    _Section(Icons.route_outlined, 'Gezi Rotaları', (api) => TripsEditor(api: api)),
     _Section(Icons.history_edu_outlined, 'Erdek Tarihi', (api) => HistoryEditor(api: api)),
   ]),
 ];

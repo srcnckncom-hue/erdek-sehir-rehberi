@@ -241,3 +241,8 @@
 - Yeni içerik belgesi `markets` (data/markets.json, panel → Şehir Rehberi › Semt Pazarları, SQL: 0011_markets.sql).
 - Alanlar: ad, gün (1 Pzt … 7 Paz), başlangıç/bitiş saati (bitiş yoksa 14:00), yer, konum, aylar (mevsimlik pazar; boşsa bütün yıl), not.
 - Uygulama: Semt Pazarları sayfası (ana sayfadaki Pazar kutucuğu, menü, arama), bugünden başlayarak gün gün; kurulduğu gün ana sayfada "Bugün pazar var". Pazar duyuruları sayfanın altından.
+
+## Gezi rotaları (r33)
+- Yeni içerik belgesi `trips` (data/trips.json, panel → Keşfet › Gezi Rotaları, SQL: 0012_trips.sql; fotoğraflar content-images/trips/).
+- Alanlar: ad, tür (yuruyus/bisiklet/tekne/arac/tarih), zorluk, km, dakika, en uygun dönem, özet, anlatım, ipuçları, duraklar (panelde satır satır "Ad | enlem, boylam | not"), isteğe bağlı çizgi (enlem, boylam satırları), fotoğraflar.
+- Uygulama: Gezi Rotaları (menü, arama "rota/yürüyüş/kapıdağ"); ayrıntıda Apple Haritalar ile numaralı yeşil durak iğneleri + rota çizgisi (AppDelegate ErdekMapView: creationParams path/fit, iğne türü "stop"), "Rotayı haritada aç" (Google Haritalar yol tarifi, en fazla 9 ara durak), WhatsApp paylaşımı, güvenlik notu.
