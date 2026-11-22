@@ -8,8 +8,9 @@ import '../../core/time/clock_time.dart';
 import '../pharmacy/domain/duty_schedule.dart';
 import '../pharmacy/domain/pharmacy.dart';
 import '../prayer/domain/prayer_times.dart';
+import '../transport/domain/transport.dart';
 
-/// iOS ana ekran widget'ı (ios/ErdekWidget) için veri hazırlar ve App Group
+/// iOS ana ekran ve kilit ekranı widget'ları (ios/ErdekWidget) için veri hazırlar ve App Group
 /// üzerinden paylaşır. Widget kendi zaman çizelgesini bu veriden kurar;
 /// uygulama birkaç gün açılmasa da doğru vakti gösterir.
 abstract final class HomeWidgetSync {
@@ -34,6 +35,7 @@ abstract final class HomeWidgetSync {
     PrayerTimesData? prayer,
     PharmacyData? pharmacy,
     bool pharmacyIsSample = false,
+    TransportData? transport,
     int days = 7,
   }) {
     final today = CalendarDate.fromDateTime(erdekNow);
@@ -62,8 +64,32 @@ abstract final class HomeWidgetSync {
       }
     }
 
+    // Erdek'ten kalkan feribot ve otobüs seferleri (bugün + yarın).
+    final departures = <Map<String, String>>[];
+    if (transport != null) {
+      final nowMinutes = erdekNow.hour * 60 + erdekNow.minute;
+      for (final mode in const [TransportMode.ferry, TransportMode.bus]) {
+        for (final route in transport.outboundByMode(mode)) {
+          for (var i = 0; i <= 1; i++) {
+            final date = today.addDays(i);
+            for (final d in route.departuresOn(date)) {
+              if (i == 0 && d.time.minutesOfDay <= nowMinutes) continue;
+              departures.add({
+                'mode': mode.jsonValue,
+                'route': '${route.from} → ${route.to}',
+                'at': _stamp(date, d.time),
+              });
+            }
+          }
+        }
+      }
+      departures.sort((a, b) => a['at']!.compareTo(b['at']!));
+      if (departures.length > 40) departures.removeRange(40, departures.length);
+    }
+
     return {
-      'version': 1,
+      'version': 2,
+      'departures': departures,
       'prayers': prayers,
       'duties': duties,
       'pharmacyIsSample': pharmacyIsSample,

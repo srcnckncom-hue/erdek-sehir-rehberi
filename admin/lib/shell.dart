@@ -11,6 +11,7 @@ import 'content/social_editor.dart';
 import 'content/transport_editor.dart';
 import 'screens/ads_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/push_screen.dart';
 import 'theme.dart';
 
 /// Kenar çubuğundaki bir bölüm.
@@ -34,6 +35,7 @@ final _groups = <_Group>[
   _Group('Genel', [
     _Section(Icons.campaign_outlined, 'Reklamlar', (api) => AdsScreen(api: api)),
     _Section(Icons.notifications_outlined, 'Duyurular', (api) => AnnouncementsEditor(api: api)),
+    _Section(Icons.send_outlined, 'Bildirim Gönder', (api) => PushScreen(api: api)),
     _Section(Icons.share_outlined, 'Sosyal Medya', (api) => SocialEditor(api: api)),
   ]),
   _Group('Şehir Rehberi', [

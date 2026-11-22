@@ -1,12 +1,15 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../api.dart';
+import '../screens/push_screen.dart';
 import 'content_editor.dart';
 import 'form_kit.dart';
 
 const _categories = {'genel': 'Genel', 'kesinti': 'Kesinti', 'pazar': 'Pazar', 'etkinlik': 'Etkinlik'};
 
 /// Duyurular. Bitiş tarihi geçen duyuru uygulamada kendiliğinden kalkar.
+/// Her duyurunun yanındaki ✈ düğmesi onu anlık bildirim olarak da gönderir
+/// (kesinti vb. acil durumlar).
 class AnnouncementsEditor extends StatelessWidget {
   const AnnouncementsEditor({super.key, required this.api});
 
@@ -17,13 +20,14 @@ class AnnouncementsEditor extends StatelessWidget {
         api: api,
         docId: 'announcements',
         title: 'Duyurular',
-        builder: (context, data, changed) => _Body(data: data, changed: changed),
+        builder: (context, data, changed) => _Body(api: api, data: data, changed: changed),
       );
 }
 
 class _Body extends StatefulWidget {
-  const _Body({required this.data, required this.changed});
+  const _Body({required this.api, required this.data, required this.changed});
 
+  final Api api;
   final Map<String, dynamic> data;
   final VoidCallback changed;
 
@@ -33,6 +37,11 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   List<dynamic> get _items => widget.data['items'] as List<dynamic>;
+
+  static String _clip(String text, int max) {
+    final t = text.trim();
+    return t.length <= max ? t : '${t.substring(0, max - 1)}…';
+  }
 
   Future<void> _edit([Map<String, dynamic>? a]) async {
     final v = await showFormDialog(
@@ -105,7 +114,20 @@ class _BodyState extends State<_Body> {
                   '${trDateText(datePart(a['startsAt'] as String?))} – ${trDateText(datePart(a['endsAt'] as String?))}',
                 a['body'] as String,
               ].join(' · '), maxLines: 2, overflow: TextOverflow.ellipsis),
-              trailing: RowActions(
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    tooltip: 'Bildirim olarak gönder',
+                    icon: const Icon(Icons.send_outlined),
+                    onPressed: () => confirmAndSendPush(
+                      context,
+                      widget.api,
+                      title: _clip(a['title'] as String, 80),
+                      body: _clip(a['body'] as String, 240),
+                    ),
+                  ),
+                  RowActions(
                 onEdit: () => _edit(a),
                 onDelete: () async {
                   if (await confirmDelete(context, 'Duyuru')) {
@@ -113,6 +135,8 @@ class _BodyState extends State<_Body> {
                     widget.changed();
                   }
                 },
+                  ),
+                ],
               ),
             ),
           ),

@@ -227,6 +227,35 @@ class Api {
     _check(res);
   }
 
+  // ─── Bildirim (send-push Edge Function) ──────────────────────────────
+  /// "Önemli duyurular"ı açan herkese anlık bildirim gönderir.
+  Future<void> sendPush({required String title, required String body}) async {
+    final res = await http.post(
+      Uri.parse('$base/functions/v1/send-push'),
+      headers: await _headers(),
+      body: jsonEncode({'title': title, 'body': body}),
+    );
+    if (res.statusCode == 404) {
+      throw ApiException('send-push fonksiyonu kurulmamış (docs/BILDIRIM_GONDER.md).');
+    }
+    if (res.statusCode < 200 || res.statusCode >= 300) {
+      var message = 'Gönderilemedi (${res.statusCode})';
+      try {
+        final j = jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+        message = (j['error'] ?? j['message'] ?? message).toString();
+      } catch (_) {
+        // gövde JSON değil
+      }
+      throw ApiException(message);
+    }
+  }
+
+  /// Son gönderilen bildirimler (yeniden eskiye).
+  Future<List<Map<String, dynamic>>> pushLog({int limit = 20}) async => [
+        for (final row in await _get('push_log?select=*&order=sent_at.desc&limit=$limit'))
+          row as Map<String, dynamic>,
+      ];
+
   // ─── Storage ─────────────────────────────────────────────────────────
   /// Görseli yükler, kovadaki yolunu döndürür.
   Future<String> uploadImage(Uint8List bytes, {required String contentType}) async {

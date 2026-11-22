@@ -15,6 +15,7 @@ import '../../features/prayer/notifications/prayer_notifications.dart';
 import '../../features/prayer/presentation/prayer_screen.dart';
 import '../../features/ramadan/ramadan.dart';
 import '../../features/reminders/reminder_scheduler.dart';
+import '../../features/transport/data/transport_repository.dart';
 import '../../features/transport/presentation/transport_screen.dart';
 import '../providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -49,6 +50,7 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
     // iOS ana ekran widget'ı: vakit ya da eczane verisi değişince güncelle.
     ref.listenManual(prayerTimesProvider, (_, _) => _syncWidget(), fireImmediately: true);
     ref.listenManual(pharmacyDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
+    ref.listenManual(transportDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
   }
 
   @override
@@ -75,6 +77,7 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
           prayer: ref.read(prayerTimesProvider).value?.data,
           pharmacy: pharmacy?.data,
           pharmacyIsSample: pharmacy?.isSample ?? false,
+          transport: ref.read(transportDataProvider).value?.data,
         ),
       ),
     );

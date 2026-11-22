@@ -5,6 +5,7 @@ import 'package:erdek_rehberi/core/data/data_envelope.dart';
 import 'package:erdek_rehberi/features/home_widget_sync/widget_sync.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/prayer/domain/prayer_times.dart';
+import 'package:erdek_rehberi/features/transport/domain/transport.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/test_overrides.dart';
@@ -34,9 +35,24 @@ void main() {
     expect(duties.first['names'], isNotEmpty);
   });
 
+  test('widget verisi: sıradaki seferler (geçmişler yok, sıralı)', () {
+    final snap = HomeWidgetSync.buildSnapshot(
+      erdekNow: testNow,
+      transport: _load('transport.json', TransportData.fromJson),
+    );
+    final departures = (snap['departures'] as List<dynamic>).cast<Map<String, String>>();
+    expect(departures, isNotEmpty);
+    final stamps = [for (final d in departures) d['at']!];
+    expect(stamps, orderedEquals([...stamps]..sort()));
+    // testNow = 21.11.2026 18:05 → bugünün geçmiş seferleri yok
+    expect(stamps.first.compareTo('2026-11-21T18:05:00+03:00'), greaterThan(0));
+    expect(departures.first['route'], contains('→'));
+  });
+
   test('veri yoksa boş listeler', () {
     final snap = HomeWidgetSync.buildSnapshot(erdekNow: testNow);
     expect(snap['prayers'], isEmpty);
     expect(snap['duties'], isEmpty);
+    expect(snap['departures'], isEmpty);
   });
 }
