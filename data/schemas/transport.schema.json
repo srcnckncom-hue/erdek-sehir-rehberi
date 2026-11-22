@@ -152,6 +152,14 @@
               "isSample": {
                 "type": "boolean",
                 "description": "Bu hat henüz örnek veri"
+              },
+              "stops": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Sırasıyla durak adları"
               }
             }
           }

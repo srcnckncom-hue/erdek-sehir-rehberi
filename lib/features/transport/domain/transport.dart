@@ -86,6 +86,7 @@ class TransportRoute {
     this.note,
     this.isOutbound = true,
     this.isSample = false,
+    this.stops = const [],
   });
 
   factory TransportRoute.fromJson(Map<String, dynamic> json) => TransportRoute(
@@ -99,6 +100,7 @@ class TransportRoute {
         note: json['note'] as String?,
         isOutbound: (json['direction'] as String? ?? 'outbound') == 'outbound',
         isSample: json['isSample'] as bool? ?? false,
+        stops: [for (final s in json['stops'] as List<dynamic>? ?? const []) s as String],
         timetables: (json['timetables'] as List<dynamic>)
             .map((e) => Timetable.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -119,6 +121,28 @@ class TransportRoute {
   /// Bu hattın saatleri henüz örnek.
   final bool isSample;
   final List<Timetable> timetables;
+
+  /// Sırasıyla duraklar (yalnızca ad; ör. "Pazar Alanı").
+  final List<String> stops;
+
+  /// Güzergâhı Google Haritalar'da açan bağlantı (durak yoksa null).
+  /// Google en fazla 9 ara durak kabul eder; fazlası eşit aralıkla seçilir.
+  String? mapsUrl() {
+    if (stops.length < 2) return null;
+    String q(String name) => '$name, Erdek, Balıkesir';
+    final middle = stops.sublist(1, stops.length - 1);
+    const maxWaypoints = 9;
+    final picked = middle.length <= maxWaypoints
+        ? middle
+        : [for (var i = 0; i < maxWaypoints; i++) middle[(i * (middle.length - 1) / (maxWaypoints - 1)).round()]];
+    return Uri.https('www.google.com', '/maps/dir/', {
+      'api': '1',
+      'origin': q(stops.first),
+      'destination': q(stops.last),
+      if (picked.isNotEmpty) 'waypoints': picked.map(q).join('|'),
+      'travelmode': 'driving',
+    }).toString();
+  }
 
   Timetable? timetableFor(CalendarDate date) =>
       timetables.where((t) => t.isActiveOn(date)).firstOrNull;

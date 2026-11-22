@@ -133,6 +133,10 @@ class TransportScreen extends ConsumerWidget {
             now: now,
             next: next,
           ),
+          if (route.stops.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.section),
+            _StopList(route: route),
+          ],
         ]);
       }
 
@@ -256,6 +260,12 @@ class _NextDepartureCard extends StatelessWidget {
       tagLabel: timetable?.name,
       tagIcon: timetable == null ? null : AppIcons.imsakiye,
       actions: [
+        if (route.mapsUrl() case final url?)
+          CardAction(
+            icon: AppIcons.directions,
+            label: l10n.routeShowOnMap,
+            onTap: () => launchOrNotify(context, () => Launchers.openUrl(url)),
+          ),
         if (route.phone != null)
           CardAction(
             icon: AppIcons.call,
@@ -264,6 +274,56 @@ class _NextDepartureCard extends StatelessWidget {
           ),
       ],
       footnote: route.operatorName,
+    );
+  }
+}
+
+// ─── Duraklar ─────────────────────────────────────────────────────────────
+
+class _StopList extends StatelessWidget {
+  const _StopList({required this.route});
+
+  final TransportRoute route;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final p = context.palette;
+    final stops = route.stops;
+    final url = route.mapsUrl();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionHeader(title: l10n.routeStops(stops.length)),
+        const SizedBox(height: AppSpacing.md),
+        GroupedCard(
+          children: [
+            for (var i = 0; i < stops.length; i++)
+              ListTile(
+                key: Key('route_stop_$i'),
+                dense: true,
+                leading: CircleAvatar(
+                  radius: 13,
+                  backgroundColor: p.mint.foreground,
+                  child: Text('${i + 1}', style: AppTypography.tabLabel.copyWith(color: Colors.white)),
+                ),
+                title: Text(stops[i], style: AppTypography.label.copyWith(color: p.textHeading)),
+              ),
+          ],
+        ),
+        if (url != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          Padding(
+            padding: AppSpacing.pagePadding,
+            child: OutlinedButton.icon(
+              key: const Key('route_map'),
+              onPressed: () => launchOrNotify(context, () => Launchers.openUrl(url)),
+              icon: AppIcon(AppIcons.directions, size: 18, color: p.primary),
+              label: Text(l10n.routeShowOnMap),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

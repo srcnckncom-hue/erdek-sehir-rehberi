@@ -1356,5 +1356,14 @@
   "erdeksporNewest": "→ en yeni",
   "erdeksporFormWon": "G",
   "erdeksporFormDrawn": "B",
-  "erdeksporFormLost": "M"
+  "erdeksporFormLost": "M",
+  "routeStops": "Duraklar ({count})",
+  "@routeStops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "routeShowOnMap": "Güzergâhı haritada göster"
 }

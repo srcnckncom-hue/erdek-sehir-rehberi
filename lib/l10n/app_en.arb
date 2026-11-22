@@ -539,5 +539,7 @@
   "erdeksporNewest": "→ newest",
   "erdeksporFormWon": "W",
   "erdeksporFormDrawn": "D",
-  "erdeksporFormLost": "L"
+  "erdeksporFormLost": "L",
+  "routeStops": "Stops ({count})",
+  "routeShowOnMap": "Show route on map"
 }

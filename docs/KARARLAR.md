@@ -263,3 +263,8 @@
 - Atatürk ve Erdek sayfası (uygulama içi metin; kaynak: Özel Erdek, Bandırma Manşet). 24 Haziran ve 18 Eylül'de "Erdek'te bugün" kartında anma satırı.
 - Dil seçimi Ayarlar'dan kaldırıldı, yan menüde Görünüm'ün altında.
 - Yeni isteğe bağlı ana sayfa kutucukları: Erdekspor, Atatürk ve Erdek.
+
+## r37 — Hat durakları
+
+- Hatlara isteğe bağlı `stops` (durak adları, sırasıyla) eklendi. Ulaşım ekranında durak listesi ve "Güzergâhı haritada göster" (Google Haritalar yol tarifi; en fazla 9 ara durak, eşit aralıkla seçilir). Koordinat tutulmaz; durak kodları (ERD5 vb.) yazılmaz.
+- Şehir içi Otogar ⇄ Kamplar (Ay Kamping) hattı gerçek tarifeyle eklendi; örnek şehir içi hatlar kaldırıldı.

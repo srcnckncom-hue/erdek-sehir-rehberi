@@ -74,6 +74,8 @@ class _BodyState extends State<_Body> {
             initial: r?['phone'] == null ? null : formatPhone(r!['phone'] as String),
             validator: phoneValidator, keyboard: TextInputType.phone),
         FieldSpec('note', 'Not (isteğe bağlı)', kind: FieldKind.multiline, initial: r?['note'] as String?),
+        FieldSpec('stops', 'Duraklar (isteğe bağlı, her satıra bir durak, sırasıyla)',
+            kind: FieldKind.multiline, initial: (r?['stops'] as List<dynamic>?)?.join('\n')),
         FieldSpec('isSample', 'Bu hat ÖRNEK mi? (uygulamada uyarı gösterir)',
             kind: FieldKind.choice, options: const {'false': 'Hayır, gerçek bilgi', 'true': 'Evet, örnek'},
             initial: '${r?['isSample'] ?? false}'),
@@ -91,6 +93,9 @@ class _BodyState extends State<_Body> {
       if (v['phone']!.isNotEmpty) 'phone': normalizePhone(v['phone']!),
       if (v['note']!.isNotEmpty) 'note': v['note'],
       if (v['isSample'] == 'true') 'isSample': true,
+      if (v['stops']!.split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty).toList() case final stops
+          when stops.isNotEmpty)
+        'stops': stops,
       'timetables': r?['timetables'] ??
           [
             {'name': 'Tarife', 'validFrom': isoDate(DateTime.now()), 'validTo': '${DateTime.now().year + 1}-12-31', 'departures': <dynamic>[]},

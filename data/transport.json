@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "isSample": false,
   "updatedAt": "2026-11-22T20:15:00+03:00",
-  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü ve şehir içi: ÖRNEK VERİ.",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
@@ -1250,162 +1250,48 @@
         "direction": "outbound"
       },
       {
-        "id": "sehirici-1-gidis",
+        "id": "sehirici-otogar-kamplar",
         "mode": "city",
         "direction": "outbound",
-        "isSample": true,
-        "title": "ÖRNEK Hat 1: Merkez → ÖRNEK Mahalle A",
-        "from": "Erdek Merkez",
-        "to": "ÖRNEK Mahalle A",
+        "title": "Otogar → Kamplar (Ay Kamping)",
+        "from": "Otogar (Atatürk Mahallesi Muhtarlığı)",
+        "to": "Ay Kamping",
         "operator": "Balıkesir Büyükşehir Belediyesi",
-        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "note": "Saatler ilk duraktan kalkış saatidir.",
+        "stops": [
+          "Atatürk Mahallesi Muhtarlığı",
+          "Yıldız Sokak",
+          "Piri Reis Caddesi Ihlamur Sokak",
+          "Erdek Plajı",
+          "13. Sokak",
+          "Erdek Alevok",
+          "Pazar Alanı",
+          "Kafkas Otel",
+          "Erdek Arlina",
+          "Erdek Agrigento",
+          "Piri Reis Caddesi",
+          "Ersoy Sitesi",
+          "Cansever Sitesi",
+          "2. Birlik Sitesi",
+          "Polem Erdek",
+          "Ay Kamping"
+        ],
         "timetables": [
           {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
             "validTo": "2027-12-31",
             "departures": [
               {
-                "time": "07:00",
+                "time": "08:00",
                 "days": [
                   1,
                   2,
                   3,
                   4,
                   5,
-                  6
-                ]
-              },
-              {
-                "time": "08:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "10:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "12:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "14:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "16:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "18:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "20:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "07:00",
-                "days": [
+                  6,
                   7
-                ]
-              },
-              {
-                "time": "10:00",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "14:00",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "18:00",
-                "days": [
-                  7
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "sehirici-1-donus",
-        "mode": "city",
-        "direction": "inbound",
-        "isSample": true,
-        "title": "ÖRNEK Hat 1: ÖRNEK Mahalle A → Merkez",
-        "from": "ÖRNEK Mahalle A",
-        "to": "Erdek Merkez",
-        "operator": "Balıkesir Büyükşehir Belediyesi",
-        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
-        "timetables": [
-          {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
-            "validTo": "2027-12-31",
-            "departures": [
-              {
-                "time": "07:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
                 ]
               },
               {
@@ -1416,370 +1302,20 @@
                   3,
                   4,
                   5,
-                  6
-                ]
-              },
-              {
-                "time": "10:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "12:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "14:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "16:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "18:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "20:30",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "07:30",
-                "days": [
+                  6,
                   7
                 ]
               },
               {
-                "time": "10:30",
+                "time": "10:00",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
-                ]
-              },
-              {
-                "time": "14:30",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "18:30",
-                "days": [
-                  7
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "sehirici-2-gidis",
-        "mode": "city",
-        "direction": "outbound",
-        "isSample": true,
-        "title": "ÖRNEK Hat 2: Merkez → ÖRNEK Mahalle B",
-        "from": "Erdek Merkez",
-        "to": "ÖRNEK Mahalle B",
-        "operator": "Balıkesir Büyükşehir Belediyesi",
-        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
-        "timetables": [
-          {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
-            "validTo": "2027-12-31",
-            "departures": [
-              {
-                "time": "07:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "09:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "11:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "13:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "15:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "17:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "19:15",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "07:15",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "11:15",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "15:15",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "19:15",
-                "days": [
-                  7
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "sehirici-2-donus",
-        "mode": "city",
-        "direction": "inbound",
-        "isSample": true,
-        "title": "ÖRNEK Hat 2: ÖRNEK Mahalle B → Merkez",
-        "from": "ÖRNEK Mahalle B",
-        "to": "Erdek Merkez",
-        "operator": "Balıkesir Büyükşehir Belediyesi",
-        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
-        "timetables": [
-          {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
-            "validTo": "2027-12-31",
-            "departures": [
-              {
-                "time": "07:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "09:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "11:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "13:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "15:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "17:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "19:45",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "07:45",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "11:45",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "15:45",
-                "days": [
-                  7
-                ]
-              },
-              {
-                "time": "19:45",
-                "days": [
-                  7
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "sehirici-3-gidis",
-        "mode": "city",
-        "direction": "outbound",
-        "isSample": true,
-        "title": "ÖRNEK Hat 3: Merkez → ÖRNEK Mahalle C",
-        "from": "Erdek Merkez",
-        "to": "ÖRNEK Mahalle C",
-        "operator": "Balıkesir Büyükşehir Belediyesi",
-        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
-        "timetables": [
-          {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
-            "validTo": "2027-12-31",
-            "departures": [
-              {
-                "time": "08:00",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
                 ]
               },
               {
@@ -1790,7 +1326,68 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "11:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "13:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "13:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -1801,7 +1398,68 @@
                   3,
                   4,
                   5,
-                  6
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "14:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "16:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "16:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
                 ]
               },
               {
@@ -1812,18 +1470,103 @@
                   3,
                   4,
                   5,
-                  6
-                ]
-              },
-              {
-                "time": "08:00",
-                "days": [
+                  6,
                   7
                 ]
               },
               {
-                "time": "14:00",
+                "time": "17:30",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "19:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "20:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "21:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "22:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "23:00",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               }
@@ -1832,74 +1575,334 @@
         ]
       },
       {
-        "id": "sehirici-3-donus",
+        "id": "sehirici-kamplar-otogar",
         "mode": "city",
         "direction": "inbound",
-        "isSample": true,
-        "title": "ÖRNEK Hat 3: ÖRNEK Mahalle C → Merkez",
-        "from": "ÖRNEK Mahalle C",
-        "to": "Erdek Merkez",
+        "title": "Kamplar (Ay Kamping) → Otogar",
+        "from": "Ay Kamping",
+        "to": "Yalı Camii",
         "operator": "Balıkesir Büyükşehir Belediyesi",
-        "note": "ÖRNEK VERİ — Balıkesir Büyükşehir Belediyesi Erdek içi hat saatleriyle değiştirilecek.",
+        "note": "Saatler Ay Kamping'den kalkış saatidir. 10:45 seferi yalnızca hafta içi.",
+        "stops": [
+          "Ay Kamping",
+          "Polem Erdek",
+          "2. Birlik Sitesi",
+          "Cansever Sitesi",
+          "Piri Reis Caddesi",
+          "Erdek Arlina",
+          "Piri Reis Caddesi 10. Sokak",
+          "Piri Reis Caddesi 8. Sokak",
+          "Pazar Alanı",
+          "Erdek Alevok",
+          "Erdek Besob",
+          "Erdek Plajı",
+          "Piri Reis Caddesi Ihlamur Sokak",
+          "Şehit Mehmet Sokak",
+          "Gül Sokak",
+          "Erdek Sahil",
+          "Yalı Camii"
+        ],
         "timetables": [
           {
-            "name": "Genel tarife (ÖRNEK)",
-            "validFrom": "2026-01-01",
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
             "validTo": "2027-12-31",
             "departures": [
               {
-                "time": "08:40",
+                "time": "08:15",
                 "days": [
                   1,
                   2,
                   3,
                   4,
                   5,
-                  6
-                ]
-              },
-              {
-                "time": "11:40",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "14:40",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "17:40",
-                "days": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6
-                ]
-              },
-              {
-                "time": "08:40",
-                "days": [
+                  6,
                   7
                 ]
               },
               {
-                "time": "14:40",
+                "time": "09:15",
                 "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "10:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "10:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "time": "11:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "11:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "13:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "13:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "14:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "14:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "16:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "16:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "17:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "17:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "19:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "20:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "21:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "22:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "23:15",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
                   7
                 ]
               }
