@@ -11,9 +11,7 @@ final _club = File('test/fixtures/erdekspor_club.html').readAsStringSync();
 final _group = File('test/fixtures/erdekspor_group.html').readAsStringSync();
 
 class _FakeFetcher implements HtmlFetcher {
-  _FakeFetcher({this.fail = false});
-
-  bool fail;
+  bool fail = false;
   final urls = <String>[];
 
   @override
