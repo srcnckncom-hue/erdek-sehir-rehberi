@@ -117,7 +117,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         creationParamsCodec: const StandardMessageCodec(),
                         onPlatformViewCreated: _onCreated,
                       )
-                    : ColoredBox(
+                    : Material(
                         key: const Key('map_fallback'),
                         color: p.surface,
                         child: ListView(
