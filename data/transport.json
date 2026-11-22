@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "isSample": false,
   "updatedAt": "2026-11-22T20:15:00+03:00",
-  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar ve Kurbağalıdere–Havuzlu Meydan: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
@@ -1907,6 +1907,259 @@
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-kurbagalidere-havuzlu",
+        "mode": "city",
+        "direction": "outbound",
+        "title": "Kurbağalıdere → Havuzlu Meydan",
+        "from": "Kurbağalıdere Caddesi",
+        "to": "İlçe Nüfus Müdürlüğü (Havuzlu Meydan)",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Saatler Kurbağalıdere Caddesi'nden kalkış saatidir.",
+        "stops": [
+          "Kurbağalıdere Caddesi",
+          "Zeytinli Mahallesi Muhtarlığı",
+          "Atatürk İlköğretim Okulu",
+          "Reşit Mazhar Ertüzün Anaokulu",
+          "Kültür Sokak",
+          "Turgut Özal Bulvarı Nurettin Meriç Sokak",
+          "Adnan Menderes Caddesi Migros",
+          "Atatürk Mahallesi Muhtarlığı",
+          "İlçe Nüfus Müdürlüğü"
+        ],
+        "timetables": [
+          {
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "08:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "09:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "10:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "11:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:10",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "time": "12:30",
+                "days": [
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "12:40",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "time": "13:05",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "time": "13:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "14:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:30",
+                "days": [
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "15:45",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "time": "16:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "17:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "18:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "19:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "20:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              },
+              {
+                "time": "21:30",
+                "days": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-havuzlu-kurbagalidere",
+        "mode": "city",
+        "direction": "inbound",
+        "title": "Havuzlu Meydan → Kurbağalıdere",
+        "from": "İlçe Nüfus Müdürlüğü (Havuzlu Meydan)",
+        "to": "Kemal Balıkesir Caddesi",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Dönüş yönü için ayrı saat yayımlanmamıştır.",
+        "stops": [
+          "İlçe Nüfus Müdürlüğü",
+          "Asiye Tozun Sitesi",
+          "Kurbağalı Sahil",
+          "Kemal Balıkesir Caddesi 1. Sokak",
+          "Kemal Balıkesir Caddesi"
+        ],
+        "timetables": [
+          {
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
+            "validTo": "2027-12-31",
+            "departures": []
           }
         ]
       }

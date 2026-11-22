@@ -266,5 +266,5 @@
 
 ## r37 — Hat durakları
 
-- Hatlara isteğe bağlı `stops` (durak adları, sırasıyla) eklendi. Ulaşım ekranında durak listesi ve "Güzergâhı haritada göster" (Google Haritalar yol tarifi; en fazla 9 ara durak, eşit aralıkla seçilir). Koordinat tutulmaz; durak kodları (ERD5 vb.) yazılmaz.
+- Hatlara isteğe bağlı `stops` (durak adları, sırasıyla) eklendi. Ulaşım ekranında durak listesi (harita düğmesi kullanıcı isteğiyle kaldırıldı). Koordinat tutulmaz; durak kodları (ERD5 vb.) yazılmaz.
 - Şehir içi Otogar ⇄ Kamplar (Ay Kamping) hattı gerçek tarifeyle eklendi; örnek şehir içi hatlar kaldırıldı.

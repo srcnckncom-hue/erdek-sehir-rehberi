@@ -57,46 +57,19 @@ void main() {
     expect(next.single.departure.time.toString(), '16:00');
   });
 
-  group('duraklar ve harita bağlantısı', () {
-    TransportRoute city(List<String> stops) => TransportRoute.fromJson({
-          'id': 'c',
-          'mode': 'city',
-          'title': 'Otogar → Kamplar',
-          'from': 'Otogar',
-          'to': 'Kamplar',
-          'stops': stops,
-          'timetables': [
-            {
-              'name': 'T',
-              'validFrom': '2026-01-01',
-              'validTo': '2027-12-31',
-              'departures': [
-                {'time': '08:00', 'days': [1, 2, 3, 4, 5, 6, 7]},
-              ],
-            },
-          ],
-        });
-
-    test('durak yoksa bağlantı yok', () {
-      expect(route.stops, isEmpty);
-      expect(route.mapsUrl(), isNull);
+  test('duraklar sırasıyla okunur', () {
+    final r = TransportRoute.fromJson({
+      'id': 'c',
+      'mode': 'city',
+      'title': 'A → B',
+      'from': 'A',
+      'to': 'B',
+      'stops': ['A', 'Pazar Alanı', 'B'],
+      'timetables': [
+        {'name': 'T', 'validFrom': '2026-01-01', 'validTo': '2027-12-31', 'departures': <dynamic>[]},
+      ],
     });
-
-    test('ilk ve son durak başlangıç ve varış olur', () {
-      final uri = Uri.parse(city(['Pazar Alanı', 'Erdek Plajı', 'Ay Kamping']).mapsUrl()!);
-      expect(uri.host, 'www.google.com');
-      expect(uri.queryParameters['origin'], 'Pazar Alanı, Erdek, Balıkesir');
-      expect(uri.queryParameters['destination'], 'Ay Kamping, Erdek, Balıkesir');
-      expect(uri.queryParameters['waypoints'], 'Erdek Plajı, Erdek, Balıkesir');
-    });
-
-    test('en fazla 9 ara durak gönderilir', () {
-      final stops = [for (var i = 0; i < 17; i++) 'D$i'];
-      final uri = Uri.parse(city(stops).mapsUrl()!);
-      final wp = uri.queryParameters['waypoints']!.split('|');
-      expect(wp, hasLength(9));
-      expect(wp.first, 'D1, Erdek, Balıkesir');
-      expect(wp.last, 'D15, Erdek, Balıkesir');
-    });
+    expect(r.stops, ['A', 'Pazar Alanı', 'B']);
+    expect(route.stops, isEmpty);
   });
 }

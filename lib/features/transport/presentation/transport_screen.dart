@@ -260,12 +260,6 @@ class _NextDepartureCard extends StatelessWidget {
       tagLabel: timetable?.name,
       tagIcon: timetable == null ? null : AppIcons.imsakiye,
       actions: [
-        if (route.mapsUrl() case final url?)
-          CardAction(
-            icon: AppIcons.directions,
-            label: l10n.routeShowOnMap,
-            onTap: () => launchOrNotify(context, () => Launchers.openUrl(url)),
-          ),
         if (route.phone != null)
           CardAction(
             icon: AppIcons.call,
@@ -290,7 +284,6 @@ class _StopList extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     final stops = route.stops;
-    final url = route.mapsUrl();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -311,18 +304,6 @@ class _StopList extends StatelessWidget {
               ),
           ],
         ),
-        if (url != null) ...[
-          const SizedBox(height: AppSpacing.md),
-          Padding(
-            padding: AppSpacing.pagePadding,
-            child: OutlinedButton.icon(
-              key: const Key('route_map'),
-              onPressed: () => launchOrNotify(context, () => Launchers.openUrl(url)),
-              icon: AppIcon(AppIcons.directions, size: 18, color: p.primary),
-              label: Text(l10n.routeShowOnMap),
-            ),
-          ),
-        ],
       ],
     );
   }

@@ -1364,6 +1364,5 @@
         "type": "int"
       }
     }
-  },
-  "routeShowOnMap": "Güzergâhı haritada göster"
+  }
 }
