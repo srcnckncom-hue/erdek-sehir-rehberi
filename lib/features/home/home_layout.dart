@@ -25,7 +25,9 @@ enum HomeTile {
   nearby,
   businesses,
   weather,
-  places;
+  places,
+  erdekspor,
+  ataturk;
 
   static const defaults = [announcements, contacts, bus, imsakiye, outages, markets, events, emergency];
 
@@ -46,6 +48,8 @@ enum HomeTile {
         businesses => AppIcons.businesses,
         weather => AppIcons.forecast,
         places => AppIcons.places,
+        erdekspor => AppIcons.erdekspor,
+        ataturk => AppIcons.ataturk,
       };
 
   Color color(AppPalette p) => switch (this) {
@@ -54,7 +58,7 @@ enum HomeTile {
         imsakiye => p.iconRed,
         outages => p.iconCrimson,
         events || favorites || businesses => p.iconOrange,
-        emergency => p.iconCoral,
+        emergency || erdekspor || ataturk => p.iconCoral,
         beaches => p.aqua.foreground,
         trips => p.mint.foreground,
       };
@@ -76,6 +80,8 @@ enum HomeTile {
         businesses => l10n.businessesTitle,
         weather => l10n.weatherTitle,
         places => l10n.placesTitle,
+        erdekspor => l10n.erdeksporTitle,
+        ataturk => l10n.ataturkTitle,
       };
 }
 

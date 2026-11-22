@@ -26,6 +26,8 @@ import '../../events/events.dart';
 import '../../events/events_screen.dart';
 import '../../markets/markets_screen.dart';
 import '../../outages/outages_screen.dart';
+import '../../erdekspor/erdekspor_screen.dart';
+import '../../explore/presentation/ataturk_screen.dart';
 import '../../explore/presentation/history_screen.dart';
 import '../../explore/presentation/places_screen.dart';
 import '../../favorites/favorites_screen.dart';
@@ -116,6 +118,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.trips: l10n.tripsTitle,
         SearchPage.beaches: l10n.beachesTitle,
         SearchPage.places: l10n.placesTitle,
+        SearchPage.ataturk: l10n.ataturkTitle,
+        SearchPage.erdekspor: l10n.erdeksporTitle,
         SearchPage.history: l10n.historyTitle,
         SearchPage.settings: l10n.settingsTitle,
       };
@@ -140,6 +144,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.trips => AppIcons.trips,
         SearchPage.beaches => AppIcons.placeBeach,
         SearchPage.places => AppIcons.places,
+        SearchPage.ataturk => AppIcons.ataturk,
+        SearchPage.erdekspor => AppIcons.erdekspor,
         SearchPage.history => AppIcons.history,
         SearchPage.settings => AppIcons.settings,
       };
@@ -184,6 +190,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         _push(openBeaches);
       case SearchPage.places:
         _push(openPlaces);
+      case SearchPage.ataturk:
+        _push(openAtaturk);
+      case SearchPage.erdekspor:
+        _push(openErdekspor);
       case SearchPage.history:
         _push(openHistory);
       case SearchPage.settings:

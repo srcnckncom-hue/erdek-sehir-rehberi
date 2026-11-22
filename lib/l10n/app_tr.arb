@@ -1310,5 +1310,51 @@
       }
     }
   },
-  "homeLayoutReset": "Varsayılan"
+  "homeLayoutReset": "Varsayılan",
+  "ataturkTitle": "Atatürk ve Erdek",
+  "todayCommemoration": "Anma",
+  "todayAtaturkDay": "Atatürk'ün Erdek'e gelişinin yıl dönümü (24 Haziran 1938)",
+  "todayLiberationDay": "Erdek'in düşman işgalinden kurtuluşunun yıl dönümü (18 Eylül 1922)",
+  "erdeksporTitle": "Erdekspor",
+  "erdeksporSubtitle": "Fikstür, sonuçlar ve puan durumu",
+  "erdeksporFixtures": "Fikstür",
+  "erdeksporResults": "Sonuçlar",
+  "erdeksporStandings": "Puan",
+  "erdeksporStats": "İstatistik",
+  "erdeksporErrorTitle": "Bilgiler alınamadı",
+  "erdeksporErrorMessage": "İnternet bağlantınızı kontrol edip tekrar deneyin.",
+  "erdeksporNoFixtures": "Programda maç yok.",
+  "erdeksporNoResults": "Henüz oynanan maç yok.",
+  "erdeksporNoStandings": "Puan durumu henüz yok.",
+  "erdeksporNoStats": "İstatistik henüz yok.",
+  "erdeksporSource": "Kaynak: Balıkesir ASKF",
+  "erdeksporUpdated": "Güncelleme {time}",
+  "@erdeksporUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "erdeksporOffline": "Çevrimdışı, son bilgiler",
+  "erdeksporOpenSite": "Federasyon sayfasında aç",
+  "erdeksporWon": "Galibiyet",
+  "erdeksporDrawn": "Beraberlik",
+  "erdeksporLost": "Mağlubiyet",
+  "erdeksporHome": "İç saha",
+  "erdeksporAway": "Deplasman",
+  "erdeksporRound": "{round}. hafta",
+  "@erdeksporRound": {
+    "placeholders": {
+      "round": {
+        "type": "int"
+      }
+    }
+  },
+  "erdeksporTeam": "Takım",
+  "erdeksporForm": "Son 5 maç",
+  "erdeksporNewest": "→ en yeni",
+  "erdeksporFormWon": "G",
+  "erdeksporFormDrawn": "B",
+  "erdeksporFormLost": "M"
 }

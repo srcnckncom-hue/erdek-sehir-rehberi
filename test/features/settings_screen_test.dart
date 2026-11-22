@@ -3,6 +3,7 @@ import 'package:erdek_rehberi/core/system/system_bridge.dart';
 import 'package:erdek_rehberi/features/prayer/presentation/notification_settings_sheet.dart';
 import 'package:erdek_rehberi/features/settings/presentation/settings_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:erdek_rehberi/app/shell/app_drawer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -52,7 +53,7 @@ void main() {
     expect(find.byKey(notificationSheetCloseKey), findsNothing);
   });
 
-  testWidgets('Dil seçimi: Türkçe ve English seçenekleri', (tester) async {
+  testWidgets('Dil seçimi yan menüde: Türkçe ve English seçenekleri', (tester) async {
     tester.view
       ..physicalSize = const Size(1170, 6000)
       ..devicePixelRatio = 3;
@@ -60,6 +61,11 @@ void main() {
 
     await tester.pumpWidget(testApp(const SettingsScreen()));
     await tester.pumpAndSettle();
+    expect(find.text('Dil'), findsNothing);
+
+    await tester.pumpWidget(testApp(const AppDrawer()));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('drawer_language')), findsOneWidget);
     expect(find.text('Dil'), findsOneWidget);
     expect(find.text('Türkçe'), findsOneWidget);
     expect(find.text('English'), findsOneWidget);

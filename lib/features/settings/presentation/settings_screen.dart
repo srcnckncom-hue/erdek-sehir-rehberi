@@ -36,7 +36,6 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     final themeMode = ref.watch(themeModeProvider);
-    final locale = ref.watch(localeProvider);
     final notificationsOn = ref.watch(prayerNotificationSettingsProvider.select((s) => s.enabled));
     final version = ref.watch(appVersionProvider).value;
 
@@ -62,20 +61,6 @@ class SettingsScreen extends ConsumerWidget {
               SegmentOption(value: ThemeMode.light, label: l10n.themeLight, icon: AppIcons.themeLight),
               SegmentOption(value: ThemeMode.dark, label: l10n.themeDark, icon: AppIcons.themeDark),
               SegmentOption(value: ThemeMode.system, label: l10n.themeSystem, icon: AppIcons.themeSystem),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.section),
-
-          // Dil (varsayılan Türkçe)
-          SectionHeader(title: l10n.languageTitle),
-          const SizedBox(height: AppSpacing.md),
-          SegmentedPills<String>(
-            key: const Key('settings_language'),
-            selected: locale.languageCode,
-            onSelected: (code) => ref.read(localeProvider.notifier).setLocale(Locale(code)),
-            options: [
-              SegmentOption(value: 'tr', label: l10n.languageTurkish),
-              SegmentOption(value: 'en', label: l10n.languageEnglish),
             ],
           ),
           const SizedBox(height: AppSpacing.section),

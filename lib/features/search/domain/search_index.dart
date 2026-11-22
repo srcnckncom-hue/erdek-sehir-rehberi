@@ -29,6 +29,8 @@ enum SearchPage {
   trips(['rota', 'gezi rotası', 'yürüyüş', 'trekking', 'bisiklet', 'tekne turu', 'ada turu', 'kapıdağ', 'patika']),
   beaches(['plaj', 'kumsal', 'mavi bayrak', 'denize girilir', 'yüzme', 'deniz']),
   places(['gezi', 'gezilecek', 'plaj', 'koy', 'müze', 'manzara']),
+  ataturk(['atatürk', 'savarona', '24 haziran', 'kurtuluş', '18 eylül', 'anıt']),
+  erdekspor(['erdekspor', 'futbol', 'maç', 'fikstür', 'puan durumu', 'spor', 'lig']),
   history(['tarih', 'kyzikos', 'antik', 'artake']),
   settings(['ayar', 'bildirim', 'tema', 'karanlık', 'gizlilik', 'dil']);
 

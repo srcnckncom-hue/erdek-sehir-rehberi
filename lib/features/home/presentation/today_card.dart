@@ -9,6 +9,7 @@ import '../../../core/util/date_texts.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../beaches/swim_score.dart';
 import '../../events/events.dart';
+import '../../explore/presentation/ataturk_screen.dart';
 import '../../events/events_screen.dart';
 import '../../markets/markets.dart';
 import '../../markets/markets_screen.dart';
@@ -30,6 +31,7 @@ class TodayCard extends ConsumerWidget {
     required this.onMarkets,
     required this.onEvents,
     required this.onOutages,
+    this.onAtaturk,
   });
 
   final VoidCallback onWeather;
@@ -38,6 +40,9 @@ class TodayCard extends ConsumerWidget {
   final VoidCallback onMarkets;
   final VoidCallback onEvents;
   final VoidCallback onOutages;
+
+  /// 24 Haziran / 18 Eylül anma satırı (Atatürk ve Erdek sayfası).
+  final VoidCallback? onAtaturk;
 
   /// Deniz satırı yalnızca mayıs–ekim.
   static bool swimSeason(DateTime now) => now.month >= 5 && now.month <= 10;
@@ -60,6 +65,15 @@ class TodayCard extends ConsumerWidget {
         alert: alert,
         onTap: onTap,
       ));
+    }
+
+    if (onAtaturk case final open?) {
+      final text = ErdekCommemorations.isAtaturkDay(now)
+          ? l10n.todayAtaturkDay
+          : ErdekCommemorations.isLiberationDay(now)
+              ? l10n.todayLiberationDay
+              : null;
+      if (text != null) row(const Key('today_commemoration'), AppIcons.ataturk, p.accentRed, l10n.todayCommemoration, text, open);
     }
 
     final outage = ref.watch(outagesDataProvider).value?.data.headline(now, ref.watch(myAreaProvider));

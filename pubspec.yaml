@@ -27,6 +27,8 @@ dependencies:
   timezone: ^0.11.2
   phosphoricons_flutter: ^1.1.1
   url_launcher: ^6.3.0
+  # Erdekspor: balikesiraskf.com sayfalarını okumak için.
+  html: ^0.15.5
   flutter_local_notifications: ^23.0.3
   # Önemli duyuru bildirimleri (FCM). Analytics/Crashlytics YOK.
   firebase_core: ^5.1.0

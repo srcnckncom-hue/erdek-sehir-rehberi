@@ -3,6 +3,11 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+
+import '../../features/explore/presentation/ataturk_screen.dart';
+
+import '../../features/erdekspor/erdekspor_screen.dart';
+
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
@@ -128,6 +133,22 @@ class AppDrawer extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             _NavRow(
+              key: const Key('drawer_ataturk'),
+              icon: AppIcons.ataturk,
+              color: p.accentRed,
+              title: l10n.ataturkTitle,
+              onTap: () => _push(context, const AtaturkScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_erdekspor'),
+              icon: AppIcons.erdekspor,
+              color: p.accentRed,
+              title: l10n.erdeksporTitle,
+              onTap: () => _push(context, const ErdeksporScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
               key: const Key('drawer_businesses'),
               icon: AppIcons.businesses,
               color: p.iconOrange,
@@ -188,6 +209,21 @@ class AppDrawer extends ConsumerWidget {
                 SegmentOption(value: ThemeMode.light, label: l10n.themeLight, icon: AppIcons.themeLight),
                 SegmentOption(value: ThemeMode.dark, label: l10n.themeDark, icon: AppIcons.themeDark),
                 SegmentOption(value: ThemeMode.system, label: l10n.themeSystem, icon: AppIcons.themeSystem),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Text(
+              l10n.languageTitle,
+              style: AppTypography.label.copyWith(color: p.textSecondary),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            SegmentedPills<String>(
+              key: const Key('drawer_language'),
+              selected: ref.watch(localeProvider).languageCode,
+              onSelected: (code) => ref.read(localeProvider.notifier).setLocale(Locale(code)),
+              options: [
+                SegmentOption(value: 'tr', label: l10n.languageTurkish, icon: AppIcons.language),
+                SegmentOption(value: 'en', label: l10n.languageEnglish, icon: AppIcons.language),
               ],
             ),
             const SizedBox(height: AppSpacing.xxl),

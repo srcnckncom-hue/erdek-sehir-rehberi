@@ -50,6 +50,8 @@ import '../../favorites/favorites_screen.dart';
 import '../../trips/trips_screen.dart';
 import '../home_layout.dart';
 import 'home_layout_screen.dart';
+import '../../erdekspor/erdekspor_screen.dart';
+import '../../explore/presentation/ataturk_screen.dart';
 import 'home_texts.dart';
 import 'today_card.dart';
 
@@ -133,6 +135,7 @@ class HomeScreen extends ConsumerWidget {
               onMarkets: () => openMarkets(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.market)),
               onEvents: () => openEvents(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.event)),
               onOutages: () => openOutages(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.outage)),
+              onAtaturk: () => openAtaturk(context),
             ),
             // Hikâyeler (panelden; yayında hikâye yoksa görünmez)
             const StoriesRow(),
@@ -408,6 +411,10 @@ class HomeScreen extends ConsumerWidget {
         unawaited(openWeather(context));
       case HomeTile.places:
         unawaited(openPlaces(context));
+      case HomeTile.erdekspor:
+        unawaited(openErdekspor(context));
+      case HomeTile.ataturk:
+        unawaited(openAtaturk(context));
     }
   }
 

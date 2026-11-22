@@ -257,3 +257,9 @@
 - Ana sayfa "Erdek'te bugün" kartı: kesinti (vurgulu), hava, deniz (mayıs–ekim), nöbetçi eczane, pazar, bugünkü etkinlik; ayrı kesinti/pazar şeritlerinin yerini aldı.
 - Ana sayfayı düzenle: 16 kutucuktan istenenler, sürükleyerek sıra (cihazda `home_tiles`). "Tümünü gör" hepsini gösterir.
 - Siri / Kısayollar (App Intents, AppDelegate.swift): nöbetçi eczane, sıradaki feribot (yoksa otobüs), sıradaki namaz vakti — widget App Group kaydından, uygulamayı açmadan. Proje developmentRegion = tr.
+
+## Erdekspor, Atatürk ve Erdek, dil yan menüde (r36)
+- Erdekspor: balikesiraskf.com/takim/erdekspor (fikstür, sonuçlar, sezon istatistikleri) ve ana ligin grup sayfası (puan durumu) uygulama içinde okunur (package:html). Grup bağlantısı fikstürdeki "Süper Amatör … Grubu" adına göre sitenin menüsünden bulunur (yeni sezonda kendiliğinden değişir; bulunamazsa 2026-2027 A Grubu). Ham HTML cihazda önbelleklenir; 20 dk'dan eskiyse yenilenir, aşağı çekince zorla yenilenir, çevrimdışıyken son kopya. Lig süzgeci (Süper Amatör / U12…), maça dokununca federasyondaki maç detayı.
+- Atatürk ve Erdek sayfası (uygulama içi metin; kaynak: Özel Erdek, Bandırma Manşet). 24 Haziran ve 18 Eylül'de "Erdek'te bugün" kartında anma satırı.
+- Dil seçimi Ayarlar'dan kaldırıldı, yan menüde Görünüm'ün altında.
+- Yeni isteğe bağlı ana sayfa kutucukları: Erdekspor, Atatürk ve Erdek.
