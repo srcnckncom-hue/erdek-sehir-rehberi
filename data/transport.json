@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "isSample": false,
   "updatedAt": "2026-11-22T20:15:00+03:00",
-  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar ve Kurbağalıdere–Havuzlu Meydan, Havuzlu Meydan–Kızarandere: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
+  "source": "Feribot: Gestaş Güney Marmara tarifesi (kullanıcıdan, 21.11.2026). Erdek–Bandırma otobüsü: Balıkesir Büyükşehir Belediyesi tarifesi (kullanıcıdan, 22.11.2026). Şehir içi Otogar–Kamplar ve Kurbağalıdere–Havuzlu Meydan, Havuzlu Meydan–Kızarandere, Havuzlu Meydan–Çeltikçi–Hamamlı: Balıkesir Büyükşehir Belediyesi (kullanıcıdan, 22.11.2026). Erdek–Balıkesir otobüsü: ÖRNEK VERİ.",
   "data": {
     "routes": [
       {
@@ -2510,6 +2510,83 @@
             "validFrom": "2026-11-22",
             "validTo": "2027-12-31",
             "departures": []
+          }
+        ]
+      },
+      {
+        "id": "sehirici-havuzlu-celtikci-hamamli",
+        "mode": "city",
+        "direction": "outbound",
+        "title": "Havuzlu Meydan → Çeltikçi – Hamamlı",
+        "from": "İlçe Nüfus Müdürlüğü (Havuzlu Meydan)",
+        "to": "Hamamlı Köyü",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Yalnızca pazartesi günleri çalışır.",
+        "stops": [
+          "İlçe Nüfus Müdürlüğü",
+          "Yalı Camii",
+          "18 Eylül Stadı",
+          "Tapu Müdürlüğü",
+          "Çeltikçi Köyü",
+          "Hamamlı Köyü"
+        ],
+        "timetables": [
+          {
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "09:45",
+                "days": [
+                  1
+                ]
+              },
+              {
+                "time": "14:45",
+                "days": [
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sehirici-hamamli-celtikci-havuzlu",
+        "mode": "city",
+        "direction": "inbound",
+        "title": "Hamamlı – Çeltikçi → Havuzlu Meydan",
+        "from": "Hamamlı Köyü",
+        "to": "İlçe Nüfus Müdürlüğü (Havuzlu Meydan)",
+        "operator": "Balıkesir Büyükşehir Belediyesi",
+        "note": "Yalnızca pazartesi günleri çalışır. Saatler Hamamlı Köyü'nden kalkış saatidir.",
+        "stops": [
+          "Hamamlı Köyü",
+          "Çeltikçi Köyü",
+          "İlçe Emniyet Müdürlüğü (Trafik Asayiş)",
+          "Atatürk Mahallesi Muhtarlığı",
+          "İlçe Nüfus Müdürlüğü"
+        ],
+        "timetables": [
+          {
+            "name": "Güncel tarife",
+            "validFrom": "2026-11-22",
+            "validTo": "2027-12-31",
+            "departures": [
+              {
+                "time": "10:00",
+                "days": [
+                  1
+                ]
+              },
+              {
+                "time": "15:00",
+                "days": [
+                  1
+                ]
+              }
+            ]
           }
         ]
       }
