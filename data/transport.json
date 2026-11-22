@@ -1278,9 +1278,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "08:00",
@@ -1604,9 +1604,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "08:15",
@@ -1932,9 +1932,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "08:30",
@@ -2156,9 +2156,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": []
           }
         ]
@@ -2190,9 +2190,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "08:00",
@@ -2506,9 +2506,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": []
           }
         ]
@@ -2532,9 +2532,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "09:45",
@@ -2570,9 +2570,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "10:00",
@@ -2607,9 +2607,9 @@
         ],
         "timetables": [
           {
-            "name": "Güncel tarife",
+            "name": "Kış tarifesi",
             "validFrom": "2026-11-22",
-            "validTo": "2027-12-31",
+            "validTo": "2027-03-31",
             "departures": [
               {
                 "time": "07:15",

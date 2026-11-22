@@ -302,7 +302,7 @@ class _RouteGrid extends StatelessWidget {
           Builder(builder: (context) {
             final selected = r.id == selectedId;
             final (first, second) = lines(r.title);
-            final fg = selected ? p.onPrimary : p.textHeading;
+            final fg = selected ? p.onPrimary : p.textBody;
             return Semantics(
               button: true,
               selected: selected,
@@ -312,22 +312,22 @@ class _RouteGrid extends StatelessWidget {
                 key: Key('route_${r.id}'),
                 color: selected ? p.primary : p.surface,
                 shape: RoundedRectangleBorder(
-                  borderRadius: AppRadius.cardAll,
+                  borderRadius: AppRadius.chipAll,
                   side: BorderSide(color: selected ? p.primary : p.divider),
                 ),
                 child: InkWell(
-                  borderRadius: AppRadius.cardAll,
+                  borderRadius: AppRadius.chipAll,
                   onTap: () => onSelect(r.id),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.md),
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(first, style: AppTypography.label.copyWith(color: fg, fontSize: 16, fontWeight: FontWeight.w700)),
+                        Text(first, style: AppTypography.tileLabel.copyWith(color: fg, fontWeight: FontWeight.w600)),
                         if (second != null) ...[
                           const SizedBox(height: 2),
-                          Text(second, style: AppTypography.label.copyWith(color: fg, fontSize: 16)),
+                          Text(second, style: AppTypography.tileLabel.copyWith(color: fg, fontWeight: FontWeight.w500)),
                         ],
                       ],
                     ),
