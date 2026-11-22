@@ -31,7 +31,7 @@ class MetNorwayWeatherRepository implements WeatherRepository {
 
   static const cacheKey = 'weather:met-norway';
   static const endpoint =
-      'https://api.met.no/weatherapi/locationforecast/2.0/compact';
+      'https://api.met.no/weatherapi/locationforecast/2.0/complete';
 
   /// Expires başlığı yoksa en az bu kadar bekle.
   static const fallbackTtl = Duration(minutes: 30);

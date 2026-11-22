@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "isSample": true,
+  "updatedAt": "2026-11-22T12:00:00+03:00",
+  "source": "Panelden eklenir",
+  "data": {
+    "stories": [
+      {
+        "id": "kampanya",
+        "title": "Kampanya",
+        "cover": "https://example.com/k.jpg",
+        "slides": [
+          {
+            "url": "https://example.com/1.jpg",
+            "caption": "Hafta sonu indirim",
+            "link": "https://example.com",
+            "linkLabel": "Ayrıntı"
+          },
+          {
+            "url": "https://example.com/2.jpg"
+          }
+        ]
+      },
+      {
+        "id": "etkinlik",
+        "title": "Etkinlikler",
+        "cover": "https://example.com/e.jpg",
+        "slides": [
+          {
+            "url": "https://example.com/3.jpg"
+          }
+        ]
+      },
+      {
+        "id": "eski",
+        "title": "Eski",
+        "cover": "https://example.com/o.jpg",
+        "endsAt": "2026-01-01T00:00:00+03:00",
+        "slides": [
+          {
+            "url": "https://example.com/4.jpg"
+          }
+        ]
+      }
+    ]
+  }
+}

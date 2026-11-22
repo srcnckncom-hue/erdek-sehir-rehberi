@@ -45,6 +45,8 @@ final testWeather = DataResult<CurrentWeather>(
     time: DateTime.utc(2026, 11, 21, 15),
     relativeHumidity: 72,
     windSpeedMs: 3.4,
+    windGustMs: 6,
+    windFromDegrees: 45,
     minTemperatureC: 14,
     maxTemperatureC: 22,
     daily: const [

@@ -896,5 +896,65 @@
     }
   },
   "seaAttribution": "Deniz verisi: E.U. Copernicus Marine Service Information (model tahmini)",
-  "mapShortSubtitle": "Eczane, işletme, gezilecek yer"
+  "mapShortSubtitle": "Eczane, işletme, gezilecek yer",
+  "weatherTabWeather": "Hava",
+  "weatherTabSea": "Deniz",
+  "weatherTabWind": "Rüzgâr",
+  "seaPendingTitle": "Deniz bilgisi hazırlanıyor",
+  "seaPendingMessage": "Deniz suyu sıcaklığı ve dalga bilgisi her sabah güncellenir. Biraz sonra tekrar bakın.",
+  "seaDaysTitle": "Önümüzdeki günler",
+  "windKmh": "{speed} km/s",
+  "@windKmh": {
+    "placeholders": {
+      "speed": {
+        "type": "int"
+      }
+    }
+  },
+  "windFrom": "{direction} yönünden",
+  "@windFrom": {
+    "placeholders": {
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "windGust": "Hamle {speed} km/s",
+  "@windGust": {
+    "placeholders": {
+      "speed": {
+        "type": "int"
+      }
+    }
+  },
+  "windHourlyTitle": "Saatlik rüzgâr",
+  "windDailyTitle": "Günlük en kuvvetli rüzgâr",
+  "windDirectionNote": "Ok, rüzgârın estiği yönü gösterir. Yön adları Marmara'daki geleneksel rüzgâr adlarıdır.",
+  "windDirection": "{sector, select, n{Kuzey (Yıldız)} ne{Kuzeydoğu (Poyraz)} e{Doğu (Gündoğusu)} se{Güneydoğu (Keşişleme)} s{Güney (Kıble)} sw{Güneybatı (Lodos)} w{Batı (Günbatısı)} nw{Kuzeybatı (Karayel)} other{—}}",
+  "@windDirection": {
+    "placeholders": {
+      "sector": {
+        "type": "String"
+      }
+    }
+  },
+  "beaufortName": "{force, select, b0{Sakin} b1{Hafif esinti} b2{Hafif rüzgâr} b3{Tatlı rüzgâr} b4{Orta rüzgâr} b5{Sert rüzgâr} b6{Kuvvetli rüzgâr} b7{Fırtınamsı} b8{Fırtına} b9{Kuvvetli fırtına} b10{Tam fırtına} b11{Şiddetli fırtına} other{Kasırga}}",
+  "@beaufortName": {
+    "placeholders": {
+      "force": {
+        "type": "String"
+      }
+    }
+  },
+  "beaufortForce": "{force} bofor",
+  "@beaufortForce": {
+    "placeholders": {
+      "force": {
+        "type": "int"
+      }
+    }
+  },
+  "storiesLabel": "Hikâyeler",
+  "storyImageError": "Fotoğraf yüklenemedi",
+  "storyOpenLink": "Aç"
 }

@@ -7,6 +7,7 @@ import 'package:erdek_rehberi/features/nearby/nearby_screen.dart';
 import 'package:erdek_rehberi/features/nearby/points.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/sea/sea.dart';
+import 'package:erdek_rehberi/features/weather/domain/weather.dart';
 import 'package:erdek_rehberi/features/weather/presentation/weather_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -79,9 +80,34 @@ void main() {
     await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 100)));
     await tester.pumpAndSettle();
 
+    await tester.tap(find.text('Deniz'));
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('sea_section')), findsOneWidget);
     expect(find.text('Deniz suyu 16°'), findsOneWidget);
     expect(find.textContaining('Copernicus'), findsOneWidget);
+  });
+
+  testWidgets('rüzgâr sekmesi: hız, yön, Beaufort', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1170, 5000)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(testApp(const WeatherScreen(initialTab: WeatherTab.wind)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('wind_section')), findsOneWidget);
+    expect(find.text('Kuzeydoğu (Poyraz) yönünden'), findsOneWidget);
+    expect(find.textContaining('bofor'), findsOneWidget);
+  });
+
+  test('Beaufort ve yön dilimleri', () {
+    expect(beaufort(0.1), 0);
+    expect(beaufort(5.0), 3);
+    expect(beaufort(40), 12);
+    expect(windSector8(0), 0);
+    expect(windSector8(350), 0);
+    expect(windSector8(45), 1);
+    expect(windSector8(225), 5);
   });
 
   testWidgets('harita: iOS dışında liste, süzgeç çalışır', (tester) async {

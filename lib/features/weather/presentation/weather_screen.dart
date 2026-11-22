@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -13,16 +15,28 @@ import '../../sea/sea.dart';
 import '../data/weather_repository.dart';
 import '../domain/weather.dart';
 
-Future<void> openWeather(BuildContext context) => Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => const WeatherScreen()),
+enum WeatherTab { weather, sea, wind }
+
+Future<void> openWeather(BuildContext context, {WeatherTab tab = WeatherTab.weather}) =>
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => WeatherScreen(initialTab: tab)),
     );
 
-/// Hava durumu: şu an + günlük tahmin (MET Norway).
-class WeatherScreen extends ConsumerWidget {
-  const WeatherScreen({super.key});
+/// Hava · Deniz · Rüzgâr sekmeleri (MET Norway + Copernicus Marine).
+class WeatherScreen extends ConsumerStatefulWidget {
+  const WeatherScreen({super.key, this.initialTab = WeatherTab.weather});
+
+  final WeatherTab initialTab;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends ConsumerState<WeatherScreen> {
+  late WeatherTab _tab = widget.initialTab;
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
     final result = ref.watch(currentWeatherProvider);
@@ -38,9 +52,22 @@ class WeatherScreen extends ConsumerWidget {
         onBack: () => Navigator.of(context).maybePop(),
         backLabel: l10n.back,
       ),
+      SegmentedPills<WeatherTab>(
+        key: const Key('weather_tabs'),
+        options: [
+          SegmentOption(value: WeatherTab.weather, label: l10n.weatherTabWeather),
+          SegmentOption(value: WeatherTab.sea, label: l10n.weatherTabSea),
+          SegmentOption(value: WeatherTab.wind, label: l10n.weatherTabWind),
+        ],
+        selected: _tab,
+        onSelected: (tab) => setState(() => _tab = tab),
+      ),
+      const SizedBox(height: AppSpacing.lg),
     ];
 
-    if (value == null) {
+    if (_tab == WeatherTab.sea) {
+      children.add(const _SeaSection());
+    } else if (value == null) {
       children.add(
         result.hasError
             ? MessageView(
@@ -67,6 +94,9 @@ class WeatherScreen extends ConsumerWidget {
           )
           ..add(const SizedBox(height: AppSpacing.md));
       }
+      if (_tab == WeatherTab.wind) {
+        children.add(_WindSection(weather: w));
+      } else {
       children
         ..add(_NowCard(weather: w))
         ..add(const SizedBox(height: AppSpacing.section));
@@ -92,27 +122,30 @@ class WeatherScreen extends ConsumerWidget {
             ),
           );
       }
+      }
     }
 
-    children.add(const _SeaSection());
-
-    children
-      ..add(const SizedBox(height: AppSpacing.xl))
-      ..add(
-        Padding(
-          padding: AppSpacing.pagePadding,
-          child: Text(
-            l10n.weatherAttribution,
-            textAlign: TextAlign.center,
-            style: AppTypography.tabLabel.copyWith(color: p.textSecondary),
+    if (_tab != WeatherTab.sea) {
+      children
+        ..add(const SizedBox(height: AppSpacing.xl))
+        ..add(
+          Padding(
+            padding: AppSpacing.pagePadding,
+            child: Text(
+              l10n.weatherAttribution,
+              textAlign: TextAlign.center,
+              style: AppTypography.tabLabel.copyWith(color: p.textSecondary),
+            ),
           ),
-        ),
-      );
+        );
+    }
 
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(currentWeatherProvider);
+          ref
+            ..invalidate(currentWeatherProvider)
+            ..invalidate(seaDataProvider);
           try {
             await ref.read(currentWeatherProvider.future);
           } catch (_) {
@@ -340,7 +373,15 @@ class _SeaSection extends ConsumerWidget {
     final today = CalendarDate.fromDateTime(now);
     final sea = ref.watch(seaDataProvider).value;
     final days = sea?.data.from(today) ?? const <SeaDay>[];
-    if (days.isEmpty) return const SizedBox.shrink();
+    if (days.isEmpty) {
+      return MessageView(
+        key: const Key('sea_pending'),
+        icon: AppIcons.sea,
+        iconColor: p.aqua.foreground,
+        title: l10n.seaPendingTitle,
+        message: l10n.seaPendingMessage,
+      );
+    }
     final first = days.first;
 
     String state(SeaDay d) => switch (d.seaState) {
@@ -357,9 +398,6 @@ class _SeaSection extends ConsumerWidget {
       key: const Key('sea_section'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: AppSpacing.section),
-        SectionHeader(title: l10n.seaTitle),
-        const SizedBox(height: AppSpacing.md),
         Container(
           margin: AppSpacing.pagePadding,
           padding: const EdgeInsets.all(AppSpacing.lg),
@@ -387,6 +425,8 @@ class _SeaSection extends ConsumerWidget {
           ),
         ),
         if (days.length > 1) ...[
+          const SizedBox(height: AppSpacing.section),
+          SectionHeader(title: l10n.seaDaysTitle),
           const SizedBox(height: AppSpacing.md),
           GroupedCard(
             children: [
@@ -437,4 +477,178 @@ class _SeaSection extends ConsumerWidget {
 
   /// 0.4 → "0,4"
   static String _m(double v) => v.toStringAsFixed(1).replaceAll('.', ',');
+}
+
+/// Rüzgâr: şu an (hız, yön, Beaufort, hamle), saatlik ve günlük.
+class _WindSection extends StatelessWidget {
+  const _WindSection({required this.weather});
+
+  final CurrentWeather weather;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final p = context.palette;
+    final w = weather;
+    final speed = w.windSpeedMs;
+    final dir = w.windFromDegrees;
+
+    String direction(double? degrees) =>
+        degrees == null ? '' : l10n.windDirection(const ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'][windSector8(degrees)]);
+
+    return Column(
+      key: const Key('wind_section'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          margin: AppSpacing.pagePadding,
+          padding: const EdgeInsets.all(AppSpacing.xl),
+          decoration: BoxDecoration(color: p.primarySoft, borderRadius: AppRadius.cardAll),
+          child: Row(
+            children: [
+              WindArrow(fromDegrees: dir, size: 56, color: p.primary),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      speed == null ? '—' : l10n.windKmh(w.windSpeedKmh!),
+                      style: AppTypography.display.copyWith(color: p.textHeading, fontSize: 40),
+                    ),
+                    if (speed != null)
+                      Text(
+                        '${l10n.beaufortName('b${beaufort(speed)}')} · ${l10n.beaufortForce(beaufort(speed))}',
+                        style: AppTypography.label.copyWith(color: p.textHeading),
+                      ),
+                    if (dir != null)
+                      Text(
+                        l10n.windFrom(direction(dir)),
+                        style: AppTypography.caption.copyWith(color: p.textBody),
+                      ),
+                    if (w.windGustKmh case final gust?)
+                      Text(
+                        l10n.windGust(gust),
+                        style: AppTypography.caption.copyWith(color: p.iconOrange, fontWeight: FontWeight.w600),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (w.hourly.length > 1) ...[
+          const SizedBox(height: AppSpacing.section),
+          SectionHeader(title: l10n.windHourlyTitle),
+          const SizedBox(height: AppSpacing.md),
+          SizedBox(
+            height: 112,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: AppSpacing.pagePadding,
+              itemCount: w.hourly.length,
+              separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
+              itemBuilder: (context, i) {
+                final h = w.hourly[i];
+                final t = h.erdekTime;
+                return Container(
+                  width: 64,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  decoration: BoxDecoration(color: p.surface, borderRadius: AppRadius.tileAll),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        i == 0 ? l10n.weatherNow : '${t.hour.toString().padLeft(2, '0')}:00',
+                        style: AppTypography.caption.copyWith(color: p.textSecondary, fontSize: 11),
+                      ),
+                      WindArrow(fromDegrees: h.windFromDegrees, size: 22, color: p.primary),
+                      Text(
+                        h.windKmh == null ? '—' : '${h.windKmh}',
+                        style: AppTypography.label.copyWith(color: p.textHeading, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        h.gustKmh == null ? 'km/s' : '↑${h.gustKmh}',
+                        style: AppTypography.caption.copyWith(color: p.textSecondary, fontSize: 10),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+        if (w.daily.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.section),
+          SectionHeader(title: l10n.windDailyTitle),
+          const SizedBox(height: AppSpacing.md),
+          GroupedCard(
+            children: [
+              for (final d in w.daily)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '${l10n.weekdayName('${d.weekday}')} '
+                          '${d.day.toString().padLeft(2, '0')}.${d.month.toString().padLeft(2, '0')}',
+                          style: AppTypography.caption.copyWith(color: p.textHeading),
+                        ),
+                      ),
+                      WindArrow(fromDegrees: d.windFromDegrees, size: 18, color: p.primary),
+                      const SizedBox(width: AppSpacing.sm),
+                      SizedBox(
+                        width: 112,
+                        child: Text(
+                          d.windFromDegrees == null ? '' : direction(d.windFromDegrees),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(color: p.textSecondary, fontSize: 11),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 72,
+                        child: Text(
+                          d.maxWindKmh == null ? '—' : l10n.windKmh(d.maxWindKmh!),
+                          textAlign: TextAlign.right,
+                          style: AppTypography.caption.copyWith(color: p.textHeading, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ],
+        const SizedBox(height: AppSpacing.md),
+        Padding(
+          padding: AppSpacing.pagePadding,
+          child: Text(
+            l10n.windDirectionNote,
+            style: AppTypography.tabLabel.copyWith(color: p.textSecondary),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Rüzgârın estiği yöne bakan ok (geldiği yönün tersi). Yön yoksa boşluk.
+class WindArrow extends StatelessWidget {
+  const WindArrow({super.key, required this.fromDegrees, required this.size, required this.color});
+
+  final double? fromDegrees;
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final from = fromDegrees;
+    if (from == null) return SizedBox.square(dimension: size);
+    return Transform.rotate(
+      angle: (from + 180) * math.pi / 180,
+      child: AppIcon(AppIcons.windArrow, size: size, color: color),
+    );
+  }
 }

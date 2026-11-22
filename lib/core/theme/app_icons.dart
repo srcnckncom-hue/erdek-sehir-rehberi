@@ -78,6 +78,8 @@ abstract final class AppIcons {
   static AppIconData get wind => _i(PhosphorIconsRegular.wind);
   static AppIconData get thermometer => _i(PhosphorIconsRegular.thermometer);
   static AppIconData get locationArrow => _i(PhosphorIconsRegular.navigationArrow);
+  static AppIconData get windArrow => _i(PhosphorIconsFill.arrowUp);
+  static AppIconData get close => _i(PhosphorIconsRegular.x);
   static AppIconData get bellFilled => _i(PhosphorIconsFill.bell);
   static AppIconData get globe => _i(PhosphorIconsRegular.globe);
   static AppIconData get whatsapp => _i(PhosphorIconsRegular.whatsappLogo);

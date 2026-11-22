@@ -8,6 +8,7 @@ import 'content/history_editor.dart';
 import 'content/pharmacy_editor.dart';
 import 'content/places_editor.dart';
 import 'content/social_editor.dart';
+import 'content/stories_editor.dart';
 import 'content/transport_editor.dart';
 import 'screens/ads_screen.dart';
 import 'screens/login_screen.dart';
@@ -35,6 +36,7 @@ final _groups = <_Group>[
   _Group('Genel', [
     _Section(Icons.campaign_outlined, 'Reklamlar', (api) => AdsScreen(api: api)),
     _Section(Icons.notifications_outlined, 'Duyurular', (api) => AnnouncementsEditor(api: api)),
+    _Section(Icons.amp_stories_outlined, 'Hikâyeler', (api) => StoriesEditor(api: api)),
     _Section(Icons.send_outlined, 'Bildirim Gönder', (api) => PushScreen(api: api)),
     _Section(Icons.share_outlined, 'Sosyal Medya', (api) => SocialEditor(api: api)),
   ]),

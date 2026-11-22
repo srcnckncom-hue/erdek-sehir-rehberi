@@ -6,9 +6,12 @@ class CurrentWeather {
     required this.time,
     this.relativeHumidity,
     this.windSpeedMs,
+    this.windGustMs,
+    this.windFromDegrees,
     this.minTemperatureC,
     this.maxTemperatureC,
     this.daily = const [],
+    this.hourly = const [],
   });
 
   /// MET Norway compact yanıtının ilk zaman dilimini okur.
@@ -40,9 +43,15 @@ class CurrentWeather {
       time: DateTime.parse(first['time'] as String),
       relativeHumidity: (instant['relative_humidity'] as num?)?.toDouble(),
       windSpeedMs: (instant['wind_speed'] as num?)?.toDouble(),
+      windGustMs: (instant['wind_speed_of_gust'] as num?)?.toDouble(),
+      windFromDegrees: (instant['wind_from_direction'] as num?)?.toDouble(),
       minTemperatureC: temps.length > 1 ? temps.reduce((a, b) => a < b ? a : b) : null,
       maxTemperatureC: temps.length > 1 ? temps.reduce((a, b) => a > b ? a : b) : null,
       daily: DailyForecast.fromMetTimeseries(timeseries),
+      hourly: [
+        for (final entry in timeseries.take(25))
+          HourlyWeather.fromMetEntry(entry as Map<String, dynamic>),
+      ],
     );
   }
 
@@ -57,11 +66,22 @@ class CurrentWeather {
 
   /// Rüzgâr hızı (m/s). Ekranda km/s gösterilir.
   final double? windSpeedMs;
+
+  /// Hamle (yalnızca "complete" yanıtında; yoksa null).
+  final double? windGustMs;
+
+  /// Rüzgârın estiği yön (derece; 0 = kuzeyden, 90 = doğudan).
+  final double? windFromDegrees;
   final double? minTemperatureC;
   final double? maxTemperatureC;
 
   /// Günlük tahmin (bugünden başlayarak; MET Norway yaklaşık 10 gün verir).
   final List<DailyForecast> daily;
+
+  /// Önümüzdeki ~24 saat (saatlik).
+  final List<HourlyWeather> hourly;
+
+  int? get windGustKmh => windGustMs == null ? null : (windGustMs! * 3.6).round();
 
   int? get windSpeedKmh => windSpeedMs == null ? null : (windSpeedMs! * 3.6).round();
 
@@ -83,6 +103,8 @@ class DailyForecast {
     required this.symbolCode,
     this.precipitationMm = 0,
     this.maxWindSpeedMs,
+    this.maxWindGustMs,
+    this.windFromDegrees,
   });
 
   /// Türkiye 2016'dan beri yıl boyu UTC+3 (yaz saati yok).
@@ -112,7 +134,13 @@ class DailyForecast {
       final t = (details['air_temperature'] as num?)?.toDouble();
       if (t != null) acc.temps.add(t);
       final wind = (details['wind_speed'] as num?)?.toDouble();
-      if (wind != null && (acc.maxWind == null || wind > acc.maxWind!)) acc.maxWind = wind;
+      if (wind != null && (acc.maxWind == null || wind > acc.maxWind!)) {
+        acc
+          ..maxWind = wind
+          ..windFrom = (details['wind_from_direction'] as num?)?.toDouble();
+      }
+      final gust = (details['wind_speed_of_gust'] as num?)?.toDouble();
+      if (gust != null && (acc.maxGust == null || gust > acc.maxGust!)) acc.maxGust = gust;
 
       final next1 = data['next_1_hours'] as Map<String, dynamic>?;
       final next6 = data['next_6_hours'] as Map<String, dynamic>?;
@@ -158,6 +186,12 @@ class DailyForecast {
   final String symbolCode;
   final double precipitationMm;
   final double? maxWindSpeedMs;
+  final double? maxWindGustMs;
+
+  /// En kuvvetli rüzgârın estiği yön (derece).
+  final double? windFromDegrees;
+
+  int? get maxWindGustKmh => maxWindGustMs == null ? null : (maxWindGustMs! * 3.6).round();
 
   /// 1 = Pazartesi ... 7 = Pazar
   int get weekday => DateTime.utc(year, month, day).weekday;
@@ -179,6 +213,8 @@ class _DayAccumulator {
   final temps = <double>[];
   double precipitation = 0;
   double? maxWind;
+  double? maxGust;
+  double? windFrom;
   String? symbol;
   int? symbolDistance;
 
@@ -192,6 +228,8 @@ class _DayAccumulator {
         symbolCode: (symbol ?? 'unknown').replaceAll('_night', '_day'),
         precipitationMm: precipitation,
         maxWindSpeedMs: maxWind,
+        maxWindGustMs: maxGust,
+        windFromDegrees: windFrom,
       );
 }
 
@@ -227,4 +265,57 @@ String weatherConditionKey(String symbolCode) {
   if (base == 'fair') return 'fair';
   if (base == 'clearsky') return 'clearsky';
   return 'unknown';
+}
+
+/// Saatlik kayıt (Rüzgâr sekmesi).
+class HourlyWeather {
+  const HourlyWeather({
+    required this.time,
+    this.temperatureC,
+    this.windSpeedMs,
+    this.windGustMs,
+    this.windFromDegrees,
+    this.symbolCode,
+  });
+
+  factory HourlyWeather.fromMetEntry(Map<String, dynamic> entry) {
+    final data = entry['data'] as Map<String, dynamic>;
+    final d = (data['instant'] as Map<String, dynamic>)['details'] as Map<String, dynamic>;
+    final next = (data['next_1_hours'] ?? data['next_6_hours']) as Map<String, dynamic>?;
+    return HourlyWeather(
+      time: DateTime.parse(entry['time'] as String),
+      temperatureC: (d['air_temperature'] as num?)?.toDouble(),
+      windSpeedMs: (d['wind_speed'] as num?)?.toDouble(),
+      windGustMs: (d['wind_speed_of_gust'] as num?)?.toDouble(),
+      windFromDegrees: (d['wind_from_direction'] as num?)?.toDouble(),
+      symbolCode: (next?['summary'] as Map<String, dynamic>?)?['symbol_code'] as String?,
+    );
+  }
+
+  /// UTC.
+  final DateTime time;
+  final double? temperatureC;
+  final double? windSpeedMs;
+  final double? windGustMs;
+  final double? windFromDegrees;
+  final String? symbolCode;
+
+  /// Erdek saati (UTC+3).
+  DateTime get erdekTime => time.toUtc().add(const Duration(hours: 3));
+
+  int? get windKmh => windSpeedMs == null ? null : (windSpeedMs! * 3.6).round();
+
+  int? get gustKmh => windGustMs == null ? null : (windGustMs! * 3.6).round();
+}
+
+/// Rüzgâr yönü: 8 ana yön (0 kuzey … 7 kuzeybatı). Esen yön = rüzgârın geldiği yön.
+int windSector8(double fromDegrees) => (((fromDegrees % 360) + 22.5) ~/ 45) % 8;
+
+/// Beaufort ölçeği (0–12), m/s'den.
+int beaufort(double ms) {
+  const limits = [0.3, 1.6, 3.4, 5.5, 8.0, 10.8, 13.9, 17.2, 20.8, 24.5, 28.5, 32.7];
+  for (var i = 0; i < limits.length; i++) {
+    if (ms < limits[i]) return i;
+  }
+  return 12;
 }

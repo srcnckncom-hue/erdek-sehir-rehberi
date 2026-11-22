@@ -20,6 +20,7 @@ import '../../announcements/domain/announcement.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
 import '../../map/map_screen.dart';
+import '../../stories/stories_row.dart';
 import '../../nearby/nearby_screen.dart';
 import '../../contacts/presentation/directory_selection.dart';
 import '../../explore/data/explore_repository.dart';
@@ -110,6 +111,8 @@ class HomeScreen extends ConsumerWidget {
               InfoBanner(icon: AppIcons.info, message: l10n.sampleDataBanner),
             ],
             const SizedBox(height: AppSpacing.section),
+            // Hikâyeler (panelden; yayında hikâye yoksa görünmez)
+            const StoriesRow(),
             SectionHeader(
               title: l10n.quickActionsTitle,
               actionLabel: l10n.seeAll,
