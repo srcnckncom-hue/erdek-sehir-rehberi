@@ -12,6 +12,7 @@ import 'content/outages_editor.dart';
 import 'content/pharmacy_editor.dart';
 import 'content/places_editor.dart';
 import 'content/social_editor.dart';
+import 'content/services_editor.dart';
 import 'content/stories_editor.dart';
 import 'content/trips_editor.dart';
 import 'content/transport_editor.dart';
@@ -51,6 +52,7 @@ final _groups = <_Group>[
     _Section(Icons.local_pharmacy_outlined, 'Nöbetçi Eczane', (api) => PharmacyEditor(api: api)),
     _Section(Icons.bolt_outlined, 'Kesintiler', (api) => OutagesEditor(api: api)),
     _Section(Icons.storefront_outlined, 'Semt Pazarları', (api) => MarketsEditor(api: api)),
+    _Section(Icons.layers_outlined, 'Harita Katmanları', (api) => ServicesEditor(api: api)),
     _Section(Icons.phone_outlined, 'Telefonlar', (api) => ContactsEditor(api: api)),
     _Section(Icons.directions_boat_outlined, 'Ulaşım', (api) => TransportEditor(api: api)),
   ]),

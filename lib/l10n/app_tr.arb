@@ -1288,5 +1288,11 @@
       }
     }
   },
-  "tripSafetyNote": "Yürüyüşe çıkmadan önce hava durumuna bakın, yanınıza su alın ve rotanızı bir yakınınıza bildirin. Acil durumda 112."
+  "tripSafetyNote": "Yürüyüşe çıkmadan önce hava durumuna bakın, yanınıza su alın ve rotanızı bir yakınınıza bildirin. Acil durumda 112.",
+  "serviceTaxi": "Taksi",
+  "serviceAtm": "ATM",
+  "serviceParking": "Otopark",
+  "serviceWc": "WC",
+  "serviceCharging": "Şarj",
+  "serviceFuel": "Akaryakıt"
 }

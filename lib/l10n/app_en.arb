@@ -492,5 +492,11 @@
   "tripStopsLine": "Stops: {stops}",
   "tripTips": "Tips",
   "tripSeason": "Best time: {season}",
-  "tripSafetyNote": "Check the weather before you go, take water and tell someone your route. In an emergency call 112."
+  "tripSafetyNote": "Check the weather before you go, take water and tell someone your route. In an emergency call 112.",
+  "serviceTaxi": "Taxi",
+  "serviceAtm": "ATM",
+  "serviceParking": "Parking",
+  "serviceWc": "WC",
+  "serviceCharging": "EV charging",
+  "serviceFuel": "Fuel"
 }

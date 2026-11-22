@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "isSample": false,
+  "updatedAt": "2026-11-21T12:00:00+03:00",
+  "source": "test",
+  "data": {
+    "points": [
+      {
+        "id": "taksi-1",
+        "type": "taksi",
+        "name": "Merkez Taksi",
+        "latitude": 40.3962,
+        "longitude": 27.7931,
+        "phone": "+902668550000",
+        "hours": "7/24"
+      },
+      {
+        "id": "atm-1",
+        "type": "atm",
+        "name": "Çarşı ATM",
+        "latitude": 40.397,
+        "longitude": 27.7925,
+        "note": "Ziraat, Halkbank"
+      },
+      {
+        "id": "bilinmeyen",
+        "type": "yok",
+        "name": "X",
+        "latitude": 40.39,
+        "longitude": 27.79
+      }
+    ]
+  }
+}

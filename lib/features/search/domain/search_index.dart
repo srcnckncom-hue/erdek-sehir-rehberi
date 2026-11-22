@@ -19,7 +19,7 @@ enum SearchPage {
   wind(['rüzgar', 'poyraz', 'lodos', 'fırtına', 'bofor', 'beaufort', 'esinti']),
   sea(['deniz', 'su sıcaklığı', 'dalga', 'yüzme', 'denize girilir']),
   map(['harita', 'konum']),
-  nearby(['yakın', 'yakınımda', 'en yakın', 'çevre']),
+  nearby(['yakın', 'yakınımda', 'en yakın', 'çevre', 'atm', 'bankamatik', 'taksi', 'otopark', 'tuvalet', 'wc', 'şarj', 'benzin', 'akaryakıt']),
   favorites(['favori', 'yıldız', 'kaydettiklerim']),
   outages(['kesinti', 'su kesintisi', 'elektrik kesintisi', 'elektrik', 'su', 'doğalgaz', 'arıza', 'baski', 'uedaş']),
   markets(['pazar', 'semt pazarı', 'pazar yeri', 'halk pazarı', 'sebze', 'meyve']),

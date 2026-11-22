@@ -246,3 +246,8 @@
 - Yeni içerik belgesi `trips` (data/trips.json, panel → Keşfet › Gezi Rotaları, SQL: 0012_trips.sql; fotoğraflar content-images/trips/).
 - Alanlar: ad, tür (yuruyus/bisiklet/tekne/arac/tarih), zorluk, km, dakika, en uygun dönem, özet, anlatım, ipuçları, duraklar (panelde satır satır "Ad | enlem, boylam | not"), isteğe bağlı çizgi (enlem, boylam satırları), fotoğraflar.
 - Uygulama: Gezi Rotaları (menü, arama "rota/yürüyüş/kapıdağ"); ayrıntıda Apple Haritalar ile numaralı yeşil durak iğneleri + rota çizgisi (AppDelegate ErdekMapView: creationParams path/fit, iğne türü "stop"), "Rotayı haritada aç" (Google Haritalar yol tarifi, en fazla 9 ara durak), WhatsApp paylaşımı, güvenlik notu.
+
+## Harita katmanları (r34)
+- Yeni içerik belgesi `services` (data/services.json, panel → Şehir Rehberi › Harita Katmanları, SQL: 0013_services.sql).
+- Türler: taksi, atm, otopark, wc, sarj, akaryakit. Alanlar: ad, enlem/boylam (zorunlu), not, saatler, telefon.
+- Uygulama: Harita ve Yakınımdakiler süzgeçleri MapLayer'a geçti (eczane/işletme/yer her zaman; hizmet türleri verisi varsa). Dokununca bilgi penceresi (ara, yol tarifi). iOS iğneleri türüne göre renk/simge, sıkışınca önce gizlenir. Arama: "atm, taksi, otopark, tuvalet, şarj, benzin" → Yakınımdakiler.

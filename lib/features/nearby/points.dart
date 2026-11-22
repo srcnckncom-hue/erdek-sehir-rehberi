@@ -5,12 +5,25 @@ import '../businesses/data/businesses_repository.dart';
 import '../businesses/domain/business.dart';
 import '../explore/data/explore_repository.dart';
 import '../explore/domain/explore.dart';
+import '../services/services.dart';
 import '../pharmacy/data/pharmacy_repository.dart';
 import '../pharmacy/domain/duty_schedule.dart';
 import '../pharmacy/domain/pharmacy.dart';
 import 'location_service.dart';
 
-enum PointKind { pharmacy, business, place }
+enum PointKind { pharmacy, business, place, service }
+
+/// Harita / Yakınımdakiler süzgeci: üç ana tür + hizmet türleri (ServiceType ile aynı adlar).
+enum MapLayer { pharmacy, business, place, taxi, atm, parking, wc, charging, fuel }
+
+/// Süzgeç düğmeleri: üç ana tür her zaman, hizmet türleri yalnızca verisi varsa (sırayla).
+List<MapLayer> filterLayers(Iterable<PointOfInterest> points) {
+  final used = {for (final p in points) p.layer};
+  return [
+    for (final l in MapLayer.values)
+      if (l == MapLayer.pharmacy || l == MapLayer.business || l == MapLayer.place || used.contains(l)) l,
+  ];
+}
 
 /// Haritada / yakınımdakilerde gösterilen bir yer.
 class PointOfInterest {
@@ -24,6 +37,7 @@ class PointOfInterest {
     this.business,
     this.businessCategory,
     this.place,
+    this.service,
   });
 
   /// "pharmacy:ID", "business:ID", "place:ID" (harita seçimi için tekil).
@@ -38,10 +52,19 @@ class PointOfInterest {
   final Business? business;
   final BusinessCategory? businessCategory;
   final Place? place;
+  final ServicePoint? service;
 
+  MapLayer get layer => switch (kind) {
+        PointKind.pharmacy => MapLayer.pharmacy,
+        PointKind.business => MapLayer.business,
+        PointKind.place => MapLayer.place,
+        PointKind.service => MapLayer.values.byName(service!.type.name),
+      };
+
+  /// iOS iğne türü: pharmacy / business / place / taxi / atm / parking / wc / charging / fuel.
   Map<String, Object?> toPin() => {
         'id': id,
-        'kind': kind.name,
+        'kind': layer.name,
         'title': title,
         'subtitle': subtitle,
         'lat': location?.latitude,
@@ -59,6 +82,7 @@ List<PointOfInterest> collectPoints({
   PharmacyData? pharmacy,
   BusinessesData? businesses,
   PlacesData? places,
+  ServicesData? services,
 }) {
   final duty = dutyDateFor(erdekNow);
   return [
@@ -90,6 +114,15 @@ List<PointOfInterest> collectPoints({
         location: _point(pl.latitude, pl.longitude),
         place: pl,
       ),
+    for (final s in services?.points ?? const <ServicePoint>[])
+      PointOfInterest(
+        id: 'service:${s.id}',
+        kind: PointKind.service,
+        title: s.name,
+        subtitle: s.note,
+        location: GeoPoint(s.latitude, s.longitude),
+        service: s,
+      ),
   ];
 }
 
@@ -102,6 +135,7 @@ final pointsProvider = Provider.family<List<PointOfInterest>, String>((ref, phar
     pharmacy: ref.watch(pharmacyDataProvider).value?.data,
     businesses: ref.watch(businessesDataProvider).value?.data,
     places: ref.watch(placesDataProvider).value?.data,
+    services: ref.watch(servicesDataProvider).value?.data,
   );
 });
 

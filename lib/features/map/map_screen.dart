@@ -7,6 +7,7 @@ import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/widgets.dart';
 import '../../l10n/app_localizations.dart';
+import '../services/map_layers.dart';
 import '../nearby/location_service.dart';
 import '../nearby/nearby_screen.dart';
 import '../nearby/points.dart';
@@ -25,7 +26,7 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 class _MapScreenState extends ConsumerState<MapScreen> {
-  PointKind? _filter;
+  MapLayer? _filter;
   MethodChannel? _channel;
   List<PointOfInterest> _shown = const [];
 
@@ -33,7 +34,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   List<PointOfInterest> _visible(List<PointOfInterest> all) => [
         for (final p in all)
-          if (p.location != null && (_filter == null || p.kind == _filter)) p,
+          if (p.location != null && (_filter == null || p.layer == _filter)) p,
       ];
 
   void _onCreated(int id) {
@@ -67,11 +68,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     }
     _shown = shown;
 
-    final filters = <(PointKind?, String)>[
+    final filters = <(MapLayer?, String)>[
       (null, l10n.filterAll),
-      (PointKind.pharmacy, l10n.mapFilterPharmacy),
-      (PointKind.business, l10n.mapFilterBusinesses),
-      (PointKind.place, l10n.mapFilterPlaces),
+      for (final l in filterLayers(all)) (l, MapLayerStyle.label(l10n, l)),
     ];
 
     return Scaffold(

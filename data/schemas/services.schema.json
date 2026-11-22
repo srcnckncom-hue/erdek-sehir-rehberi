@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harita katmanları",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isSample",
+    "updatedAt",
+    "data"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isSample": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?([+-]\\d{2}:\\d{2}|Z)$"
+    },
+    "source": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "points"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "points": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "type",
+              "name",
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "type": {
+                "enum": [
+                  "taksi",
+                  "atm",
+                  "otopark",
+                  "wc",
+                  "sarj",
+                  "akaryakit"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "latitude": {
+                "type": "number",
+                "minimum": 40,
+                "maximum": 41
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": 27,
+                "maximum": 28.5
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "hours": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "phone": {
+                "type": "string",
+                "pattern": "^(\\+90\\d{10}|1\\d{2,3})$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

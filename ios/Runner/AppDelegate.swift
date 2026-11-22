@@ -346,6 +346,20 @@ final class ErdekMapView: NSObject, FlutterPlatformView, MKMapViewDelegate {
       view.markerTintColor = UIColor(red: 0.93, green: 0.41, blue: 0.11, alpha: 1)
       view.glyphImage = UIImage(systemName: "storefront.fill")
       view.displayPriority = .defaultHigh
+    // Hizmet noktaları (taksi, ATM, otopark, WC, şarj, akaryakıt): sıkışınca önce bunlar gizlenir.
+    case "taxi", "atm", "parking", "wc", "charging", "fuel":
+      let style: [String: (UIColor, String)] = [
+        "taxi": (UIColor(red: 0.96, green: 0.70, blue: 0.0, alpha: 1), "car.fill"),
+        "atm": (UIColor(red: 0.13, green: 0.55, blue: 0.35, alpha: 1), "banknote.fill"),
+        "parking": (UIColor(red: 0.16, green: 0.38, blue: 0.85, alpha: 1), "parkingsign"),
+        "wc": (UIColor(red: 0.10, green: 0.60, blue: 0.65, alpha: 1), "toilet.fill"),
+        "charging": (UIColor(red: 0.45, green: 0.30, blue: 0.80, alpha: 1), "bolt.car.fill"),
+        "fuel": (UIColor(red: 0.80, green: 0.20, blue: 0.25, alpha: 1), "fuelpump.fill"),
+      ]
+      let (color, symbol) = style[pin.kind]!
+      view.markerTintColor = color
+      view.glyphImage = UIImage(systemName: symbol) ?? UIImage(systemName: "mappin")
+      view.displayPriority = .defaultLow
     default:
       view.markerTintColor = UIColor(red: 0.15, green: 0.56, blue: 0.77, alpha: 1)
       view.glyphImage = UIImage(systemName: "mappin.and.ellipse")

@@ -9,6 +9,8 @@ import '../../core/widgets/widgets.dart';
 import '../../l10n/app_localizations.dart';
 import '../businesses/presentation/business_detail_screen.dart';
 import '../explore/presentation/place_detail_screen.dart';
+import '../services/map_layers.dart';
+import '../services/service_sheet.dart';
 import 'location_service.dart';
 import 'points.dart';
 
@@ -23,6 +25,8 @@ Future<void> openPoint(BuildContext context, PointOfInterest point) async {
       await openBusiness(context, point.business!, category: point.businessCategory);
     case PointKind.place:
       await openPlace(context, point.place!);
+    case PointKind.service:
+      await openServicePoint(context, point.service!);
     case PointKind.pharmacy:
       final pharmacy = point.pharmacy!;
       final l10n = AppLocalizations.of(context);
@@ -78,7 +82,7 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
   GeoPoint? _here;
   LocationFailure? _failure;
   bool _loading = true;
-  PointKind? _filter;
+  MapLayer? _filter;
 
   @override
   void initState() {
@@ -139,13 +143,11 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
       );
     } else {
       final all = ref.watch(pointsProvider(l10n.mapPharmacyLabel));
-      final filtered = [for (final x in all) if (_filter == null || x.kind == _filter) x];
+      final filtered = [for (final x in all) if (_filter == null || x.layer == _filter) x];
       final sorted = sortByDistance(filtered, here);
-      final filters = <(PointKind?, String)>[
+      final filters = <(MapLayer?, String)>[
         (null, l10n.filterAll),
-        (PointKind.pharmacy, l10n.mapFilterPharmacy),
-        (PointKind.business, l10n.mapFilterBusinesses),
-        (PointKind.place, l10n.mapFilterPlaces),
+        for (final l in filterLayers(all)) (l, MapLayerStyle.label(l10n, l)),
       ];
       children
         ..add(InfoBanner(icon: AppIcons.info, message: l10n.nearbyPrivacyNote))
@@ -200,11 +202,8 @@ class _NearbyRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final p = context.palette;
-    final (icon, color) = switch (point.kind) {
-      PointKind.pharmacy => (AppIcons.pharmacy, p.accentRed),
-      PointKind.business => (AppIcons.businesses, p.iconOrange),
-      PointKind.place => (AppIcons.places, p.iconBlue),
-    };
+    final icon = MapLayerStyle.icon(point.layer);
+    final color = MapLayerStyle.color(p, point.layer);
     final distance = meters == null ? l10n.nearbyNoLocation : formatDistance(meters!);
 
     return InkWell(

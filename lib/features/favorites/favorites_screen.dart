@@ -112,6 +112,7 @@ class _FavoriteRow extends StatelessWidget {
       PointKind.business => (AppIcons.businesses, p.iconOrange),
       PointKind.place => (AppIcons.places, p.aqua.foreground),
       PointKind.pharmacy => (AppIcons.pill, p.accentRed),
+      PointKind.service => (AppIcons.places, p.primary),
     };
     return InkWell(
       key: Key('favorite_row_${item.id}'),

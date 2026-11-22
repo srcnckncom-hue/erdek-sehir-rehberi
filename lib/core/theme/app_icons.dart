@@ -54,6 +54,9 @@ abstract final class AppIcons {
   static AppIconData get history => _d(PhosphorIconsDuotone.scroll);
   static AppIconData get placeBeach => _d(PhosphorIconsDuotone.umbrellaSimple);
   static AppIconData get trips => _d(PhosphorIconsDuotone.path);
+  static AppIconData get serviceTaxi => _d(PhosphorIconsDuotone.taxi);
+  static AppIconData get serviceAtm => _d(PhosphorIconsDuotone.money);
+  static AppIconData get serviceFuel => _d(PhosphorIconsDuotone.gasPump);
   static AppIconData get tripWalk => _d(PhosphorIconsDuotone.footprints);
   static AppIconData get tripBike => _d(PhosphorIconsDuotone.bicycle);
   static AppIconData get amenityFlag => _d(PhosphorIconsDuotone.flag);
