@@ -19,6 +19,11 @@
         "tips": [
           "ÖRNEK ipucu: En uygun ziyaret saati",
           "ÖRNEK ipucu: Yanınıza alınacaklar"
+        ],
+        "amenities": [
+          "mavi_bayrak",
+          "dus",
+          "yok-boyle"
         ]
       },
       {

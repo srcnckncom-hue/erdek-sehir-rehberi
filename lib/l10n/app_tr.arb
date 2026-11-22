@@ -1153,5 +1153,60 @@
       }
     }
   },
-  "searchSectionOutages": "Kesintiler"
+  "searchSectionOutages": "Kesintiler",
+  "beachesTitle": "Plajlar",
+  "beachesSubtitle": "Bugün denize girilir mi, hangi plaj neler sunuyor",
+  "beachesEmpty": "Bu süzgece uyan plaj yok.",
+  "amenityBlueFlag": "Mavi Bayrak",
+  "amenityLifeguard": "Cankurtaran",
+  "amenityShower": "Duş",
+  "amenityWc": "WC",
+  "amenitySunbeds": "Şezlong",
+  "amenityParking": "Otopark",
+  "amenityAccessible": "Engelli erişimi",
+  "amenityShallow": "Sığ · çocuklara uygun",
+  "amenitySand": "Kum",
+  "amenityPebble": "Çakıl",
+  "amenityFood": "Kafe / restoran",
+  "swimQuestion": "Bugün denize girilir mi?",
+  "swimGreat": "Harika bir deniz günü",
+  "swimGood": "Girilir",
+  "swimFair": "İdare eder",
+  "swimPoor": "Bugün uygun değil",
+  "swimFactorWater": "Su {t}°",
+  "@swimFactorWater": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "swimFactorAir": "Hava {t}°",
+  "@swimFactorAir": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "swimFactorWave": "Dalga {m} m",
+  "@swimFactorWave": {
+    "placeholders": {
+      "m": {
+        "type": "String"
+      }
+    }
+  },
+  "swimFactorWind": "Rüzgâr {v} m/sn",
+  "@swimFactorWind": {
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "swimFactorRain": "Yağış var",
+  "swimFactorStorm": "Gök gürültülü",
+  "swimNote": "Hava, deniz suyu, dalga ve rüzgâra göre kabaca hesaplanır; plajdaki uyarı bayraklarına ve cankurtarana uyun.",
+  "swimNoteNoSea": "Deniz suyu bilgisi henüz yok; puan hava ve rüzgâra göre. Plajdaki uyarılara uyun."
 }

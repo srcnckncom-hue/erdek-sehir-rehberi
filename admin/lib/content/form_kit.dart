@@ -1,7 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
 /// Basit form diyaloğu: alanlar metin, çok satırlı metin, seçim ya da tarih.
-enum FieldKind { text, multiline, choice, date }
+/// multiChoice: [FieldSpec.options] içinden birden çok seçim; değer virgülle birleşik anahtarlar.
+enum FieldKind { text, multiline, choice, date, multiChoice }
 
 class FieldSpec {
   const FieldSpec(
@@ -60,7 +61,7 @@ class _FormDialogState extends State<_FormDialog> {
   };
   late final Map<String, String> _values = {
     for (final f in widget.fields)
-      if (f.kind == FieldKind.choice || f.kind == FieldKind.date)
+      if (f.kind == FieldKind.choice || f.kind == FieldKind.date || f.kind == FieldKind.multiChoice)
         f.key: f.initial ?? (f.kind == FieldKind.choice ? f.options.keys.first : ''),
   };
   String? _error;
@@ -139,6 +140,31 @@ class _FormDialogState extends State<_FormDialog> {
             TextButton(onPressed: () => _pickDate(f), child: const Text('Seç')),
             if (value.isNotEmpty && !f.required)
               TextButton(onPressed: () => setState(() => _values[f.key] = ''), child: const Text('Temizle')),
+          ],
+        );
+      case FieldKind.multiChoice:
+        final selected = {...(_values[f.key] ?? '').split(',').where((k) => k.isNotEmpty)};
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(f.label),
+            if (f.hint != null) Text(f.hint!, style: const TextStyle(fontSize: 12, color: Colors.black54)),
+            const SizedBox(height: 6),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [
+                for (final e in f.options.entries)
+                  FilterChip(
+                    label: Text(e.value),
+                    selected: selected.contains(e.key),
+                    onSelected: (on) => setState(() {
+                      on ? selected.add(e.key) : selected.remove(e.key);
+                      _values[f.key] = [for (final k in f.options.keys) if (selected.contains(k)) k].join(',');
+                    }),
+                  ),
+              ],
+            ),
           ],
         );
     }

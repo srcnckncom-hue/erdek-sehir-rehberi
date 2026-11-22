@@ -6,6 +6,21 @@ import 'content_editor.dart';
 import 'form_kit.dart';
 import 'photo_strip.dart';
 
+/// Plaj olanakları (uygulamada karşılığı: BeachAmenity).
+const beachAmenities = {
+  'mavi_bayrak': 'Mavi Bayrak',
+  'cankurtaran': 'Cankurtaran',
+  'dus': 'Duş',
+  'wc': 'WC',
+  'sezlong': 'Şezlong / şemsiye',
+  'otopark': 'Otopark',
+  'engelli': 'Engelli erişimi',
+  'sig': 'Sığ (çocuklu aileler)',
+  'kum': 'Kum',
+  'cakil': 'Çakıl',
+  'restoran': 'Kafe / restoran',
+};
+
 const _areas = {'erdek': 'Erdek', 'kapidag': 'Kapıdağ'};
 const _categories = {
   'plaj': 'Plaj',
@@ -142,6 +157,9 @@ class _BodyState extends State<_Body> {
           initial: (p?['tips'] as List<dynamic>?)?.join('\n'),
           hint: 'Her satıra bir bilgi.',
         ),
+        FieldSpec('amenities', 'Plaj olanakları (yalnızca plajlar için)', kind: FieldKind.multiChoice,
+            options: beachAmenities, initial: (p?['amenities'] as List<dynamic>?)?.join(','),
+            hint: 'Plajlar sayfasında ikon olarak görünür ve filtrelenir.'),
         FieldSpec('address', 'Adres (isteğe bağlı)', initial: p?['address'] as String?),
         FieldSpec('latitude', 'Enlem (isteğe bağlı)', initial: p?['latitude']?.toString(),
             validator: numberValidator(min: 40, max: 41), hint: 'Yol tarifi için. Ör. 40.3991'),
@@ -167,6 +185,7 @@ class _BodyState extends State<_Body> {
       'summary': v['summary'],
       'paragraphs': splitParagraphs(v['paragraphs']!),
       if (tips.isNotEmpty) 'tips': tips,
+      if (v['category'] == 'plaj' && v['amenities']!.isNotEmpty) 'amenities': v['amenities']!.split(','),
       if (v['address']!.isNotEmpty) 'address': v['address'],
       'latitude': ?lat,
       'longitude': ?lng,

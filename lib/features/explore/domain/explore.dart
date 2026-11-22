@@ -44,6 +44,27 @@ class PlacePhoto {
   final String? credit;
 }
 
+/// Plaj olanakları (panelde seçilir; bilinmeyen kod atlanır).
+enum BeachAmenity {
+  blueFlag('mavi_bayrak'),
+  lifeguard('cankurtaran'),
+  shower('dus'),
+  wc('wc'),
+  sunbeds('sezlong'),
+  parking('otopark'),
+  accessible('engelli'),
+  shallow('sig'),
+  sand('kum'),
+  pebble('cakil'),
+  food('restoran');
+
+  const BeachAmenity(this.jsonValue);
+
+  final String jsonValue;
+
+  static BeachAmenity? fromJson(String v) => values.where((a) => a.jsonValue == v).firstOrNull;
+}
+
 class Place {
   const Place({
     required this.id,
@@ -57,6 +78,7 @@ class Place {
     this.latitude,
     this.longitude,
     this.photos = const [],
+    this.amenities = const [],
   });
 
   factory Place.fromJson(Map<String, dynamic> json) => Place(
@@ -73,6 +95,9 @@ class Place {
         photos: [
           for (final p in json['photos'] as List<dynamic>? ?? const [])
             PlacePhoto.fromJson(p as Map<String, dynamic>),
+        ],
+        amenities: [
+          for (final a in json['amenities'] as List<dynamic>? ?? const []) ?BeachAmenity.fromJson(a as String),
         ],
       );
 
@@ -95,6 +120,9 @@ class Place {
 
   /// İlki kapak fotoğrafıdır (listede de görünür). Boşsa tür ikonu gösterilir.
   final List<PlacePhoto> photos;
+
+  /// Yalnızca plajlarda (mavi bayrak, duş, otopark…).
+  final List<BeachAmenity> amenities;
 
   bool get hasLocation => (latitude != null && longitude != null) || address != null;
 }

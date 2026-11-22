@@ -53,6 +53,12 @@ abstract final class AppIcons {
   static AppIconData get places => _d(PhosphorIconsDuotone.mapTrifold);
   static AppIconData get history => _d(PhosphorIconsDuotone.scroll);
   static AppIconData get placeBeach => _d(PhosphorIconsDuotone.umbrellaSimple);
+  static AppIconData get amenityFlag => _d(PhosphorIconsDuotone.flag);
+  static AppIconData get amenityLifeguard => _d(PhosphorIconsDuotone.lifebuoy);
+  static AppIconData get amenityShower => _d(PhosphorIconsDuotone.shower);
+  static AppIconData get amenityWc => _d(PhosphorIconsDuotone.toilet);
+  static AppIconData get amenityAccessible => _d(PhosphorIconsDuotone.wheelchair);
+  static AppIconData get amenityShallow => _d(PhosphorIconsDuotone.baby);
   static AppIconData get placeHistoric => _d(PhosphorIconsDuotone.bank);
   static AppIconData get placeNature => _d(PhosphorIconsDuotone.tree);
   static AppIconData get placeVillage => _d(PhosphorIconsDuotone.houseLine);

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../beaches/beaches_screen.dart';
 import '../../../app/providers.dart';
 import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_theme.dart';
@@ -398,6 +399,16 @@ class _SeaSection extends ConsumerWidget {
       key: const Key('sea_section'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const SwimScoreCard(),
+        Center(
+          child: TextButton.icon(
+            key: const Key('sea_beaches'),
+            onPressed: () => openBeaches(context),
+            icon: AppIcon(AppIcons.placeBeach, size: 18, color: p.primary),
+            label: Text(l10n.beachesTitle),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
         Container(
           margin: AppSpacing.pagePadding,
           padding: const EdgeInsets.all(AppSpacing.lg),

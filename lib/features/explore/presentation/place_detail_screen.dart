@@ -6,6 +6,7 @@ import '../../../core/util/launch_or_notify.dart';
 import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../beaches/beaches_screen.dart';
 import '../domain/explore.dart';
 import '../../favorites/favorites.dart';
 import '../../favorites/favorites_screen.dart';
@@ -48,6 +49,14 @@ class PlaceDetailScreen extends StatelessWidget {
           ],
           // Fotoğraflar (panelden yüklenir); yoksa tür ikonu + "Fotoğraf yakında".
           PlacePhotoGallery(place: place),
+          if (place.amenities.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.md),
+            Padding(padding: AppSpacing.pagePadding, child: BeachAmenityChips(amenities: place.amenities)),
+          ],
+          if (place.category == PlaceCategory.beach) ...[
+            const SizedBox(height: AppSpacing.md),
+            const SwimScoreCard(),
+          ],
           const SizedBox(height: AppSpacing.xl),
           Padding(
             padding: AppSpacing.pagePadding,

@@ -231,3 +231,8 @@
 - Uygulama: Kesintiler sayfası (Şu an süren / Planlı), ana sayfada uyarı şeridi (süren ya da 24 saat içinde başlayacak; Mahallem öncelikli), menü, arama ("su", "elektrik", "arıza"…). Ana sayfa "Kesinti" kutucuğu bu sayfayı açar; kesinti duyuruları sayfanın altından.
 - Mahallem: cihazda (`my_area`). Mahalle eşleştirmesi "Mah./Mahallesi", büyük-küçük ve Türkçe harf farkına bakmaz.
 - "Mahallemdeki kesintileri hatırlat": başlamadan 1 saat önce yerel bildirim (en fazla 10; kimlikler 2.100.000.000–2.100.000.999). Veri, mahalle ya da ayar değişince ve uygulama öne gelince yeniden kurulur.
+
+## Plajlar ve yüzme puanı (r31)
+- Plajlar = gezilecek yerlerde türü "plaj" olanlar. Yeni alan `amenities` (mavi_bayrak, cankurtaran, dus, wc, sezlong, otopark, engelli, sig, kum, cakil, restoran); panel → Gezilecek Yerler formunda çoklu seçim (form_kit: FieldKind.multiChoice).
+- "Bugün denize girilir mi?" puanı (0–100): su sıcaklığı, hava (anlık/bugünkü en yüksek), dalga (Copernicus), rüzgâr, yağış/fırtına. ≥75 Harika, ≥55 Girilir, ≥35 İdare eder, altı Uygun değil. Kabaca; plaj uyarılarına uyulması notu.
+- Görünür: Plajlar sayfası (menü, arama "plaj/yüzme/mavi bayrak", Hava › Deniz sekmesi), plaj ayrıntı sayfası.

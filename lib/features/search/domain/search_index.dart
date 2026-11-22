@@ -25,6 +25,7 @@ enum SearchPage {
   events(['etkinlik', 'konser', 'festival', 'şenlik', 'tiyatro', 'sergi', 'fuar']),
   ramadan(['ramazan', 'iftar', 'sahur', 'oruç', 'kadir', 'bayram']),
   businesses(['işletme', 'restoran', 'lokanta', 'kafe', 'otel', 'pansiyon', 'market', 'alışveriş', 'esnaf']),
+  beaches(['plaj', 'kumsal', 'mavi bayrak', 'denize girilir', 'yüzme', 'deniz']),
   places(['gezi', 'gezilecek', 'plaj', 'koy', 'müze', 'manzara']),
   history(['tarih', 'kyzikos', 'antik', 'artake']),
   settings(['ayar', 'bildirim', 'tema', 'karanlık', 'gizlilik', 'dil']);

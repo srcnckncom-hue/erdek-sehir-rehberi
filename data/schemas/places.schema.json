@@ -123,6 +123,25 @@
                     }
                   }
                 }
+              },
+              "amenities": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "mavi_bayrak",
+                    "cankurtaran",
+                    "dus",
+                    "wc",
+                    "sezlong",
+                    "otopark",
+                    "engelli",
+                    "sig",
+                    "kum",
+                    "cakil",
+                    "restoran"
+                  ]
+                }
               }
             },
             "dependentRequired": {
