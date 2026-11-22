@@ -10,7 +10,7 @@ import '../../core/theme/app_theme.dart';
 import '../../features/prayer/notifications/prayer_notifications.dart';
 import '../../features/prayer/presentation/notification_settings_sheet.dart';
 import '../../features/push/push_service.dart';
-import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/push/push_topics_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../providers.dart';
 
@@ -383,8 +383,9 @@ class _NotificationCard extends ConsumerWidget {
           ),
           if (pushAvailable)
             SwitchListTile.adaptive(
-              value: ref.watch(announcementsPushProvider),
-              onChanged: (on) => toggleAnnouncementsPush(context, ref, on: on),
+              key: const Key('onboarding_push_all'),
+              value: ref.watch(pushTopicsProvider).isNotEmpty,
+              onChanged: (on) => setAllPushTopics(context, ref, on: on),
               secondary: AppIcon(AppIcons.announcements, size: 26, color: p.iconPurple),
               title: Text(
                 l10n.announcementsPushTitle,

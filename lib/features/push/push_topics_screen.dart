@@ -19,6 +19,19 @@ Future<void> togglePushTopic(BuildContext context, WidgetRef ref, PushTopic topi
   if (!ok) messenger?.showSnackBar(SnackBar(content: Text(denied)));
 }
 
+/// Tanıtım ekranı: tüm konuları birden aç/kapat. İzin verilmezse durur.
+Future<void> setAllPushTopics(BuildContext context, WidgetRef ref, {required bool on}) async {
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  final denied = AppLocalizations.of(context).notificationPermissionDenied;
+  final notifier = ref.read(pushTopicsProvider.notifier);
+  for (final t in PushTopic.values) {
+    if (!await notifier.setEnabled(t, on)) {
+      messenger?.showSnackBar(SnackBar(content: Text(denied)));
+      return;
+    }
+  }
+}
+
 String pushTopicTitle(AppLocalizations l10n, PushTopic t) => switch (t) {
       PushTopic.general => l10n.announcementsPushTitle,
       PushTopic.outages => l10n.pushTopicOutages,

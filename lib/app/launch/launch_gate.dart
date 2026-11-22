@@ -41,8 +41,8 @@ class _LaunchGateState extends ConsumerState<LaunchGate> {
   /// Açılışı sayar; yeterince kullanıldıysa (bkz. [shouldAskForReview]) bir
   /// kez Apple'ın puanlama penceresini ister. Tanıtım ekranı açılışında sormaz.
   Future<void> _countLaunch({required bool askReview}) async {
-    // Duyuru bildirimleri açıksa aboneliği tazele.
-    await ref.read(announcementsPushProvider.notifier).refresh();
+    // Açık bildirim konularına aboneliği tazele.
+    await ref.read(pushTopicsProvider.notifier).refresh();
     final store = ref.read(usageStoreProvider);
     final now = ref.read(clockProvider)();
     await store.recordLaunch(now);

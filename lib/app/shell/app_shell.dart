@@ -9,7 +9,6 @@ import '../../features/contacts/presentation/directory_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/home_widget_sync/widget_sync.dart';
 import '../../features/pharmacy/data/pharmacy_repository.dart';
-import '../../features/push/push_service.dart';
 import '../../features/pharmacy/presentation/pharmacy_screen.dart';
 import '../../features/prayer/data/prayer_repository.dart';
 import '../../features/prayer/notifications/prayer_notifications.dart';
@@ -52,10 +51,6 @@ class _AppShellState extends ConsumerState<AppShell> with WidgetsBindingObserver
     ref.listenManual(prayerTimesProvider, (_, _) => _syncWidget(), fireImmediately: true);
     ref.listenManual(pharmacyDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
     ref.listenManual(transportDataProvider, (_, _) => _syncWidget(), fireImmediately: true);
-    // Açık bildirim konularına aboneliği tazele (yalnızca Firebase ayarlıysa).
-    if (ref.read(pushAvailableProvider)) {
-      unawaited(ref.read(pushTopicsProvider.notifier).refresh());
-    }
   }
 
   @override
