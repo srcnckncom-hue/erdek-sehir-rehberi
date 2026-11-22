@@ -79,7 +79,7 @@ class _BodyState extends State<_Body> {
         FieldSpec('note', 'Not (isteğe bağlı)', initial: m?['note'] as String?, hint: 'Ör. "Bayramda kurulmaz"'),
       ],
     );
-    if (v == null) return;
+    if (v == null || !mounted) return;
     final lat = parseNumber(v['latitude']!);
     final lng = parseNumber(v['longitude']!);
     final messenger = ScaffoldMessenger.of(context);
