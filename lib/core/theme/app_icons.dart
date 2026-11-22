@@ -32,6 +32,13 @@ abstract final class AppIcons {
   static AppIconData get outage => _d(PhosphorIconsDuotone.lightning);
   static AppIconData get market => _d(PhosphorIconsDuotone.storefront);
   static AppIconData get event => _d(PhosphorIconsDuotone.confetti);
+  static AppIconData get eventConcert => _d(PhosphorIconsDuotone.musicNotes);
+  static AppIconData get eventCulture => _d(PhosphorIconsDuotone.masksTheater);
+  static AppIconData get eventSport => _d(PhosphorIconsDuotone.soccerBall);
+  static AppIconData get eventKids => _d(PhosphorIconsDuotone.smiley);
+  static AppIconData get eventOther => _d(PhosphorIconsDuotone.calendarCheck);
+  static AppIconData get calendarAdd => _i(PhosphorIconsRegular.calendarPlus);
+  static AppIconData get ticket => _i(PhosphorIconsRegular.ticket);
   static AppIconData get emergency => _d(PhosphorIconsDuotone.siren);
   static AppIconData get assembly => _d(PhosphorIconsDuotone.usersThree);
   static AppIconData get myLocation => _i(PhosphorIconsRegular.crosshair);

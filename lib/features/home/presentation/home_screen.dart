@@ -19,6 +19,7 @@ import '../../announcements/data/announcements_seen.dart';
 import '../../announcements/domain/announcement.dart';
 import '../../appearance/appearance.dart';
 import '../../emergency/emergency_screen.dart';
+import '../../events/events_screen.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
 import '../../map/map_screen.dart';
@@ -386,7 +387,7 @@ class HomeScreen extends ConsumerWidget {
         icon: AppIcons.event,
         label: l10n.actionEvents,
         iconColor: p.iconOrange,
-        onTap: () => _openAnnouncements(ref, AnnouncementCategory.event),
+        onTap: () => openEvents(context, onOpenAnnouncements: () => _openAnnouncements(ref, AnnouncementCategory.event)),
       ),
       QuickActionTile(
         icon: AppIcons.emergency,

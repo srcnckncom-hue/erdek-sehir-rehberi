@@ -17,6 +17,7 @@ import '../../features/weather/presentation/weather_screen.dart';
 import '../../features/map/map_screen.dart';
 import '../../features/nearby/nearby_screen.dart';
 import '../../features/emergency/emergency_screen.dart';
+import '../../features/events/events_screen.dart';
 import '../../features/favorites/favorites_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../core/system/system_bridge.dart';
@@ -66,6 +67,14 @@ class AppDrawer extends ConsumerWidget {
               color: p.iconOrange,
               title: l10n.favoritesTitle,
               onTap: () => _push(context, const FavoritesScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_events'),
+              icon: AppIcons.event,
+              color: p.iconOrange,
+              title: l10n.eventsTitle,
+              onTap: () => _push(context, const EventsScreen()),
             ),
             const SizedBox(height: AppSpacing.sm),
             _NavRow(

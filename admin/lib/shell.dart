@@ -5,6 +5,7 @@ import 'content/announcements_editor.dart';
 import 'content/appearance_editor.dart';
 import 'content/businesses_editor.dart';
 import 'content/contacts_editor.dart';
+import 'content/events_editor.dart';
 import 'content/history_editor.dart';
 import 'content/pharmacy_editor.dart';
 import 'content/places_editor.dart';
@@ -38,6 +39,7 @@ final _groups = <_Group>[
     _Section(Icons.campaign_outlined, 'Reklamlar', (api) => AdsScreen(api: api)),
     _Section(Icons.notifications_outlined, 'Duyurular', (api) => AnnouncementsEditor(api: api)),
     _Section(Icons.amp_stories_outlined, 'Hikâyeler', (api) => StoriesEditor(api: api)),
+    _Section(Icons.event_outlined, 'Etkinlikler', (api) => EventsEditor(api: api)),
     _Section(Icons.send_outlined, 'Bildirim Gönder', (api) => PushScreen(api: api)),
     _Section(Icons.share_outlined, 'Sosyal Medya', (api) => SocialEditor(api: api)),
     _Section(Icons.wallpaper_outlined, 'Görünüm', (api) => AppearanceEditor(api: api)),

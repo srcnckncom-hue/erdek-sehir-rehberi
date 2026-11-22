@@ -6,6 +6,7 @@ import 'package:erdek_rehberi/features/announcements/domain/announcement.dart';
 import 'package:erdek_rehberi/features/appearance/appearance.dart';
 import 'package:erdek_rehberi/features/businesses/domain/business.dart';
 import 'package:erdek_rehberi/features/contacts/domain/contacts.dart';
+import 'package:erdek_rehberi/features/events/events.dart';
 import 'package:erdek_rehberi/features/explore/domain/explore.dart';
 import 'package:erdek_rehberi/features/pharmacy/domain/pharmacy.dart';
 import 'package:erdek_rehberi/features/prayer/domain/prayer_times.dart';
@@ -87,5 +88,9 @@ void main() {
 
   test('appearance.json', () {
     _load('appearance.json', AppearanceData.fromJson);
+  });
+
+  test('events.json', () {
+    _load('events.json', EventsData.fromJson);
   });
 }

@@ -1,4 +1,6 @@
 import CoreLocation
+import EventKit
+import EventKitUI
 import Flutter
 import MapKit
 import StoreKit
@@ -13,6 +15,9 @@ import WidgetKit
 
   /// "Yakınımdakiler" için konum (lib/features/nearby/location_service.dart).
   private let locationProvider = LocationProvider()
+
+  /// Etkinliği takvime ekleme penceresi (lib/features/events).
+  fileprivate static let calendar = CalendarPresenter()
 
   override func application(
     _ application: UIApplication,
@@ -77,6 +82,9 @@ import WidgetKit
           let version = info?["CFBundleShortVersionString"] as? String ?? "?"
           let build = info?["CFBundleVersion"] as? String ?? "?"
           result("\(version) (\(build))")
+        case "addToCalendar":
+          let args = call.arguments as? [String: Any] ?? [:]
+          AppDelegate.calendar.present(args, from: AppDelegate.topViewController, result: result)
         default:
           result(FlutterMethodNotImplemented)
         }
@@ -105,6 +113,17 @@ import WidgetKit
       .compactMap { $0 as? UIWindowScene }
       .first { $0.activationState == .foregroundActive }
       ?? UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
+  }
+
+  /// En üstte görünen ekran (pencere açmak için).
+  fileprivate static func topViewController() -> UIViewController? {
+    guard let scene = activeScene(),
+          let root = scene.windows.first(where: { $0.isKeyWindow })?.rootViewController
+            ?? scene.windows.first?.rootViewController
+    else { return nil }
+    var top = root
+    while let presented = top.presentedViewController { top = presented }
+    return top
   }
 
   private static func presentShareSheet(text: String) {
@@ -304,5 +323,72 @@ final class ErdekMapView: NSObject, FlutterPlatformView, MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
     guard let pin = view.annotation as? ErdekPin else { return }
     channel.invokeMethod("select", arguments: pin.id)
+  }
+}
+
+// MARK: - Takvim
+
+/// Etkinliği iOS'un kendi "Etkinlik ekle" penceresiyle takvime ekler; kullanıcı
+/// pencerede düzenleyip "Ekle"ye basar. iOS 17+: izin istenmez (pencere
+/// uygulamanın dışında çalışır). Daha eski iOS: bir kez takvim izni sorulur.
+final class CalendarPresenter: NSObject, EKEventEditViewDelegate {
+  private let store = EKEventStore()
+  private var pending: FlutterResult?
+
+  func present(_ args: [String: Any], from top: @escaping () -> UIViewController?, result: @escaping FlutterResult) {
+    let show: () -> Void = { [weak self] in
+      DispatchQueue.main.async {
+        guard let self, let controller = top() else {
+          result("unavailable")
+          return
+        }
+        let tz = TimeZone(identifier: "Europe/Istanbul") ?? .current
+        let event = EKEvent(eventStore: self.store)
+        event.title = args["title"] as? String ?? ""
+        event.location = args["location"] as? String
+        event.notes = args["notes"] as? String
+        if let link = args["url"] as? String { event.url = URL(string: link) }
+        event.timeZone = tz
+        event.isAllDay = args["allDay"] as? Bool ?? false
+        let start = CalendarPresenter.date(args["start"], tz) ?? Date()
+        event.startDate = start
+        event.endDate = CalendarPresenter.date(args["end"], tz) ?? start.addingTimeInterval(2 * 3600)
+
+        let editor = EKEventEditViewController()
+        editor.eventStore = self.store
+        editor.event = event
+        editor.editViewDelegate = self
+        self.pending?("canceled")
+        self.pending = result
+        controller.present(editor, animated: true)
+      }
+    }
+    if #available(iOS 17.0, *) {
+      show()
+    } else {
+      store.requestAccess(to: .event) { granted, _ in
+        if granted {
+          show()
+        } else {
+          DispatchQueue.main.async { result("denied") }
+        }
+      }
+    }
+  }
+
+  /// [yıl, ay, gün, saat, dakika] → Date (Erdek saati).
+  private static func date(_ value: Any?, _ tz: TimeZone) -> Date? {
+    guard let parts = value as? [Int], parts.count == 5 else { return nil }
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = tz
+    return calendar.date(from: DateComponents(
+      year: parts[0], month: parts[1], day: parts[2], hour: parts[3], minute: parts[4]
+    ))
+  }
+
+  func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+    controller.dismiss(animated: true)
+    pending?(action == .saved ? "saved" : "canceled")
+    pending = nil
   }
 }

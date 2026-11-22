@@ -1033,5 +1033,57 @@
   "pushTopicOutagesSubtitle": "Planlı ve arıza kaynaklı kesintiler",
   "pushTopicTransportSubtitle": "Feribot ve otobüs iptalleri, sefer değişiklikleri",
   "pushTopicEventsSubtitle": "Konser, festival, şenlik ve pazar duyuruları",
-  "pushTopicsNote": "Bildirimler yalnızca seçtiğiniz konularda gelir. Konu aboneliği için telefonunuza anonim bir bildirim anahtarı oluşturulur; adınız, numaranız veya konumunuz kullanılmaz."
+  "pushTopicsNote": "Bildirimler yalnızca seçtiğiniz konularda gelir. Konu aboneliği için telefonunuza anonim bir bildirim anahtarı oluşturulur; adınız, numaranız veya konumunuz kullanılmaz.",
+  "eventsTitle": "Etkinlikler",
+  "eventsSubtitle": "Erdek'te yaklaşan etkinlikler",
+  "eventsAll": "Tümü ({count})",
+  "@eventsAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventsEmptyTitle": "Yaklaşan etkinlik yok",
+  "eventsEmptyMessage": "Konser, festival ve şenlikler eklendikçe burada görünecek.",
+  "eventsAnnouncementsLink": "Etkinlik duyurularına bak",
+  "eventCatConcert": "Konser",
+  "eventCatFestival": "Festival",
+  "eventCatCulture": "Kültür-Sanat",
+  "eventCatSport": "Spor",
+  "eventCatKids": "Çocuk",
+  "eventCatMarket": "Pazar-Fuar",
+  "eventCatOther": "Diğer",
+  "eventAllDay": "Tüm gün",
+  "eventNow": "Şimdi sürüyor",
+  "eventOrganizer": "Düzenleyen",
+  "eventAddToCalendar": "Takvime ekle",
+  "eventRemind": "Hatırlat",
+  "eventReminderOn": "Hatırlatılacak",
+  "eventMoreInfo": "Ayrıntılar ve bilet",
+  "eventCalendarSaved": "Takviminize eklendi.",
+  "eventCalendarDenied": "Takvim izni verilmedi. iPhone Ayarlar › Erdek Rehberi › Takvimler'den açabilirsiniz.",
+  "eventReminderAdded": "Başlamadan 2 saat önce hatırlatılacak.",
+  "eventReminderAddedAllDay": "O gün sabah 09:00'da hatırlatılacak.",
+  "eventReminderTooLate": "Hatırlatma zamanı geçti.",
+  "eventReminderBody": "Bugün saat {time} · {place}",
+  "@eventReminderBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "eventReminderBodyAllDay": "Bugün · {place}",
+  "@eventReminderBodyAllDay": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "searchSectionEvents": "Etkinlikler"
 }

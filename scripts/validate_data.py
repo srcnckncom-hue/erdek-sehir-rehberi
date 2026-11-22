@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 FILES = [
     "pharmacy", "prayer_times", "transport", "contacts", "announcements", "places", "history",
-    "businesses", "social", "sea", "stories", "appearance",
+    "businesses", "social", "sea", "stories", "appearance", "events",
 ]
 
 errors: list[str] = []
@@ -116,6 +116,18 @@ def check_stories(d):
             err("stories", f"{s['title']}: bitiş başlangıçtan sonra olmalı")
 
 
+def check_events(d):
+    for x in dupes([e["id"] for e in d["events"]]):
+        err("events", f"etkinlik kimliği birden fazla kez tanımlı: {x}")
+    for e in d["events"]:
+        if "endDate" in e and e["endDate"] < e["date"]:
+            err("events", f"{e['title']}: bitiş günü başlangıçtan önce olamaz")
+        if "endTime" in e and "startTime" not in e:
+            err("events", f"{e['title']}: bitiş saati varsa başlangıç saati de girilmeli")
+        if ("latitude" in e) != ("longitude" in e):
+            err("events", f"{e['title']}: enlem ve boylam birlikte girilmeli")
+
+
 def check_sea(d):
     dates = [x["date"] for x in d["days"]]
     if dates != sorted(dates):
@@ -137,6 +149,7 @@ CHECKS = {
     "sea": check_sea,
     "stories": check_stories,
     "appearance": lambda d: None,
+    "events": check_events,
 }
 
 

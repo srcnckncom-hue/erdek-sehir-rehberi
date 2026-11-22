@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "isSample": false,
+  "updatedAt": "2026-11-21T12:00:00+03:00",
+  "source": "test",
+  "data": {
+    "events": [
+      {
+        "id": "test-konser",
+        "title": "Test Konseri",
+        "category": "konser",
+        "date": "2026-11-21",
+        "startTime": "20:30",
+        "endTime": "23:00",
+        "place": "Cumhuriyet Meydanı",
+        "latitude": 40.3972,
+        "longitude": 27.7934,
+        "summary": "Açık hava konseri.",
+        "paragraphs": [
+          "Ücretsiz."
+        ]
+      },
+      {
+        "id": "test-festival",
+        "title": "Test Festivali",
+        "category": "festival",
+        "date": "2026-11-20",
+        "endDate": "2026-11-23",
+        "place": "Sahil"
+      },
+      {
+        "id": "test-gecmis",
+        "title": "Geçmiş Etkinlik",
+        "category": "spor",
+        "date": "2026-11-10",
+        "startTime": "10:00"
+      },
+      {
+        "id": "test-pazar",
+        "title": "Test Pazarı",
+        "category": "pazar",
+        "date": "2026-11-28",
+        "startTime": "08:00",
+        "endTime": "14:00"
+      }
+    ]
+  }
+}

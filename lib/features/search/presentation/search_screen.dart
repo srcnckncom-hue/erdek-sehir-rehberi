@@ -8,6 +8,7 @@ import '../../../app/shell/app_tab.dart';
 import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/util/launch_or_notify.dart';
+import '../../../core/util/date_texts.dart';
 import '../../../core/util/launchers.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
@@ -19,6 +20,8 @@ import '../../businesses/presentation/businesses_screen.dart';
 import '../../contacts/domain/contacts.dart';
 import '../../emergency/emergency.dart';
 import '../../emergency/emergency_screen.dart';
+import '../../events/events.dart';
+import '../../events/events_screen.dart';
 import '../../explore/presentation/history_screen.dart';
 import '../../explore/presentation/places_screen.dart';
 import '../../favorites/favorites_screen.dart';
@@ -101,6 +104,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.map: l10n.mapTitle,
         SearchPage.nearby: l10n.nearbyTitle,
         SearchPage.favorites: l10n.favoritesTitle,
+        SearchPage.events: l10n.eventsTitle,
         SearchPage.ramadan: l10n.ramadanTitle,
         SearchPage.businesses: l10n.businessesTitle,
         SearchPage.places: l10n.placesTitle,
@@ -120,6 +124,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         SearchPage.map => AppIcons.map,
         SearchPage.nearby => AppIcons.nearby,
         SearchPage.favorites => AppIcons.favoriteOn,
+        SearchPage.events => AppIcons.event,
         SearchPage.ramadan => AppIcons.ramadan,
         SearchPage.businesses => AppIcons.businesses,
         SearchPage.places => AppIcons.places,
@@ -151,6 +156,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         _push(openNearby);
       case SearchPage.favorites:
         _push(openFavorites);
+      case SearchPage.events:
+        _push(openEvents);
       case SearchPage.ramadan:
         _push(openRamadan);
       case SearchPage.businesses:
@@ -226,6 +233,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         for (final h in HelpLine.values) h.toContact(l10n),
       ],
       businesses: businesses?.data,
+      events: ref.watch(upcomingEventsProvider),
       pharmacy: ref.watch(pharmacyDataProvider).value?.data,
       contacts: ref.watch(contactsDataProvider).value?.data,
       transport: ref.watch(transportDataProvider).value?.data,
@@ -304,6 +312,19 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               onTap: () => _push(
                 (c) => openBusiness(c, b, category: data.categoryOf(b), isSample: sample),
               ),
+            ),
+        ]));
+      }
+      if (results.events.isNotEmpty) {
+        body.add(section(l10n.searchSectionEvents, [
+          for (final e in results.events)
+            _ResultRow(
+              key: Key('search_event_${e.id}'),
+              icon: EventStyle.icon(e.category),
+              color: EventStyle.color(p, e.category),
+              title: e.title,
+              subtitle: '${DateTexts.dayMonth(l10n, e.date)} · ${EventStyle.when(l10n, e)}',
+              onTap: () => _push((c) => openEvent(c, e)),
             ),
         ]));
       }

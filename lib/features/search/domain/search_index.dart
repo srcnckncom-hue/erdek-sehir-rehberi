@@ -2,6 +2,7 @@ import '../../../core/util/text_search.dart';
 import '../../announcements/domain/announcement.dart';
 import '../../businesses/domain/business.dart';
 import '../../contacts/domain/contacts.dart';
+import '../../events/events.dart';
 import '../../explore/domain/explore.dart';
 import '../../pharmacy/domain/pharmacy.dart';
 import '../../transport/domain/transport.dart';
@@ -20,6 +21,7 @@ enum SearchPage {
   map(['harita', 'konum']),
   nearby(['yakın', 'yakınımda', 'en yakın', 'çevre']),
   favorites(['favori', 'yıldız', 'kaydettiklerim']),
+  events(['etkinlik', 'konser', 'festival', 'şenlik', 'tiyatro', 'sergi', 'fuar']),
   ramadan(['ramazan', 'iftar', 'sahur', 'oruç', 'kadir', 'bayram']),
   businesses(['işletme', 'restoran', 'lokanta', 'kafe', 'otel', 'pansiyon', 'market', 'alışveriş', 'esnaf']),
   places(['gezi', 'gezilecek', 'plaj', 'koy', 'müze', 'manzara']),
@@ -38,6 +40,7 @@ class SearchResults {
     this.helpLines = const [],
     this.pharmacies = const [],
     this.businesses = const [],
+    this.events = const [],
     this.contacts = const [],
     this.routes = const [],
     this.announcements = const [],
@@ -50,6 +53,7 @@ class SearchResults {
   final List<Contact> helpLines;
   final List<Pharmacy> pharmacies;
   final List<Business> businesses;
+  final List<CityEvent> events;
   final List<Contact> contacts;
   final List<TransportRoute> routes;
   final List<Announcement> announcements;
@@ -60,6 +64,7 @@ class SearchResults {
       helpLines.isEmpty &&
       pharmacies.isEmpty &&
       businesses.isEmpty &&
+      events.isEmpty &&
       contacts.isEmpty &&
       routes.isEmpty &&
       announcements.isEmpty &&
@@ -70,6 +75,7 @@ class SearchResults {
       helpLines.length +
       pharmacies.length +
       businesses.length +
+      events.length +
       contacts.length +
       routes.length +
       announcements.length +
@@ -85,6 +91,7 @@ SearchResults searchAll({
   List<Contact> helpLines = const [],
   PharmacyData? pharmacy,
   BusinessesData? businesses,
+  List<CityEvent> events = const [],
   ContactsData? contacts,
   TransportData? transport,
   AnnouncementsData? announcements,
@@ -109,6 +116,9 @@ SearchResults searchAll({
     businesses: [
       for (final b in businesses?.businesses ?? const <Business>[])
         if (m([b.name, businesses!.categoryOf(b)?.title, b.summary, b.description, b.address])) b,
+    ].take(limit).toList(),
+    events: [
+      ...events.where((e) => m([e.title, e.place, e.summary, e.organizer])),
     ].take(limit).toList(),
     contacts: [
       for (final c in contacts?.categories ?? const <ContactCategory>[])

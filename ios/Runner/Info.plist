@@ -70,6 +70,10 @@
 	<array>
 		<string>tr</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Seçtiğiniz etkinliği takviminize eklemek için. Takviminizdeki diğer kayıtlar okunmaz.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>Seçtiğiniz etkinliği takviminize eklemek için. Takviminizdeki diğer kayıtlar okunmaz.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Yakınınızdaki nöbetçi eczane, işletme ve gezilecek yerleri mesafeye göre sıralamak ve haritada göstermek için. Konumunuz yalnızca telefonunuzda kullanılır; kaydedilmez ve kimseyle paylaşılmaz.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

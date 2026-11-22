@@ -217,3 +217,10 @@
 - 4 FCM konusu: `duyurular` (Önemli duyurular, eski aboneler korunur), `kesintiler`, `ulasim`, `etkinlikler`.
 - Uygulama: Ayarlar › Bildirim konuları (her biri ayrı anahtar). Eski sürümde "Önemli duyurular" açık olanlarda yeni konular da açık başlar; açılışta açık konulara abonelik tazelenir.
 - Panel: Bildirim Gönder'de konu seçimi; Duyurular ✈ türüne göre konu seçer. send-push yalnızca bu 4 konuyu kabul eder, push_log.topic'e yazar. Günlük sınır tüm konular için toplam 10.
+
+## Etkinlik takvimi (r28)
+- Yeni içerik belgesi `events` (data/events.json, panel → Genel › Etkinlikler, SQL: 0009_events.sql). Fotoğraflar content-images/events/.
+- Alanlar: başlık, tür (konser/festival/kultur/spor/cocuk/pazar/diger), tarih, son gün (çok günlü), başlangıç/bitiş saati (boşsa tüm gün), yer, enlem/boylam, kısa tanım, açıklama, düzenleyen, bağlantı (https), fotoğraflar.
+- Uygulama: Etkinlikler sayfası (ana sayfadaki Etkinlik kutucuğu, menü, arama). Güne göre gruplu; süren çok günlü etkinlik "bugün" altında, "Şimdi sürüyor". Bitenler kendiliğinden kalkar.
+- Ayrıntı: Takvime ekle (iOS EKEventEditViewController; iOS 17+ izin istemez, eskide bir kez takvim izni — Info.plist NSCalendars…), Hatırlat (2 saat önce; tüm gün ise 09:00; bildirim kimlikleri 2.000.000.000–2.099.999.999), Yol tarifi, WhatsApp'ta paylaş, bilet/ayrıntı bağlantısı.
+- Etkinlik duyuruları (Duyurular › Etkinlik) yerinde kalır; Etkinlikler sayfasının altından ulaşılır.

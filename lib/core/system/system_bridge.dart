@@ -14,6 +14,45 @@ abstract interface class SystemBridge {
 
   /// "1.0.0 (5)" gibi; bilinmiyorsa null.
   Future<String?> appVersion();
+
+  /// iOS'un kendi "Etkinlik ekle" penceresini doldurulmuş açar.
+  /// Sonuç: [CalendarResult].
+  Future<CalendarResult> addToCalendar(CalendarEntry entry);
+}
+
+enum CalendarResult { saved, canceled, denied, unavailable }
+
+/// Takvime eklenecek etkinlik. Saatler Erdek saatiyle (alanlar).
+class CalendarEntry {
+  const CalendarEntry({
+    required this.title,
+    required this.start,
+    required this.end,
+    this.allDay = false,
+    this.location,
+    this.notes,
+    this.url,
+  });
+
+  final String title;
+  final DateTime start;
+  final DateTime end;
+  final bool allDay;
+  final String? location;
+  final String? notes;
+  final String? url;
+
+  static List<int> _parts(DateTime d) => [d.year, d.month, d.day, d.hour, d.minute];
+
+  Map<String, Object?> toArgs() => {
+        'title': title,
+        'start': _parts(start),
+        'end': _parts(end),
+        'allDay': allDay,
+        'location': location,
+        'notes': notes,
+        'url': url,
+      };
 }
 
 class ChannelSystemBridge implements SystemBridge {
@@ -45,6 +84,16 @@ class ChannelSystemBridge implements SystemBridge {
       return null;
     }
   }
+
+  @override
+  Future<CalendarResult> addToCalendar(CalendarEntry entry) async {
+    try {
+      final r = await _channel.invokeMethod<String>('addToCalendar', entry.toArgs());
+      return CalendarResult.values.where((v) => v.name == r).firstOrNull ?? CalendarResult.unavailable;
+    } on Exception {
+      return CalendarResult.unavailable;
+    }
+  }
 }
 
 /// Testler ve önizlemeler.
@@ -60,6 +109,14 @@ class NoopSystemBridge implements SystemBridge {
 
   @override
   Future<String?> appVersion() async => null;
+
+  final calendar = <CalendarEntry>[];
+
+  @override
+  Future<CalendarResult> addToCalendar(CalendarEntry entry) async {
+    calendar.add(entry);
+    return CalendarResult.saved;
+  }
 }
 
 /// main() içinde ChannelSystemBridge ile override edilir.
