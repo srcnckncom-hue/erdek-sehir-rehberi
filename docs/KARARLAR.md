@@ -192,3 +192,11 @@
 - .github/workflows/ dosyaları uzaktan yazılamıyorsa Desktop\erdek-workflows\adimN klasörüne konur, kullanıcı elle taşır.
 - Prayer-sync bot commit'lerinden sonra kullanıcı Pull yapmalı.
 - Kullanıcı adım adım, kısa talimat istiyor; tam tıklama yolu ver.
+
+## Acil Durum sayfası (r23)
+- Ana sayfadaki "Acil" kutucuğu artık doğrudan 112'yi aramıyor; **Acil Durum** sayfasını açıyor (menüde de var).
+- 112 büyük kırmızı düğme. 110/155/156/158/177/122'nin 112'ye bağlandığı notu (İçişleri Bakanlığı, 81 il).
+- Ulusal hatlar koda gömülü (internetsiz): 114 Zehir Danışma, 184 SABİM, 183 Sosyal Destek, 185 Su arıza, 186 Elektrik arıza, 187 Doğal gaz.
+- "Erdek'teki numaralar": Rehberin `acil` ve `kamu` kategorileri (panelden düzenlenir).
+- "Konumumu bul": koordinat (112'ye okunur), WhatsApp / paylaş / kopyala. Harita bağlantısı Google Haritalar (karşı taraf Android de olabilir). Konum kaydedilmez; gizlilik metni güncellendi.
+- e-Devlet AFAD toplanma alanı sorgulama bağlantısı.

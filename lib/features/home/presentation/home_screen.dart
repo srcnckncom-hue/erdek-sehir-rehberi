@@ -18,6 +18,7 @@ import '../../announcements/data/announcements_repository.dart';
 import '../../announcements/data/announcements_seen.dart';
 import '../../announcements/domain/announcement.dart';
 import '../../appearance/appearance.dart';
+import '../../emergency/emergency_screen.dart';
 import '../../businesses/data/businesses_repository.dart';
 import '../../businesses/presentation/businesses_screen.dart';
 import '../../map/map_screen.dart';
@@ -391,7 +392,7 @@ class HomeScreen extends ConsumerWidget {
         icon: AppIcons.emergency,
         label: l10n.actionEmergency,
         iconColor: p.iconCoral,
-        onTap: () => launchOrNotify(context, () => Launchers.call('112')),
+        onTap: () => openEmergency(context),
       ),
     ];
   }

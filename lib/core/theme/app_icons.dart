@@ -33,6 +33,8 @@ abstract final class AppIcons {
   static AppIconData get market => _d(PhosphorIconsDuotone.storefront);
   static AppIconData get event => _d(PhosphorIconsDuotone.confetti);
   static AppIconData get emergency => _d(PhosphorIconsDuotone.siren);
+  static AppIconData get assembly => _d(PhosphorIconsDuotone.usersThree);
+  static AppIconData get myLocation => _i(PhosphorIconsRegular.crosshair);
   static AppIconData get info => _d(PhosphorIconsDuotone.info);
   static AppIconData get warning => _d(PhosphorIconsDuotone.warningCircle);
   static AppIconData get offline => _d(PhosphorIconsDuotone.wifiSlash);

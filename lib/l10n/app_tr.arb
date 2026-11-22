@@ -956,5 +956,39 @@
   },
   "storiesLabel": "Hikâyeler",
   "storyImageError": "Fotoğraf yüklenemedi",
-  "storyOpenLink": "Aç"
+  "storyOpenLink": "Aç",
+  "emergencyScreenTitle": "Acil Durum",
+  "emergencyScreenSubtitle": "Tek dokunuşla arayın, konumunuzu gönderin",
+  "emergencyCallLabel": "Acil Çağrı Merkezi",
+  "emergencyCallServices": "Ambulans · itfaiye · polis · jandarma · sahil güvenlik · AFAD · orman yangını",
+  "emergencyUnifiedNote": "110, 155, 156, 158, 177 ve 122 numaraları da 112 Acil Çağrı Merkezi'ne bağlanır. İnternet olmadan da arayabilirsiniz.",
+  "emergencyLocationTitle": "Konumum",
+  "emergencyLocationHint": "Bulunduğunuz yerin koordinatını görün; 112'ye okuyun ya da yakınlarınıza gönderin.",
+  "emergencyLocate": "Konumumu bul",
+  "emergencyCoordinatesLabel": "Enlem, boylam",
+  "emergencyReadToOperator": "112 görevlisi sorarsa bu sayıları okuyun.",
+  "emergencyRefresh": "Konumu yenile",
+  "emergencyLocationPrivacy": "Konumunuz yalnızca siz bu düğmeye basınca alınır ve yalnızca sizin seçtiğiniz kişiye gönderilir; uygulama kaydetmez.",
+  "emergencyShareTitle": "🆘 Yardıma ihtiyacım var. Konumum:",
+  "emergencyShareCoordinates": "Koordinat: {coords}",
+  "@emergencyShareCoordinates": {
+    "placeholders": {
+      "coords": {
+        "type": "String"
+      }
+    }
+  },
+  "emergencyHelpLinesTitle": "Diğer önemli hatlar",
+  "emergencyLocalTitle": "Erdek'teki numaralar",
+  "emergencyDisasterTitle": "Afet ve deprem",
+  "emergencyAssemblyTitle": "En yakın toplanma alanım",
+  "emergencyAssemblySubtitle": "e-Devlet › AFAD Toplanma Alanı Sorgulama",
+  "helpLinePoison": "Ulusal Zehir Danışma Merkezi",
+  "helpLineHealth": "Sağlık Bakanlığı İletişim Merkezi (SABİM)",
+  "helpLineSocial": "Aile ve Sosyal Hizmetler Destek Hattı",
+  "helpLineWater": "Su arıza",
+  "helpLineElectricity": "Elektrik arıza",
+  "helpLineGas": "Doğal gaz acil",
+  "copy": "Kopyala",
+  "copied": "Kopyalandı"
 }

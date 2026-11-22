@@ -16,6 +16,7 @@ import '../../core/time/calendar_date.dart';
 import '../../features/weather/presentation/weather_screen.dart';
 import '../../features/map/map_screen.dart';
 import '../../features/nearby/nearby_screen.dart';
+import '../../features/emergency/emergency_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../../core/system/system_bridge.dart';
 import '../../features/settings/presentation/report_issue.dart';
@@ -110,6 +111,14 @@ class AppDrawer extends ConsumerWidget {
               color: p.iconCoral,
               title: l10n.nearbyTitle,
               onTap: () => _push(context, const NearbyScreen()),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _NavRow(
+              key: const Key('drawer_emergency'),
+              icon: AppIcons.emergency,
+              color: p.accentRed,
+              title: l10n.emergencyScreenTitle,
+              onTap: () => _push(context, const EmergencyScreen()),
             ),
             const SizedBox(height: AppSpacing.xxl),
             Text(
