@@ -19,6 +19,13 @@ android {
         coreLibraryDesugaringEnabled = true
     }
 
+    // Sürüm derlemesindeki lint kontrolü JDK 17'de çöküyor (eklentilerin Kotlin kodu);
+    // derlemeyi etkilemez.
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
+
     signingConfigs {
         if (hasUploadKey) {
             upload {
