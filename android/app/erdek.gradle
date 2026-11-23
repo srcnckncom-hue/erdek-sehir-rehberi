@@ -7,6 +7,8 @@ def hasUploadKey = env.ANDROID_KEYSTORE_PATH && new File(env.ANDROID_KEYSTORE_PA
 
 android {
     namespace = "com.erdek.sehirrehberi.erdekrehberi"
+    // Eklentiler (flutter_local_notifications, androidx.core) en az 37 istiyor; geriye uyumlu.
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.erdek.sehirrehberi.erdekrehberi"
