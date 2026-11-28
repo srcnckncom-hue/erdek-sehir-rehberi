@@ -1,51 +1,51 @@
 {
   "schemaVersion": 1,
   "isSample": false,
-  "updatedAt": "2026-11-27T08:30:01+03:00",
+  "updatedAt": "2026-11-28T08:21:56+03:00",
   "source": "E.U. Copernicus Marine Service Information",
   "data": {
     "location": "Erdek Körfezi",
     "days": [
       {
-        "date": "2026-11-27",
-        "waterTempC": 13.3,
-        "waveHeightM": 0.1,
-        "waveMaxM": 0.2
-      },
-      {
         "date": "2026-11-28",
-        "waterTempC": 13.2,
+        "waterTempC": 13.1,
         "waveHeightM": 0.2,
-        "waveMaxM": 0.3
+        "waveMaxM": 0.4
       },
       {
         "date": "2026-11-29",
-        "waterTempC": 16.1,
-        "waveHeightM": 1.0,
+        "waterTempC": 16.0,
+        "waveHeightM": 1.2,
         "waveMaxM": 1.5
       },
       {
         "date": "2026-11-30",
-        "waterTempC": 15.5,
+        "waterTempC": 15.9,
         "waveHeightM": 1.4,
         "waveMaxM": 1.5
       },
       {
         "date": "2026-12-01",
-        "waterTempC": 13.8,
+        "waterTempC": 13.9,
         "waveHeightM": 1.3,
-        "waveMaxM": 1.3
+        "waveMaxM": 1.4
       },
       {
         "date": "2026-12-02",
-        "waterTempC": 13.2,
-        "waveHeightM": 0.9,
-        "waveMaxM": 1.3
+        "waterTempC": 13.3,
+        "waveHeightM": 1.3,
+        "waveMaxM": 1.4
       },
       {
         "date": "2026-12-03",
-        "waterTempC": 12.8,
-        "waveHeightM": 0.4,
+        "waterTempC": 12.9,
+        "waveHeightM": 0.9,
+        "waveMaxM": 1.1
+      },
+      {
+        "date": "2026-12-04",
+        "waterTempC": 12.5,
+        "waveHeightM": 0.3,
         "waveMaxM": 0.5
       }
     ]
